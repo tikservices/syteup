@@ -1,5 +1,11 @@
 {
 	"version" : 0.1,
+	"fileds": {
+		"realname" : "Moez Bouhlel",
+		"description": "FOSS and  IT fan",
+		"url": "http://lejenome.github.io/",
+		"mail": "bmoez.j@gmail.com"
+	},
 	"deployment_mode" : "dev",
 	"blog_platform" : "tumblr", //or wordpress
 	"google_analytics_tracking_id" : "",

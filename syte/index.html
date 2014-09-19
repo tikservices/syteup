@@ -17,16 +17,7 @@
   <link rel="stylesheet" href="static/css/style.min.css" type="text/css" media="screen, projection">
   <!--endif-->
   <!--include "favicon.html" DONE-->
-  <!-- based on http://iconogen.com/ -->
-  <link rel="shortcut icon" href="static/imgs/favicon.ico" type="image/x-icon" /><link rel="apple-touch-icon" href="static/imgs/apple-touch-icon.png" />
-  <link rel="apple-touch-icon" sizes="57x57" href="static/imgs/apple-touch-icon-57x57.png" />
-  <link rel="apple-touch-icon" sizes="72x72" href="static/imgs/apple-touch-icon-72x72.png" />
-  <link rel="apple-touch-icon" sizes="114x114" href="static/imgs/apple-touch-icon-114x114.png" />
-  <link rel="apple-touch-icon" sizes="144x144" href="static/imgs/apple-touch-icon-144x144.png" />
-  <link rel="apple-touch-icon" sizes="57x57" href="static/imgs/apple-touch-icon-60x60.png" />
-  <link rel="apple-touch-icon" sizes="72x72" href="static/imgs/apple-touch-icon-120x120.png" />
-  <link rel="apple-touch-icon" sizes="114x114" href="static/imgs/apple-touch-icon-76x76.png" />
-  <link rel="apple-touch-icon" sizes="144x144" href="static/imgs/apple-touch-icon-152x152.png" />
+  <link rel="import" href="templates/favicon.html">
 </head>
 <body>
 <header class="main-header">
@@ -34,8 +25,8 @@
     <div class="picture">
       <a href="/" rel="home"></a>
     </div>
-    <h1>Rodrigo Neri</h1>
-    <h2>iOS &amp; Web Developer + Designer + Entrepreneur Co-Founder of <a href="http://instin.com">Instin</a></h2>
+    <h1 id="field-realname">Rodrigo Neri</h1>
+    <h2 id="field-description">iOS &amp; Web Developer + Designer + Entrepreneur Co-Founder of <a href="http://instin.com">Instin</a></h2>
   </hgroup>
   <nav>
     <ul class="main-nav">
@@ -55,7 +46,7 @@
       <li><a href="http://www.flickr.com/photos/manavo" id="flickr-link">Flickr</a></li>
       <li><a href="http://linkedin.com/in/rigoneri" id="linkedin-link">LinkedIn</a></li>
       endcomment-->
-      <li><a href="mailto:contact@rigoneri.com?subject=Hello" id="contact-link">Contact</a></li>
+      <li><a id="field-mail" href="mailto:contact@rigoneri.com?subject=Hello" id="contact-link">Contact</a></li>
     </ul>
   </nav>
   <a href="https://github.com/lejenome/syteup" class="fork-me">Fork me on Github</a>
@@ -67,7 +58,7 @@
     <span class="nav-btn-bar"></span>
     <span class="nav-btn-bar"></span>
   </span>
-  <h3><a href="/">rigoneri.com</a></h3>
+  <h3><a id="field-url" href="/">rigoneri.com</a></h3>
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script type="text/javascript">
