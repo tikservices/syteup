@@ -1,34 +1,28 @@
-# -*- coding: utf-8 -*-
-import json
-from operator import itemgetter
+function github(request, username) {
+    var user_r = new XMLHttpRequest(),
+	repos_r = new XMLHttpRequest(),
+        context = {};
 
-import requests
-from django.shortcuts import redirect, render
-from django.http import HttpResponse
-from django.conf import settings
+    user_r.open('GET', settings.GITHUB_API_URL + 'users/' +  username, true);
+    user_r.onload = function() {
+	    if (this.status != 200 ) return;
+	    context.user = this.reponse;
+    };
 
+    repos_r.open('GET', settings.GITHUB_API_URL + 'users/' + username + '/repos', true);
+    repos_r.onload = function() {
+	    if (this.status != 200 ) return;
+	    context.user = this.reponse;
+    }
 
-def github(request, username):
-    user_r = requests.get('{0}users/{1}?access_token={2}'.format(
-        settings.GITHUB_API_URL,
-        username,
-        settings.GITHUB_ACCESS_TOKEN))
+    user_r.send();
+    repos_r.send()
 
-    repos_r = requests.get('{0}users/{1}/repos?access_token={2}'.format(
-        settings.GITHUB_API_URL,
-        username,
-        settings.GITHUB_ACCESS_TOKEN))
+    context['repos'].sort(function(r1, r2) { return r1.updated_at > r2.updated_at });
+    return context;
+}
 
-    context = {'user': user_r.json()}
-    context.update({'repos': repos_r.json()})
-
-    context['repos'].sort(key=itemgetter('updated_at'), reverse=True)
-
-    return HttpResponse(content=json.dumps(context),
-                        status=repos_r.status_code,
-                        content_type=repos_r.headers['content-type'])
-
-
+/*
 def github_auth(request):
     context = dict()
     code = request.GET.get('code', None)
@@ -61,3 +55,4 @@ def github_auth(request):
         context['error'] = error
 
     return render(request, 'github_auth.html', context)
+*/
