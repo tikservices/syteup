@@ -7,9 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rigo [Rodrigo Neri]</title>
   <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-  <!--if RSS_FEED_ENABLED
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ RSS_FEED_URL }}" />
-  endif-->
   <!--if DEV_DEPLOYMENT_MODE-->
   <link rel="stylesheet/less" type="text/css" href="static/less/styles.less">
   <script src="static/less/less-1.3.1.min.js" type="text/javascript"></script>
@@ -46,7 +43,7 @@
       <li><a href="http://www.flickr.com/photos/manavo" id="flickr-link">Flickr</a></li>
       <li><a href="http://linkedin.com/in/rigoneri" id="linkedin-link">LinkedIn</a></li>
       endcomment-->
-      <li><a id="field-mail" href="mailto:contact@rigoneri.com?subject=Hello" id="contact-link">Contact</a></li>
+      <li><a id="field-email" href="mailto:contact@rigoneri.com?subject=Hello" id="contact-link">Contact</a></li>
     </ul>
   </nav>
   <a href="https://github.com/lejenome/syteup" class="fork-me">Fork me on Github</a>
@@ -61,38 +58,7 @@
   <h3><a id="field-url" href="/">rigoneri.com</a></h3>
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script type="text/javascript">
-var config_r = new XMLHttpRequest(),
-    settings = {};
-config_r.open('GET', 'config.json', true);
-config_r.onload = function() {
-	if ( this.status != 200 ) alert("FATAL! CAN'T LOAD CONFIG FILE");
-	settings = this.response;
-};
-config_r.send();
-var twitter_integration_enabled = settings["services"]["twitter"]["enable"] || false,
-    github_integration_enabled = settings["services"]["github"]["enable"] || false,
-    dribbble_integration_enabled = settings["services"]["dribbble"]["enable"] || false,
-    instagram_integration_enabled = settings["services"]["instagram"]["enable"] || false,
-    lastfm_integration_enabled = settings["services"]["lastfm"]["enable"] || false,
-    disqus_integration_enabled = settings["services"]["disqus"]["enable"] || false,
-    soundcloud_integration_enabled = settings["services"]["soundcloud"]["enable"] || false,
-    bitbucket_integration_enabled = settings["services"]["bitbucket"]["enable"] || false,
-    foursquare_integration_enabled = settings["services"]["foursquare"]["enable"] || false,
-    tent_integration_enabled = settings["services"]["tent"]["enable"] || false,
-    steam_integration_enabled = settings["services"]["steam"]["enable"] || false,
-    stackoverflow_integration_enabled = settings["services"]["stackoverflow"]["enable"] || false,
-    flickr_integration_enabled = settings["services"]["flickr"]["enable"] || false,
-    linkedin_integration_enabled = settings["services"]["linkedin"]["enable"] || false;
-if (settings["services"]["disqus"]["enable"])
-var disqus_shortname = settings["services"]["disqus"]["shotname"];
-if (settings["services"]["flickr"]["enable"])
-var flickr_id = settings["services"]["flickr"]["id"];
-if(settings["services"]["tent"]["enable"]) {
-	var tent_entity_uri = settings["services"]["tent"]["entity_uri"],
-		tent_feed_uri = settings["services"]["tent"]["feed_url"];
-}
-</script>
+<script src="main.js"></script>
 
 <!--if DEV_DEPLOYMENT_MODE-->
 <script src="static/js/libs/jquery.url.js"></script>
@@ -135,6 +101,7 @@ endif-->
 
 <!--block extra_js--><!-- endblock-->
 <script type="text/javascript">
+/*
 //block extra_inline_js--><!--endblock-->
 
 //if WOOPRA_TRACKING_DOMAIN
@@ -170,6 +137,7 @@ ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www')
 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 })();
 //endif
+*/
 </script>
 </body>
 </html>
