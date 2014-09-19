@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="description" content="Personal website and blog of developer, designer and entrepreneur Rodrigo Neri also known as Rigo. Follow him at @rigoneri" />
-  <meta name="keywords" content="Rodrigo Neri, rigoneri, developer, designer, entrepreneur, instin, myhomework" />
+  <meta name="description" content="Syteup : Personal website and blog" />
+  <meta name="keywords" content="syteup personal website blog social syte syteup" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rigo [Rodrigo Neri]</title>
+  <title>Syteup [Personal website and blog]</title>
   <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <!--if DEV_DEPLOYMENT_MODE-->
   <link rel="stylesheet/less" type="text/css" href="static/less/styles.less">
@@ -22,33 +22,33 @@
     <div class="picture">
       <a href="/" rel="home"></a>
     </div>
-    <h1 id="field-realname">Rodrigo Neri</h1>
-    <h2 id="field-description">iOS &amp; Web Developer + Designer + Entrepreneur Co-Founder of <a href="http://instin.com">Instin</a></h2>
+    <h1 id="field-realname">Moez Bouhlel</h1>
+    <h2 id="field-description">FOSS and IT fan</h2>
   </hgroup>
   <nav>
     <ul class="main-nav">
       <li><a href="/" id="home-link">Home</a></li>
-      <li><a href="http://twitter.com/#!/rigoneri" id="twitter-link">Twitter</a></li>
-      <li><a href="http://github.com/rigoneri" id="github-link">Github</a></li>
-      <li><a href="http://dribbble.com/rigoneri" id="dribbble-link">Dribbble</a></li>
-      <li><a href="http://instagr.am/p/Lau1VrEPbt" id="instagram-link">Instagram</a></li>
-      <li><a href="http://lastfm.com/user/rigoneri" id="lastfm-link">Last.fm</a></li>
-      <li><a href="https://foursquare.com/user/8786308" id="foursquare-link">Foursquare</a></li>
+      <li><a href="http://twitter.com/#!/lejenome" id="twitter-link">Twitter</a></li>
+      <li><a href="http://github.com/lejenome" id="github-link">Github</a></li>
+      <li><a href="http://steamcommunity.com/id/lejenome" id="steam-link">Steam</a></li>
+      <li><a href="http://stackoverflow.com/users/2481592/lejenome" id="stackoverflow-link">StackOverflow</a></li>
+      <li><a href="http://linkedin.com/in/lejenome" id="linkedin-link">LinkedIn</a></li>
       <!--comment
       <li><a href="http://tent.henklein.com" id="tent-link">Tent.io</a></li>
       <li><a href="http://soundcloud.com/guram-kajaia" id="soundcloud-link">Soundcloud</a></li>
       <li><a href="http://bitbucket.org/rigoneri" id="bitbucket-link">Bitbucket</a></li>
-      <li><a href="http://steamcommunity.com/id/steamshortname" id="steam-link">Steam</a></li>
-      <li><a href="http://stackoverflow.com/users/USERID/USERNAME" id="stackoverflow-link">StackOverflow</a></li>
       <li><a href="http://www.flickr.com/photos/manavo" id="flickr-link">Flickr</a></li>
-      <li><a href="http://linkedin.com/in/rigoneri" id="linkedin-link">LinkedIn</a></li>
       endcomment-->
-      <li><a id="field-email" href="mailto:contact@rigoneri.com?subject=Hello" id="contact-link">Contact</a></li>
+      <li><a id="field-email" href="mailto:bmoez.j@gmail.com?subject=Hello" id="contact-link">Contact</a></li>
     </ul>
   </nav>
   <a href="https://github.com/lejenome/syteup" class="fork-me">Fork me on Github</a>
 </header>
-<!--block main_section--><!--endblock-->
+<!--block main_section-->
+<section class="main-section blog-section" id="blog-posts">
+  <span class="loading">loading blog posts ...</span>
+</section>
+<!--endblock-->
 <div class="mobile-nav">
   <span class="nav-btn" id="mobile-nav-btn">
     <span class="nav-btn-bar"></span>
@@ -57,7 +57,7 @@
   </span>
   <h3><a id="field-url" href="/">rigoneri.com</a></h3>
 </div>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="main.js"></script>
 
 <!--if DEV_DEPLOYMENT_MODE-->
@@ -92,52 +92,5 @@
 <!--else-->
 <script src="static/js/min/scripts.min.js"></script>
 <!--endif-->
-
-<!--if SHARETHIS_PUBLISHER_KEY
-<script type="text/javascript">var switchTo5x=true;</script>
-<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
-<script type="text/javascript">stLight.options({publisher: "{{ SHARETHIS_PUBLISHER_KEY }}"});</script>
-endif-->
-
-<!--block extra_js--><!-- endblock-->
-<script type="text/javascript">
-/*
-//block extra_inline_js--><!--endblock-->
-
-//if WOOPRA_TRACKING_DOMAIN
-// Start of woopra code
-function woopraReady(tracker) {
-    tracker.setDomain("{{WOOPRA_TRACKING_DOMAIN}}");
-    tracker.setIdleTimeout({{WOOPRA_TRACKING_IDLE_TIMEOUT}});
-    //if WOOPRA_INCLUDE_QUERY
-    tracker.trackPageview({type:'pageview',url:window.location.pathname+window.location.search,title:document.title});
-    //else
-    tracker.track();
-    //endif
-    return false;
-}
-(function() {
-    var wsc = document.createElement('script');
-    wsc.src = document.location.protocol+'//static.woopra.com/js/woopra.js';
-    wsc.type = 'text/javascript';
-    wsc.async = true;
-    var ssc = document.getElementsByTagName('script')[0];
-    ssc.parentNode.insertBefore(wsc, ssc);
-})();
-// End of woopra code
-//endif
-
-//if GOOGLE_ANALYTICS_TRACKING_ID
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', '{{GOOGLE_ANALYTICS_TRACKING_ID}}']);
-_gaq.push(['_trackPageview']);
-(function() {
-var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
-//endif
-*/
-</script>
 </body>
 </html>

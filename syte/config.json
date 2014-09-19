@@ -1,11 +1,12 @@
 {
 	"version" : 0.1,
 	"deployment_mode" : "dev",
-	"blog_platform" : "tumblr or wordpress",
+	"blog_platform" : "tumblr",
 	"fields": {
+		"username" : "lejenome",
 		"realname" : "Moez Bouhlel",
 		"description": "FOSS and  IT fan",
-		"url": "http://lejenome.github.io/",
+		"url": "lejenome.github.io",
 		"email": "bmoez.j@gmail.com"
 	},
 	"plugins": {
@@ -53,11 +54,13 @@
 		"tumblr" : {
 			"blog_url" : "[ENTER TUMBLR BLOG URL] ex. rigoneri.tumblr.com",
 			"api_url" : "http://api.tumblr.com/v2/blog/{[TUMBLR_BLOG_URL]",
-			"api_key" : "[ENTER TUMBLR API KEY HERE, SEE TUMBLR SETUP INSTRUCTIONS]"
+			"api_key" : "[ENTER TUMBLR API KEY HERE, SEE TUMBLR SETUP INSTRUCTIONS]",
+			"tag_slug" : ""
 		},
 		"wordpress" : {
 			"blog_url" : "[ENTER WORDPRESS BLOG URL] ex. gordonkoo.wordpress.com",
-			"api_url" : "https://public-api.wordpress.com/rest/v1/sites/[WORDPRESS_BLOG_URL]"
+			"api_url" : "https://public-api.wordpress.com/rest/v1/sites/[WORDPRESS_BLOG_URL]",
+			"tag_slug" : ""
 		},
 		"twitter" : {
 			"api_url" : "https://api.twitter.com/",

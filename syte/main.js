@@ -11,9 +11,14 @@ config_r.onload = function() {
 	document.getElementById("field-url").textContent = settings["fields"]["url"];
 	document.getElementById("field-email").href = "mailto:" + settings["fields"]["email"] +
 	       	"?subject=Hello";
+	document.head.getElementsByTagName("title")[0].textContent = settings["fields"]["username"] +
+		" [" + settings["fields"]["realname"] + "]";
+
+	document.head.getElementsByTagName("meta")[0].content =  settings["fields"]["realname"] +
+		" : " + settings["fields"]["description"];
 
 	//SERVICES SETTINGS
-	document.twitter_integration_enabled = settings["services"]["twitter"] || false;
+/*	document.twitter_integration_enabled = settings["services"]["twitter"] || false;
 	document.github_integration_enabled = settings["services"]["github"] || false;
 	document.dribbble_integration_enabled = settings["services"]["dribbble"] || false;
 	document.instagram_integration_enabled = settings["services"]["instagram"] || false;
@@ -26,7 +31,7 @@ config_r.onload = function() {
 	document.steam_integration_enabled = settings["services"]["steam"] || false;
 	document.stackoverflow_integration_enabled = settings["services"]["stackoverflow"] || false;
 	document.flickr_integration_enabled = settings["services"]["flickr"] || false;
-	document.linkedin_integration_enabled = settings["services"]["linkedin"] || false;
+	document.linkedin_integration_enabled = settings["services"]["linkedin"] || false;*/
 	if (settings["services"]["disqus"])
 		document.disqus_shortname = settings["services_settings"]["disqus"]["shotname"];
 	if (settings["services"]["flickr"])
@@ -35,6 +40,44 @@ config_r.onload = function() {
 		document.tent_entity_uri = settings["services_settings"]["tent"]["entity_uri"],
 		document.tent_feed_uri = settings["services_settings"]["tent"]["feed_url"];
 	}
+
+	//SETUP LINKS & BLOG
+	if (settings["blog_platform"] === "wordpress") {
+		var postOffset = 0,
+			wpDomain = settings["services_settings"]["wordpress"]["block_url"];
+	} else {
+		var postOffset = 0;
+	}
+
+	$(function() {
+		setupLinks(settings);
+	      	fetchBlogPosts(postOffset, settings["services_settings"][settings["blog_platform"]]["tag_slug"], settings["blog_platform"]);
+ 		if (settings["services"]["disqus"])
+		      $('body').bind('blog-post-loaded', function() {
+			      embedDisqus(true);
+		      });
+	});
+
+	var resultsLoaded = false,
+    		reachedEnd    = false, // set to true if no more blog posts left.
+		scrollWait    = false,
+		scrollWaitDur = 250;
+
+	$(window).scroll(function() {
+	      	if(!reachedEnd && !resultsLoaded && !scrollWait &&
+			  	($(window).scrollTop() + $(window).height() > $(document).height()/1.2)) {
+		  	resultsLoaded = true;
+		  	postOffset += 20;
+			fetchBlogPosts(postOffset, settings["services_settings"][settings["blog_platform"]]["tag_slug"], settings["blog_platform"]);
+		  	scrollWait = true;
+		  	// Only load posts at most every scrollWaitDur milliseconds.
+			setTimeout(function() { scrollWait = false; }, scrollWaitDur);
+	      	}
+	      	if(resultsLoaded && ($(window).scrollTop() +
+				    	$(window).height() < $(document).height()/1.2)) {
+		  	resultsLoaded = false;
+	      	}
+	});
 
 	//PLUGINS SETTINGS
 	if (settings["plugins"]["woopra"]) {
