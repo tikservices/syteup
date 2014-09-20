@@ -1,23 +1,23 @@
 List of services to add integration for:
 
-    - Twitter [DONE]
-    - Github [DONE]
-    - Dribbble [DONE]
-    - Instagram [DONE]
-    - Tumblr [DONE]
-    - Foursquare [DONE]    
-    - Last.fm [DONE]
-    - Wordpress [DONE]
-    - Bitbucket [DONE]
-    - Stack Overflow [DONE]
-    - Steam [DONE]
-    - Soundcloud [DONE]
-    - Tent.io [DONE]
+    - Twitter [DONE] [PY]
+    - Github [DONE] [JS]
+    - Dribbble [DONE] [JS] [CORS]
+    - Instagram [DONE] [PY]
+    - Tumblr [DONE] [PY]
+    - Foursquare [DONE] [PY]
+    - Last.fm [DONE] [PY]
+    - Wordpress [DONE] [JS] [NO-DISQUS]
+    - Bitbucket [DONE] [JS] [CORS]
+    - Stack Overflow [DONE] [JS] [NO-ABOUT_ME]
+    - Steam [DONE] [PY]
+    - Soundcloud [DONE] [PY]
+    - Tent.io [DONE] [PY]
     - Facebook
-    - LinkedIn [DONE]
+    - LinkedIn [DONE] [PY]
     - Youtube
     - Netflix
-    - Flickr [DONE]
+    - Flickr [DONE] [PY]
     - Picasa
     - Rdio
     - Spotify
@@ -29,4 +29,5 @@ List of services to add integration for:
     - Google+
     - Posterous Spaces
     - viewbook.com
+    - blogger
 
