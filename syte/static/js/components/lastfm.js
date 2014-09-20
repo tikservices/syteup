@@ -1,4 +1,4 @@
-function setupLastfm(url, el) {
+function setupLastfm(url, el, settings) {
   var href = el.href;
 
   if ($('#lastfm-profile').length > 0) {
@@ -12,8 +12,8 @@ function setupLastfm(url, el) {
       return false;
   })
 
-  if (params.length == 2) {
-     var username = params[1];
+//  if (params.length == 2) {
+//     var username = params[1];
 
      var spinner = new Spinner(spin_opts).spin();
      $('#lastfm-link').append(spinner.el);
@@ -45,8 +45,9 @@ function setupLastfm(url, el) {
         }
      });
 
-     require(["json!/lastfm/" + username, "text!templates/lastfm-profile.html"],
-        function(lastfm_data, lastfm_view) {
+     require(["views/lastfm.js", "text!templates/lastfm-profile.html"],
+        function(lastfm, lastfm_view) {
+		var lastfm_data = lastfm(settings);
             if (lastfm_data.error || lastfm_data.length == 0) {
                 window.location = href;
                 return;
@@ -83,7 +84,7 @@ function setupLastfm(url, el) {
         });
 
      return;
-  }
+//  }
 
   window.location = href;
 }

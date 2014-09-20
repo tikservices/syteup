@@ -1,5 +1,5 @@
 
-function setupSoundcloud(url, el) {
+function setupSoundcloud(url, el, settings) {
   var href = el.href;
 
   if ($('#soundcloud-profile').length > 0) {
@@ -13,14 +13,15 @@ function setupSoundcloud(url, el) {
     return false;
   });
 
-  if (params.length == 1) {
-    var username = params[0],
-         spinner = new Spinner(spin_opts).spin();
+//  if (params.length == 1) {
+//    var username = params[0],
+     var  spinner = new Spinner(spin_opts).spin();
 
     $('#soundcloud-link').append(spinner.el);
 
-    require(["json!/soundcloud/" + username, "text!templates/soundcloud-profile.html"],
-      function(soundcloud_data, soundcloud_view) {
+    require(["views/soundcloud.js", "text!templates/soundcloud-profile.html"],
+      function(soundcloud, soundcloud_view) {
+	      var soundcloud_data = soundcloud(settings);
         if (soundcloud_data.error || soundcloud_data.length == 0) {
           window.location = href;
           return;
@@ -36,7 +37,7 @@ function setupSoundcloud(url, el) {
         spinner.stop();
     });
     return;
-  }
+//  }
 
   window.location = href;
 }

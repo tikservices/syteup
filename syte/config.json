@@ -46,20 +46,20 @@
 		}
 	},
 	"services": {
-		"twitter": true,
 		"github": true,
-		"linkedin": true,
+		"flickr": true,
+		"soundcloud": true,
+		"lastfm": true,
 		"stackoverflow": true,
-		"steam": true,
+		"bitbucket" : true,
 		"dribbble": true,
+		"twitter": false,
+		"linkedin": false,
+		"steam": false,
 		"instagram": false,
 		"foursquare": false,
-		"flickr": false,
 		"tent": false,
-		"disqus": false,
-		"soundcloud": false,
-		"bitbucket" : true,
-		"lastfm": false
+		"disqus": false
 	},
 	"services_settings" : {
 		"twitter" : {
@@ -97,11 +97,11 @@
 		       "oauth_access_token_url" : "https://api.instagram.com/oauth/access_token"
 		},
 		"foursquare" : {
-			"url":"",
+			"url":"https://foursquare.com/user/19396425",
+			"client_id" : "19396425",
 			"api_url" : "https://api.foursquare.com/v2/",
 			"access_token" : "[ENTER FOURSQUARE ACCESS TOKEN HERE, SEE FOURSQUARE SETUP INSTRUCTIONS]",
 			"show_current_day" : true,
-			"client_id" : "[ENTER FOURSQUARE CLIENT_ID HERE, SEE FOURSQUARE SETUP INSTRUCTIONS]",
 			"oauth_enabled": false,
 			"oauth_client_secret" : "[ENTER FOURSQUARE CLIENT_SECRET HERE, SEE FOURSQUARE SETUP INSTRUCTIONS]",
 		        "oauth_authorize_url" : "https://foursquare.com/oauth2/authenticate",
@@ -112,9 +112,10 @@
 			"shortname" : ""
 		},
 		"lastfm" : {
-			"url":"",
+			"url":"http://www.last.fm/user/bmoezj",
+			"username": "bmoezj",
 			"api_url" : "http://ws.audioscrobbler.com/2.0/",
-			"api_key" : "[ENTER LASTFM API_KEY HERE, SEE LASTFM SETUP INSTRUCTIONS]"
+			"api_key" : "c52df19324d791fe6b22d1c80cad14dd"
 		},
 		"bitbucket" : {
 			"url":"https://bitbucket.org/pypy",
@@ -123,9 +124,10 @@
 			"show_forks" : false
 		},
 		"soundcloud" : {
-			"url":"",
+			"url":"https://soundcloud.com/olivianoelle",
 			"api_url" : "https://api.soundcloud.com/",
-			"client_id" : "[ENTER SOUNDCLOUD APPLICATION CLIENT_ID HERE]",
+			"username" : "olivianoelle",
+		        "client_id" : "eb58570acbacb769c818a49e0eeb7545",
 			"show_artwork" : false,
 			"player_color" : "ff912b"
 		},
@@ -140,8 +142,8 @@
 			"feed_url" : "[ENTER A URL TO YOUR FEED] ex. https://yourname.tent.is"
 		},
 		"flickr" : {
-			"url":"",
-			"flickr_id" : "[ENTER YOUR FLICKR ID (NOT USERNAME) HERE] //You do your username->ID lookup here: http://idgettr.com/"
+			"url":"https://www.flickr.com/photos/shutterjack/",
+			"client_id" : "18205706@N06"
 		},
 		"linkedin" : {
 			"url":"",

@@ -11,9 +11,17 @@
 - Structure of a blog module
     - TODO LATER
 - Structure of a service module
-    - TODO LATER
+    - config.json : services.<service_name> : boolean (enabled/disabled)
+    - config.json : services_settings.<service_name> : object of service
+      settings
+    - static/js/components/<service_name>.js : setup<Service_name> function
+      called by setupLinks for to manipulate service template
+    - static/templates/<service_name>-{view,profile}.html : service templateto
+      insert data into and show it by syteup
+    - views/<service_name>.js : <service_name> AMD function called by
+      setup<Service_name> function to get service data from service server (api restful calls) and retrun an object of data
 - Structure of a plugin module
-    - TODO LATER
+    - static/js/components/<plugin_name>.js
 
 OLD DESIGN DOCUMENTATION, TO DELETE LATTER
 

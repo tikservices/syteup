@@ -1,46 +1,8 @@
-# -*- coding: utf-8 -*-
-import json
-import datetime
+function foursquare(settings){
+	var context = {},
+	user_r = new XMLHttpRequest(),
+	checkins_r = new XMLHttpRequest();
 
-import requests
-from django.shortcuts import redirect, render
-from django.conf import settings
-from django.http import HttpResponse
-
-
-def foursquare_auth(request):
-    context = dict()
-    code = request.GET.get('code', None)
-    error = request.GET.get('error', None)
-
-    if not code and not error:
-        return redirect('{0}?client_id={1}&redirect_uri={2}foursquare/auth/&response_type=code'.format(
-            settings.FOURSQUARE_OAUTH_AUTHORIZE_URL,
-            settings.FOURSQUARE_CLIENT_ID,
-            settings.SITE_ROOT_URI))
-
-    if code:
-        r = requests.post(settings.FOURSQUARE_OAUTH_ACCESS_TOKEN_URL, data={
-            'client_id': settings.FOURSQUARE_CLIENT_ID,
-            'client_secret': settings.FOURSQUARE_CLIENT_SECRET,
-            'grant_type': 'authorization_code',
-            'redirect_uri': '{0}foursquare/auth/'.format(settings.SITE_ROOT_URI),
-            'code': code,
-        })
-
-        data = json.loads(r.text)
-        error = data.get('error', None)
-
-        if not error:
-            context['token'] = data['access_token']
-
-    if error:
-        context['error'] = error
-
-    return render(request, 'foursquare_auth.html', context)
-
-
-def foursquare(request):
     user_r = requests.get('{0}users/self?oauth_token={1}&v=20120812'.format(
         settings.FOURSQUARE_API_URL,
         settings.FOURSQUARE_ACCESS_TOKEN))

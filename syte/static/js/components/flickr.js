@@ -1,7 +1,7 @@
 var flickr_template;
 var flickr_spinner;
 
-function setupFlickr(el) {
+function setupFlickr(url, el, settings) {
   var href = el.href;
 
   if($('#flickr-profile').length > 0) {
@@ -17,7 +17,7 @@ function setupFlickr(el) {
         flickr_template = flickr_view;
 
          $.ajax({
-            url: "http://api.flickr.com/services/feeds/photos_public.gne?id="+flickr_id+"&format=json&lang=en-us&jsoncallback=processFlickr",
+            url: "http://api.flickr.com/services/feeds/photos_public.gne?id="+settings.client_id+"&format=json&lang=en-us&jsoncallback=processFlickr",
             type: 'GET',
             dataType: 'jsonp'
         });
