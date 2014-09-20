@@ -1,5 +1,5 @@
 
-function setupSteam(url, el) {
+function setupSteam(url, el, settings) {
   var href = el.href;
 
   if ($('#steam-profile').length > 0) {
@@ -13,14 +13,15 @@ function setupSteam(url, el) {
       return false;
   })
 
-  if (params.length == 2) {
-     var username = params[1];
+//  if (params.length == 2) {
+//     var username = params[1];
 
      var spinner = new Spinner(spin_opts).spin();
      $('#steam-link').append(spinner.el);
 
-     require(["json!/steam/" + username, "text!templates/steam-profile.html"],
-        function(steam_data, steam_view) {
+     require(["views/steam.js", "text!templates/steam-profile.html"],
+        function(steam, steam_view) {
+		var steam_data = steam(settings);
             if (steam_data.error || steam_data.length == 0) {
                 window.location = href;
                 return;
@@ -44,7 +45,7 @@ function setupSteam(url, el) {
         });
 
      return;
-  }
+//  }
 
   window.location = href;
 }

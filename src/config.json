@@ -40,7 +40,7 @@
 			"tag_slug" : ""
 		},
 		"wordpress" : {
-			"blog_url" : "java.wordpress.com",
+			"blog_url" : "lejenome.wordpress.com",
 			"api_url" : "https://public-api.wordpress.com/rest/v1",
 			"tag_slug" : ""
 		}
@@ -53,23 +53,15 @@
 		"stackoverflow": true,
 		"bitbucket" : true,
 		"dribbble": true,
+		"steam": true,
 		"twitter": false,
 		"linkedin": false,
-		"steam": false,
 		"instagram": false,
 		"foursquare": false,
 		"tent": false,
 		"disqus": false
 	},
 	"services_settings" : {
-		"twitter" : {
-			"url": "https://twitter.com/lejenome",
-			"api_url" : "https://api.twitter.com/",
-			"consumer_key" : "[ENTER TWITTER CONSUMER KEY HERE, SEE TWITTER SETUP INSTRUCTIONS]",
-			"consumer_secret" : "[ENTER TWITTER CONSUMER SECRET HERE, SEE TWITTER SETUP INSTRUCTIONS]",
-			"user_key" : "[ENTER TWITTER USER KEY HERE, SEE TWITTER SETUP INSTRUCTIONS]",
-			"user_secret" : "[ENTER TWITTER USER SECRET HERE, SEE TWITTER SETUP INSTRUCTIONS]"
-		},
 		"github" : {
 			"url" : "https://github.com/lejenome",
 			"api_url" : "https://api.github.com/",
@@ -80,10 +72,48 @@
 			"userid" : "2481592",
 			"api_url" : "https://api.stackexchange.com/2.2/"
 		},
+		"flickr" : {
+			"url":"https://www.flickr.com/photos/shutterjack/",
+			"client_id" : "18205706@N06"
+		},
+		"steam" : {
+			"url":"http://steamcommunity.com/id/lejenome",
+			"username": "lejenome",
+			"api_url" : "http://api.steampowered.com/ISteamUser",
+			"api_key" : "0FF5714DECD645E76E4A79AB9933DAB8"
+		},
+		"bitbucket" : {
+			"url":"https://bitbucket.org/pypy",
+			"username" : "pypy",
+			"api_url" : "https://api.bitbucket.org/1.0/",
+			"show_forks" : false
+		},
+		"soundcloud" : {
+			"url":"https://soundcloud.com/olivianoelle",
+			"api_url" : "https://api.soundcloud.com/",
+			"username" : "olivianoelle",
+		        "client_id" : "eb58570acbacb769c818a49e0eeb7545",
+			"show_artwork" : false,
+			"player_color" : "ff912b"
+		},
+		"lastfm" : {
+			"url":"http://www.last.fm/user/bmoezj",
+			"username": "bmoezj",
+			"api_url" : "http://ws.audioscrobbler.com/2.0/",
+			"api_key" : "c52df19324d791fe6b22d1c80cad14dd"
+		},
 		"dribbble" : {
 			"url":"https://dribbble.com/mbarvian",
 			"username" : "mbarvian",
 			"api_url" : "https://api.dribbble.com/players/"
+		},
+		"twitter" : {
+			"url": "https://twitter.com/lejenome",
+			"api_url" : "https://api.twitter.com/",
+			"consumer_key" : "[ENTER TWITTER CONSUMER KEY HERE, SEE TWITTER SETUP INSTRUCTIONS]",
+			"consumer_secret" : "[ENTER TWITTER CONSUMER SECRET HERE, SEE TWITTER SETUP INSTRUCTIONS]",
+			"user_key" : "[ENTER TWITTER USER KEY HERE, SEE TWITTER SETUP INSTRUCTIONS]",
+			"user_secret" : "[ENTER TWITTER USER SECRET HERE, SEE TWITTER SETUP INSTRUCTIONS]"
 		},
 		"instagram" : {
 			"url" :"",
@@ -111,39 +141,10 @@
 			"url":"",
 			"shortname" : ""
 		},
-		"lastfm" : {
-			"url":"http://www.last.fm/user/bmoezj",
-			"username": "bmoezj",
-			"api_url" : "http://ws.audioscrobbler.com/2.0/",
-			"api_key" : "c52df19324d791fe6b22d1c80cad14dd"
-		},
-		"bitbucket" : {
-			"url":"https://bitbucket.org/pypy",
-			"username" : "pypy",
-			"api_url" : "https://api.bitbucket.org/1.0/",
-			"show_forks" : false
-		},
-		"soundcloud" : {
-			"url":"https://soundcloud.com/olivianoelle",
-			"api_url" : "https://api.soundcloud.com/",
-			"username" : "olivianoelle",
-		        "client_id" : "eb58570acbacb769c818a49e0eeb7545",
-			"show_artwork" : false,
-			"player_color" : "ff912b"
-		},
-		"steam" : {
-			"url":"",
-			"api_url" : "http://api.steampowered.com/ISteamUser",
-			"api_key" : "[ENTER YOUR STEAM API KEY HERE, SEE STEAM SETUP INSTRUCTIONS]"
-		},
 		"tent" : {
 			"url":"",
 			"entity_uri" : "[ENTER YOUR ENTITY URI HERE] ex. https://yourname.tent.is",
 			"feed_url" : "[ENTER A URL TO YOUR FEED] ex. https://yourname.tent.is"
-		},
-		"flickr" : {
-			"url":"https://www.flickr.com/photos/shutterjack/",
-			"client_id" : "18205706@N06"
 		},
 		"linkedin" : {
 			"url":"",
