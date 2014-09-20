@@ -18,7 +18,7 @@ function github(settings) {
     user_r.send();
     repos_r.send()
 
-    context['repos'].sort(function(r1, r2) { return r1.updated_at > r2.updated_at });
+    context['repos'].sort(function(r1, r2) { return r1.updated_at < r2.updated_at });
     return context;
 }
 define(function() {return github;});

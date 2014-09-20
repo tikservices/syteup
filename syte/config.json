@@ -51,14 +51,14 @@
 		"linkedin": true,
 		"stackoverflow": true,
 		"steam": true,
-		"dribbble": false,
+		"dribbble": true,
 		"instagram": false,
 		"foursquare": false,
 		"flickr": false,
 		"tent": false,
 		"disqus": false,
 		"soundcloud": false,
-		"bitbucket" : false,
+		"bitbucket" : true,
 		"lastfm": false
 	},
 	"services_settings" : {
@@ -81,8 +81,9 @@
 			"api_url" : "https://api.stackexchange.com/2.2/"
 		},
 		"dribbble" : {
-			"url":"",
-			"api_url" : "http://api.dribbble.com/players/"
+			"url":"https://dribbble.com/mbarvian",
+			"username" : "mbarvian",
+			"api_url" : "https://api.dribbble.com/players/"
 		},
 		"instagram" : {
 			"url" :"",
@@ -116,7 +117,8 @@
 			"api_key" : "[ENTER LASTFM API_KEY HERE, SEE LASTFM SETUP INSTRUCTIONS]"
 		},
 		"bitbucket" : {
-			"url":"",
+			"url":"https://bitbucket.org/pypy",
+			"username" : "pypy",
 			"api_url" : "https://api.bitbucket.org/1.0/",
 			"show_forks" : false
 		},

@@ -1,5 +1,5 @@
 
-function setupDribbble(url, el) {
+function setupDribbble(url, el, settings) {
   var href = el.href;
 
   if ($('#dribbble-profile').length > 0) {
@@ -13,14 +13,15 @@ function setupDribbble(url, el) {
       return false;
   })
 
-  if (params.length == 1) {
-     var username = params[0];
+//  if (params.length == 1) {
+//     var username = params[0];
 
      var spinner = new Spinner(spin_opts).spin();
      $('#dribbble-link').append(spinner.el);
 
-     require(["json!/dribbble/" + username, "text!templates/dribbble-view.html"],
-        function(dribbble_data, dribbble_view) {
+     require(["views/dribbble.js", "text!templates/dribbble-view.html"],
+        function(dribbble, dribbble_view) {
+		var dribbble_data = dribbble(settings);
             if (dribbble_data.message || dribbble_data.length == 0) {
                 window.location = href;
                 return;
@@ -49,7 +50,7 @@ function setupDribbble(url, el) {
         });
 
      return;
-  }
+//  }
 
   window.location = href;
 }

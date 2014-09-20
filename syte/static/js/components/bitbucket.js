@@ -1,5 +1,5 @@
 
-function setupBitbucket(url, el) {
+function setupBitbucket(url, el, settings) {
   var href = el.href;
 
   if ($('#bitbucket-profile').length > 0) {
@@ -13,14 +13,15 @@ function setupBitbucket(url, el) {
       return false;
   })
 
-  if (params.length == 1) {
-     var username = params[0];
+//  if (params.length == 1) {
+//     var username = params[0];
 
      var spinner = new Spinner(spin_opts).spin();
      $('#bitbucket-link').append(spinner.el);
 
-     require(["json!/bitbucket/" + username, "text!templates/bitbucket-profile.html"],
-        function(bitbucket_data, bitbucket_view) {
+     require(["views/bitbucket.js", "text!templates/bitbucket-profile.html"],
+        function(bitbucket, bitbucket_view) {
+		var bitbucket_data = bitbucket(settings);
             if (bitbucket_data.error || bitbucket_data.length == 0) {
                 window.location = href;
                 return;
@@ -41,7 +42,7 @@ function setupBitbucket(url, el) {
         });
 
      return;
-  }
+//  }
 
   window.location = href;
 }
