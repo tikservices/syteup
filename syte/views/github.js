@@ -1,18 +1,18 @@
-function github(username) {
+function github(settings) {
     var user_r = new XMLHttpRequest(),
 	repos_r = new XMLHttpRequest(),
         context = {};
 
-    user_r.open('GET', settings.GITHUB_API_URL + 'users/' +  username, true);
+    user_r.open('GET', settings.api_url + 'users/' +  settings.client_id, false);
     user_r.onload = function() {
 	    if (this.status != 200 ) return;
-	    context.user = this.reponse;
+	    context.user = JSON.parse(this.responseText);
     };
 
-    repos_r.open('GET', settings.GITHUB_API_URL + 'users/' + username + '/repos', true);
+    repos_r.open('GET', settings.api_url + 'users/' + settings.client_id + '/repos', false);
     repos_r.onload = function() {
 	    if (this.status != 200 ) return;
-	    context.user = this.reponse;
+	    context.repos = JSON.parse(this.responseText);
     }
 
     user_r.send();

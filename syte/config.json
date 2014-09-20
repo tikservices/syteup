@@ -1,7 +1,7 @@
 {
 	"version" : 0.1,
 	"deployment_mode" : "dev",
-	"blog_platform" : "tumblr",
+	"blog_platform" : "wordpress",
 	"fields": {
 		"username" : "lejenome",
 		"realname" : "Moez Bouhlel",
@@ -32,25 +32,7 @@
 			"publisher_key" : ""
 		}
 	},
-	"services": {
-		"tumblr" : false,
-		"wordpress": false,
-		"twitter": false,
-		"github": true,
-		"stackoverflow": false,
-		"dribbble": false,
-		"instagram": false,
-		"foursquare": false,
-		"linkedin": false,
-		"flickr": false,
-		"tent": false,
-		"disqus": false,
-		"steam": false,
-		"soundcloud": false,
-		"bitbucket" : false,
-		"lastfm": false
-	},
-	"services_settings" : {
+	"blogs_settings": {
 		"tumblr" : {
 			"blog_url" : "[ENTER TUMBLR BLOG URL] ex. rigoneri.tumblr.com",
 			"api_url" : "http://api.tumblr.com/v2/blog/{[TUMBLR_BLOG_URL]",
@@ -58,11 +40,30 @@
 			"tag_slug" : ""
 		},
 		"wordpress" : {
-			"blog_url" : "[ENTER WORDPRESS BLOG URL] ex. gordonkoo.wordpress.com",
-			"api_url" : "https://public-api.wordpress.com/rest/v1/sites/[WORDPRESS_BLOG_URL]",
+			"blog_url" : "java.wordpress.com",
+			"api_url" : "https://public-api.wordpress.com/rest/v1",
 			"tag_slug" : ""
-		},
+		}
+	},
+	"services": {
+		"twitter": true,
+		"github": true,
+		"linkedin": true,
+		"stackoverflow": true,
+		"steam": true,
+		"dribbble": false,
+		"instagram": false,
+		"foursquare": false,
+		"flickr": false,
+		"tent": false,
+		"disqus": false,
+		"soundcloud": false,
+		"bitbucket" : false,
+		"lastfm": false
+	},
+	"services_settings" : {
 		"twitter" : {
+			"url": "https://twitter.com/lejenome",
 			"api_url" : "https://api.twitter.com/",
 			"consumer_key" : "[ENTER TWITTER CONSUMER KEY HERE, SEE TWITTER SETUP INSTRUCTIONS]",
 			"consumer_secret" : "[ENTER TWITTER CONSUMER SECRET HERE, SEE TWITTER SETUP INSTRUCTIONS]",
@@ -70,21 +71,21 @@
 			"user_secret" : "[ENTER TWITTER USER SECRET HERE, SEE TWITTER SETUP INSTRUCTIONS]"
 		},
 		"github" : {
+			"url" : "https://github.com/lejenome",
 			"api_url" : "https://api.github.com/",
-			"client_id" : "lejenome",
-			"access_token" : "[ENTER GITHUB ACCESS TOKEN HERE, SEE GITHUB SETUP INSTRUCTIONS]",
-			"oauth_enabled" : false,
-			"client_secret" : "[ENTER GITHUB CLIENT SECRET HERE, SEE GITHUB SETUP INSTRUCTIONS]",
-			"oauth_authorize_url" : "https://github.com/login/oauth/authorize",
-			"oauth_access_token_url" : "https://github.com/login/oauth/access_token"
+			"client_id" : "lejenome"
 		},
 		"stackoverflow" : {
-			"api_url" : "http://api.stackoverflow.com/1.1/"
+			"url": "http://stackoverflow.com/users/2481592/lejenome",
+			"userid" : "2481592",
+			"api_url" : "https://api.stackexchange.com/2.2/"
 		},
 		"dribbble" : {
+			"url":"",
 			"api_url" : "http://api.dribbble.com/players/"
 		},
 		"instagram" : {
+			"url" :"",
 		       "api_url": "https://api.instagram.com/v1/",
 		       "access_token" : "[ENTER INSTAGRAM ACCESS TOKEN HERE, SEE INSTAGRAM SETUP INSTRUCTIONS]",
 		       "user_id" : "[ENTER INSTAGRAM USER_ID HERE, SEE INSTAGRAM SETUP INSTRUCTIONS]",
@@ -95,6 +96,7 @@
 		       "oauth_access_token_url" : "https://api.instagram.com/oauth/access_token"
 		},
 		"foursquare" : {
+			"url":"",
 			"api_url" : "https://api.foursquare.com/v2/",
 			"access_token" : "[ENTER FOURSQUARE ACCESS TOKEN HERE, SEE FOURSQUARE SETUP INSTRUCTIONS]",
 			"show_current_day" : true,
@@ -105,34 +107,42 @@
 		        "oauth_access_token_url" : "https://foursquare.com/oauth2/access_token"
 		},
 		"disqus" : {
+			"url":"",
 			"shortname" : ""
 		},
 		"lastfm" : {
+			"url":"",
 			"api_url" : "http://ws.audioscrobbler.com/2.0/",
 			"api_key" : "[ENTER LASTFM API_KEY HERE, SEE LASTFM SETUP INSTRUCTIONS]"
 		},
 		"bitbucket" : {
+			"url":"",
 			"api_url" : "https://api.bitbucket.org/1.0/",
 			"show_forks" : false
 		},
 		"soundcloud" : {
+			"url":"",
 			"api_url" : "https://api.soundcloud.com/",
 			"client_id" : "[ENTER SOUNDCLOUD APPLICATION CLIENT_ID HERE]",
 			"show_artwork" : false,
 			"player_color" : "ff912b"
 		},
 		"steam" : {
+			"url":"",
 			"api_url" : "http://api.steampowered.com/ISteamUser",
 			"api_key" : "[ENTER YOUR STEAM API KEY HERE, SEE STEAM SETUP INSTRUCTIONS]"
 		},
 		"tent" : {
+			"url":"",
 			"entity_uri" : "[ENTER YOUR ENTITY URI HERE] ex. https://yourname.tent.is",
 			"feed_url" : "[ENTER A URL TO YOUR FEED] ex. https://yourname.tent.is"
 		},
 		"flickr" : {
+			"url":"",
 			"flickr_id" : "[ENTER YOUR FLICKR ID (NOT USERNAME) HERE] //You do your username->ID lookup here: http://idgettr.com/"
 		},
 		"linkedin" : {
+			"url":"",
 			"api_key" : "[ENTER YOUR LINKEDIN CONSUMER KEY HERE]",
 			"api_secret" : "[ENTER YOUR LINKEDIN CONSUMER SECRET KEY HERE]",
 			"token" : "[ENTER YOUR LINKED IN USER TOKEN HERE]"

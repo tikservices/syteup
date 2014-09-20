@@ -37,8 +37,8 @@ function renderBlogPosts(posts) {
         $.each(posts, function(i, p) {
             p.formated_date = moment.utc(p.date, 'YYYY-MM-DD HH:mm:ss').local().format('MMMM DD, YYYY')
 
-            if (disqus_integration_enabled)
-                p.disqus_enabled = true;
+//            if (disqus_integration_enabled)
+//                p.disqus_enabled = true;
 
             if (p.type == 'text') {
                 var idx = p.body.indexOf('<!-- more -->');
@@ -70,7 +70,8 @@ function renderBlogPosts(posts) {
      });
 }
 
-function fetchTumblrBlogPosts(offset, tag) {
+function fetchTumblrBlogPosts(offset, settings) {
+	var tag = settings.tag_slug;
   var blog_fetch_url = '/blog.json?o=' + offset;
 
   if (tag)
@@ -81,8 +82,9 @@ function fetchTumblrBlogPosts(offset, tag) {
   });
 }
 
-function fetchWordpressBlogPosts(offset, tag) {
-  var wpApiUrl = ['https://public-api.wordpress.com/rest/v1/sites/', wpDomain, '/posts/?callback=?'].join('');
+function fetchWordpressBlogPosts(offset, settings) {
+	var tag = settings.tag_slug;
+  var wpApiUrl = [settings.api_url + '/sites/', settings.blog_url, '/posts/?callback=?'].join('');
 
   if (offset > 0) {
     wpApiUrl += '&offset=' + offset;

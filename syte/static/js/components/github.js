@@ -1,5 +1,5 @@
 
-function setupGithub(url, el) {
+function setupGithub(url, el, settings) {
   var href = el.href;
 
   if ($('#github-profile').length > 0) {
@@ -19,9 +19,9 @@ function setupGithub(url, el) {
      var spinner = new Spinner(spin_opts).spin();
      $('#github-link').append(spinner.el);
 
-     require(["views/github.js", "text!static/templates/github-profile.html"],
+     require(["views/github.js", "text!templates/github-profile.html"],
         function(github, github_view) {
-		github_data = github(username);
+		var github_data = github(settings);
             if (github_data.error || github_data.length == 0) {
                 window.location = href;
                 return;

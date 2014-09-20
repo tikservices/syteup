@@ -1,17 +1,17 @@
-function stackoverflow(request, userid) {
+function stackoverflow(settings) {
         var user_r = new XMLHttpRequest(),
 	    timeline_r = new XMLHttpRequest(),
 	    context = {};
-        user_r.open('GET', settings.STACKOVERFLOW_API_URL + 'users/' + userid, true);
+        user_r.open('GET', settings.api_url + 'users/' + settings.userid + "?site=stackoverflow" , false);
         user_r.onload = function() {
             if ( this.status != 200 ) return;
-            context.user = this.response["users"][0];
+            context.user = JSON.parse(this.responseText)["items"][0];
 	};
 
-       	timeline_r.open('GET', settings.STACKOVERFLOW_API_URL + 'users/' + userid + '/timeline', true);
+       	timeline_r.open('GET', settings.api_url + 'users/' + settings.userid + '/timeline?site=stackoverflow', false);
         timeline_r.onload = function() {
             if ( this.status != 200 ) return;
-            context.timeline = this.response["user_timelines"];
+            context.timeline = JSON.parse(this.responseText)["items"];
 	};
 
 	user_r.send();
@@ -19,3 +19,4 @@ function stackoverflow(request, userid) {
 
 	return context;
 }
+define(function() { return stackoverflow;});

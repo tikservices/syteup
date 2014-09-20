@@ -9,8 +9,8 @@ config_r.onload = function() {
 	document.getElementById("field-realname").textContent = settings["fields"]["realname"];
 	document.getElementById("field-description").textContent = settings["fields"]["description"];
 	document.getElementById("field-url").textContent = settings["fields"]["url"];
-	document.getElementById("field-email").href = "mailto:" + settings["fields"]["email"] +
-	       	"?subject=Hello";
+/*	document.getElementById("field-email").href = "mailto:" + settings["fields"]["email"] +
+	       	"?subject=Hello";*/
 	document.head.getElementsByTagName("title")[0].textContent = settings["fields"]["username"] +
 		" [" + settings["fields"]["realname"] + "]";
 
@@ -18,20 +18,6 @@ config_r.onload = function() {
 		" : " + settings["fields"]["description"];
 
 	//SERVICES SETTINGS
-/*	document.twitter_integration_enabled = settings["services"]["twitter"] || false;
-	document.github_integration_enabled = settings["services"]["github"] || false;
-	document.dribbble_integration_enabled = settings["services"]["dribbble"] || false;
-	document.instagram_integration_enabled = settings["services"]["instagram"] || false;
-  	document.lastfm_integration_enabled = settings["services"]["lastfm"] || false;
-	document.disqus_integration_enabled = settings["services"]["disqus"] || false;
- 	document.soundcloud_integration_enabled = settings["services"]["soundcloud"] || false;
-        document.bitbucket_integration_enabled = settings["services"]["bitbucket"] || false;
-	document.foursquare_integration_enabled = settings["services"]["foursquare"] || false;
-	document.tent_integration_enabled = settings["services"]["tent"] || false;
-	document.steam_integration_enabled = settings["services"]["steam"] || false;
-	document.stackoverflow_integration_enabled = settings["services"]["stackoverflow"] || false;
-	document.flickr_integration_enabled = settings["services"]["flickr"] || false;
-	document.linkedin_integration_enabled = settings["services"]["linkedin"] || false;*/
 	if (settings["services"]["disqus"])
 		document.disqus_shortname = settings["services_settings"]["disqus"]["shotname"];
 	if (settings["services"]["flickr"])
@@ -44,14 +30,14 @@ config_r.onload = function() {
 	//SETUP LINKS & BLOG
 	if (settings["blog_platform"] === "wordpress") {
 		var postOffset = 0,
-			wpDomain = settings["services_settings"]["wordpress"]["block_url"];
+			wpDomain = settings["blogs_settings"]["wordpress"]["blog_url"];
 	} else {
 		var postOffset = 0;
 	}
 
 	$(function() {
 		setupLinks(settings);
-	      	fetchBlogPosts(postOffset, settings["services_settings"][settings["blog_platform"]]["tag_slug"], settings["blog_platform"]);
+	      	fetchBlogPosts(postOffset, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"]);
  		if (settings["services"]["disqus"])
 		      $('body').bind('blog-post-loaded', function() {
 			      embedDisqus(true);
@@ -68,7 +54,7 @@ config_r.onload = function() {
 			  	($(window).scrollTop() + $(window).height() > $(document).height()/1.2)) {
 		  	resultsLoaded = true;
 		  	postOffset += 20;
-			fetchBlogPosts(postOffset, settings["services_settings"][settings["blog_platform"]]["tag_slug"], settings["blog_platform"]);
+			fetchBlogPosts(postOffset, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"]);
 		  	scrollWait = true;
 		  	// Only load posts at most every scrollWaitDur milliseconds.
 			setTimeout(function() { scrollWait = false; }, scrollWaitDur);

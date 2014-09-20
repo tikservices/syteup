@@ -1,5 +1,5 @@
 
-function setupStackoverflow(url, el) {
+function setupStackoverflow(url, el, settings) {
   var href = el.href;
 
   if ($('#stackoverflow-profile').length > 0) {
@@ -13,15 +13,14 @@ function setupStackoverflow(url, el) {
       return false;
   })
 
-  if (params.length == 3) {
-     var userid = params[1];
-     var username = params[2];
+//  if (params.length == 3) {
 
      var spinner = new Spinner(spin_opts).spin();
      $('#stackoverflow-link').append(spinner.el);
 
-     require(["json!/stackoverflow/" + userid, "text!templates/stackoverflow-view.html"], 
-        function(stackoverflow_data, stackoverflow_view) {
+     require(["views/stackoverflow.js", "text!templates/stackoverflow-view.html"], 
+        function(stackoverflow, stackoverflow_view) {
+		var stackoverflow_data = stackoverflow(settings);
             if (stackoverflow_data.error || stackoverflow_data.length == 0) {
                 window.location = href;
                 return;
@@ -32,7 +31,7 @@ function setupStackoverflow(url, el) {
             var user = stackoverflow_data.user;
             var badge_count = user.badge_counts.bronze + user.badge_counts.silver + user.badge_counts.gold;
             user.badge_count = badge_count;
-            user.about_me = user.about_me.replace(/(<([^>]+)>)/ig,"");
+            user.about_me = (user.about_me || "").replace(/(<([^>]+)>)/ig,"");
 
             var timeline = stackoverflow_data.timeline;
             $.each(timeline, function(i, t){
@@ -61,7 +60,7 @@ function setupStackoverflow(url, el) {
         });
 
      return;
-  }
+//  }
 
   window.location = href;
 }
