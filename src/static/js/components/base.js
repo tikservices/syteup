@@ -27,3 +27,30 @@ var spin_opts = {
   className: 'spinner',
   zIndex: 2e9
 };
+
+function syncGet (url, success, headers, failure) {
+	var xhr = new XMLHttpRequest();
+	xhr.open('GET', url, false);
+	xhr.onload = function() {
+		if (this.status != 200) {
+			if (failure) failure();
+		       	return;
+		}
+		success(JSON.parse(this.responseText));
+	};
+	xhr.onerror = function() {
+		if(failure) failure();
+	}
+	if(headers) {
+		for ( header in headers ) {
+			if (headers.hasOwnProperty(header)) return;
+			xhr.setRequestHeader(header, headers[header]);
+		}
+	}
+	xhr.send();
+}
+function asyncGet (url, headers) {
+	return new Promise(function(resolve, reject) {
+		syncGet(url, resolve, headers, reject);
+	});
+}
