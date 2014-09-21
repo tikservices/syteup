@@ -1,5 +1,5 @@
 
-function setupLinkedin(url, el) {
+function setupLinkedin(url, el, settings) {
   var href = el.href;
 
   if ($('#linkedin-profile').length > 0) {
@@ -10,8 +10,9 @@ function setupLinkedin(url, el) {
   var spinner = new Spinner(spin_opts).spin();
   $('#linkedin-link').append(spinner.el);
 
-  require(["json!/linkedin/", "text!templates/linkedin-view.html"],
-    function(linkedin_data, linkedin_view) {
+  require(["views/linkedin.js", "text!templates/linkedin-view.html"],
+    function(linkedin, linkedin_view) {
+	    var linkedin_data = linkedin(settings);
         if (linkedin_data.error) {
             window.location = href;
             return;

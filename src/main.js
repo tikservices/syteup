@@ -19,12 +19,12 @@ config_r.onload = function() {
 
 	//SERVICES SETTINGS
 	if (settings["services"]["disqus"])
-		document.disqus_shortname = settings["services_settings"]["disqus"]["shotname"];
+		window.disqus_shortname = settings["services_settings"]["disqus"]["shotname"];
 	if (settings["services"]["flickr"])
-		document.flickr_id = settings["services_settings"]["flickr"]["id"];
+		window.flickr_id = settings["services_settings"]["flickr"]["id"];
 	if(settings["services"]["tent"]) {
-		document.tent_entity_uri = settings["services_settings"]["tent"]["entity_uri"],
-		document.tent_feed_uri = settings["services_settings"]["tent"]["feed_url"];
+		window.tent_entity_uri = settings["services_settings"]["tent"]["entity_uri"],
+		window.tent_feed_uri = settings["services_settings"]["tent"]["feed_url"];
 	}
 
 	//SETUP LINKS & BLOG
@@ -34,14 +34,25 @@ config_r.onload = function() {
 	} else {
 		var postOffset = 0;
 	}
+	window.disqus_enabled = settings["blogs_settings"]["plugins"]["disqus"] || false;
+	window.sharethis_enabled = settings["blogs_settings"]["plugins"]["sharethis"] || false;
 
 	$(function() {
 		setupLinks(settings);
 	      	fetchBlogPosts(postOffset, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"]);
- 		if (settings["services"]["disqus"])
+ 		if (disqus_enabled)
 		      $('body').bind('blog-post-loaded', function() {
-			      embedDisqus(true);
+			      embedDisqus(settings["plugins_settings"]["disqus"]);
 		      });
+		if (sharethis_enabled) {
+			var switchTo5x = true;
+			var jsfile  = document.createElement('script');
+			jsfile.src = "http://w.sharethis.com/button/buttons.js"
+			jsfile.type = 'text/javascript';
+			//jsfile.async = true;
+			document.body.appendChild(jsfile);
+			stLight.options({publisher: settings["plugins_settings"]["sharethis"]["publisher_key"]});
+		}
 	});
 
 	var resultsLoaded = false,
@@ -95,16 +106,6 @@ config_r.onload = function() {
 			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 		})();
-	}
-	if (settings["plugins"]["sharethis"]) {
-		var switchTo5x = true;
-
-		var jsfile  = document.createElement('script');
-		jsfile.src = "http://w.sharethis.com/button/buttons.js"
-		jsfile.type = 'text/javascript';
-//		jsfile.async = true;
-		document.body.appendChild(jsfile);
-		stLight.options({publisher: settings["plugins_settings"]["sharethis"]["publisher_key"]});
 	}
 	if (settings["plugins"]["rss"]) {
 		var rss = document.createElement('link');

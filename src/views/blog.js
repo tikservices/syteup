@@ -1,36 +1,23 @@
-# -*- coding: utf-8 -*-
-import os
-import re
-import htmlentitydefs
-import requests
+function convertWordpressResponse(post) {
+    post['id'] = post['ID'];
+    post['body'] = post['content'];
+    post['tags'] = [];
 
-from django.shortcuts import render
-from django.conf import settings
-from django.http import HttpResponse
-from datetime import datetime
-from pybars import Compiler
-from HTMLParser import HTMLParser
+    var date = post['date'];
+    var pos = date.rfind('+');
+    if (pos > 0) {
+        date = date[0:pos];
+    } else {
+        pos = date.rfind('-');
+        date = date[0:pos];
+    }
+    var f_date = datetime.strptime(date, '%Y-%m-%dT%H:%M:%S');
+    post['formated_date'] = f_date.strftime('%B %d, %Y');
 
+    if (post['type'] == 'post')
+        post['type'] = 'text';
 
-# Takes a response (e.g. from Wordpress) and converts it into a format that
-# will be accepted by the Handlebars templates
-def convertWordpressResponse(post):
-    post['id'] = post['ID']
-    post['body'] = post['content']
-    post['tags'] = []
-
-    date = post['date']
-    pos = date.rfind('+')
-    if pos > 0:
-        date = date[0:pos]
-    else:
-        pos = date.rfind('-')
-        date = date[0:pos]
-    f_date = datetime.strptime(date, '%Y-%m-%dT%H:%M:%S')
-    post['formated_date'] = f_date.strftime('%B %d, %Y')
-
-    if post['type'] == 'post':
-        post['type'] = 'text'
+}
 
 
 def blog(request):

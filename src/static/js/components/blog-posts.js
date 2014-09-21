@@ -37,8 +37,8 @@ function renderBlogPosts(posts) {
         $.each(posts, function(i, p) {
             p.formated_date = moment.utc(p.date, 'YYYY-MM-DD HH:mm:ss').local().format('MMMM DD, YYYY')
 
-//            if (disqus_integration_enabled)
-//                p.disqus_enabled = true;
+            if (disqus_enabled)
+                p.disqus_enabled = true;
 
             if (p.type == 'text') {
                 var idx = p.body.indexOf('<!-- more -->');

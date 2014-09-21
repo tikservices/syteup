@@ -8,13 +8,13 @@ List of services to add integration for:
     - Stack Overflow	[JS] [NO-ABOUT_ME]
     - Dribbble		[JS] [CORS]
     - Bitbucket		[JS] [CORS]
+    - Steam		[JS] [CORS]
+    - LinkedIn		[JS] [CORS]
     - Twitter		[PY]
     - Instagram		[PY]
     - Tumblr		[PY]
     - Foursquare	[PY]
-    - Steam		[PY]
     - Tent.io		[PY]
-    - LinkedIn		[PY]
     - Facebook
     - Youtube
     - Netflix

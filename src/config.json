@@ -13,7 +13,6 @@
 		"google_analytics" : false,
 		"woopra": false,
 		"rss" : true,
-		"sharethis": false,
 		"sitemap" : false
 	},
 	"plugins_settings": {
@@ -28,11 +27,20 @@
 		"rss": {
 			"url" : "http://lejenome.tumblr.com/rss"
 		},
-		"sharethis" : {
+		"disqus": {
+			"url":"",
+			"shortname" : "lejenome",
+			"just_count" : false
+		},
+		"sharethis": {
 			"publisher_key" : ""
 		}
 	},
 	"blogs_settings": {
+		"plugins": {
+			"disqus": true,
+			"sharethis": false
+		},
 		"tumblr" : {
 			"blog_url" : "[ENTER TUMBLR BLOG URL] ex. rigoneri.tumblr.com",
 			"api_url" : "http://api.tumblr.com/v2/blog/{[TUMBLR_BLOG_URL]",
@@ -55,7 +63,7 @@
 		"dribbble": true,
 		"steam": true,
 		"twitter": false,
-		"linkedin": false,
+		"linkedin": true,
 		"instagram": false,
 		"foursquare": false,
 		"tent": false,
@@ -109,11 +117,12 @@
 		},
 		"twitter" : {
 			"url": "https://twitter.com/lejenome",
-			"api_url" : "https://api.twitter.com/",
-			"consumer_key" : "[ENTER TWITTER CONSUMER KEY HERE, SEE TWITTER SETUP INSTRUCTIONS]",
+			"username" : "lejenome",
+			"api_url" : "https://api.twitter.com/1.1/",
+			"consumer_key" : "ow0dbuyF6xR6m7Dl3b6nZO0xW",
 			"consumer_secret" : "[ENTER TWITTER CONSUMER SECRET HERE, SEE TWITTER SETUP INSTRUCTIONS]",
-			"user_key" : "[ENTER TWITTER USER KEY HERE, SEE TWITTER SETUP INSTRUCTIONS]",
-			"user_secret" : "[ENTER TWITTER USER SECRET HERE, SEE TWITTER SETUP INSTRUCTIONS]"
+			"access_token_key" : "550024181-e0ooxzUESKTI1S1QlNJ6Q7rlCEMhICuXeFNq28DH",
+			"access_token_secret" : "[ENTER TWITTER USER SECRET HERE, SEE TWITTER SETUP INSTRUCTIONS]"
 		},
 		"instagram" : {
 			"url" :"",
@@ -137,20 +146,17 @@
 		        "oauth_authorize_url" : "https://foursquare.com/oauth2/authenticate",
 		        "oauth_access_token_url" : "https://foursquare.com/oauth2/access_token"
 		},
-		"disqus" : {
-			"url":"",
-			"shortname" : ""
-		},
 		"tent" : {
 			"url":"",
 			"entity_uri" : "[ENTER YOUR ENTITY URI HERE] ex. https://yourname.tent.is",
 			"feed_url" : "[ENTER A URL TO YOUR FEED] ex. https://yourname.tent.is"
 		},
 		"linkedin" : {
-			"url":"",
-			"api_key" : "[ENTER YOUR LINKEDIN CONSUMER KEY HERE]",
+			"url":"https://www.linkedin.com/in/lejenome",
+			"username": "lejenome",
+			"api_key" : "771y9k3kzkytxl",
 			"api_secret" : "[ENTER YOUR LINKEDIN CONSUMER SECRET KEY HERE]",
-			"token" : "[ENTER YOUR LINKED IN USER TOKEN HERE]"
+			"token" : "ed557527-b515-4e93-ad18-5306de6dfa13"
 		}
 	}
 }
