@@ -28,12 +28,9 @@ config_r.onload = function() {
 	}
 
 	//SETUP LINKS & BLOG
-	if (settings["blog_platform"] === "wordpress") {
-		var postOffset = 0,
-			wpDomain = settings["blogs_settings"]["wordpress"]["blog_url"];
-	} else {
-		var postOffset = 0;
-	}
+	if (settings["blog_platform"] === "wordpress") 
+		var wpDomain = settings["blogs_settings"]["wordpress"]["blog_url"];
+	var postOffset = 0;
 	window.disqus_enabled = settings["blogs_settings"]["plugins"]["disqus"] || false;
 	window.sharethis_enabled = settings["blogs_settings"]["plugins"]["sharethis"] || false;
 

@@ -42,9 +42,9 @@
 			"sharethis": false
 		},
 		"tumblr" : {
-			"blog_url" : "[ENTER TUMBLR BLOG URL] ex. rigoneri.tumblr.com",
-			"api_url" : "http://api.tumblr.com/v2/blog/{[TUMBLR_BLOG_URL]",
-			"api_key" : "[ENTER TUMBLR API KEY HERE, SEE TUMBLR SETUP INSTRUCTIONS]",
+			"blog_url" : "lejenome.tumblr.com",
+			"api_url" : "http://api.tumblr.com/v2/blog/",
+			"api_key" : "8DFsCxDWJckE1sOmMjaAjqV6TgbfbUnF01uGHNefhVMDbBpnLY",
 			"tag_slug" : ""
 		},
 		"wordpress" : {

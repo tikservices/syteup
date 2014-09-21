@@ -71,12 +71,7 @@ function renderBlogPosts(posts) {
 }
 
 function fetchTumblrBlogPosts(offset, settings) {
-	var tag = settings.tag_slug;
-  var blog_fetch_url = '/blog.json?o=' + offset;
-
-  if (tag)
-      blog_fetch_url = '/tags/' + tag + '/?o=' + offset;
-
+  var blog_fetch_url = settings.api_url + settings.blog_url + '/posts?offset=' + offset + '&tag=' + settings.tag_slug;
   $.getJSON(blog_fetch_url, function(blog_posts) {
     renderBlogPosts(blog_posts.response.posts);
   });
@@ -84,7 +79,7 @@ function fetchTumblrBlogPosts(offset, settings) {
 
 function fetchWordpressBlogPosts(offset, settings) {
 	var tag = settings.tag_slug;
-  var wpApiUrl = [settings.api_url + '/sites/', settings.blog_url, '/posts/?callback=?'].join('');
+  var wpApiUrl = [settings.api_url , '/sites/', settings.blog_url, '/posts/?callback=?'].join('');
 
   if (offset > 0) {
     wpApiUrl += '&offset=' + offset;

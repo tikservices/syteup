@@ -10,9 +10,9 @@ List of services to add integration for:
     - Bitbucket		[JS] [CORS]
     - Steam		[JS] [CORS]
     - LinkedIn		[JS] [CORS]
+    - Tumblr		[JS] [CORS]
     - Twitter		[PY]
     - Instagram		[PY]
-    - Tumblr		[PY]
     - Foursquare	[PY]
     - Tent.io		[PY]
     - Facebook

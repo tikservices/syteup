@@ -19,9 +19,15 @@
     </ul>
     {{/if}}
     {{#if disqus_enabled }}
+    {{#if disqus_just_count}}
     <div id="disqus_thread" class="disqus-thread">
       <a href="/post/{{ id }}#disqus_thread" class="comments"></a>
     </div>
+    {{else}}
+    <div class="disqus_show_comments" data-id="{{id}}">
+	    <a>Show Comments</a>
+    </div>
+    {{/if}}
     {{/if}}
   </footer>
 </article>
