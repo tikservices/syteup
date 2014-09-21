@@ -1,5 +1,5 @@
 
-function setupTent(el) {
+function setupTent(url, el, settings) {
   var href = el.href;
 
   if ($('#tent-profile').length > 0) {
@@ -11,11 +11,11 @@ function setupTent(el) {
   $('#tent-link').append(spinner.el);
 
   require(
-    ["json!" + tent_entity_uri + "/posts",
-     "json!" + tent_entity_uri + "/profile",
-     "json!" + tent_entity_uri + "/followers",
-     "json!" + tent_entity_uri + "/followings", 
-     "json!" + tent_entity_uri + "/posts/count",
+    ["json!" + settings.url + "/posts",
+     "json!" + settings.url + "/profile",
+     "json!" + settings.url + "/followers",
+     "json!" + settings.url + "/followings",
+     "json!" + settings.url + "/posts/count",
      "text!templates/tent-view.html"],
 
     function(tent_posts, tent_profile, tent_followers, tent_followings, tent_posts_count, tent_view) {
@@ -31,7 +31,7 @@ function setupTent(el) {
       var user = tent_profile["https://tent.io/types/info/basic/v0.1.0"];
 
       user.entity_url = tent_profile["https://tent.io/types/info/core/v0.1.0"].entity;
-      user.feed_url = tent_feed_url;
+      user.feed_url = settings.feed_url;
       user.profile_image_url = user.avatar_url;
       user.statuses_count =numberWithCommas(tent_posts_count);
       user.friends_count = numberWithCommas(tent_followings.length);

@@ -66,8 +66,7 @@
 		"linkedin": true,
 		"instagram": false,
 		"foursquare": false,
-		"tent": false,
-		"disqus": false
+		"tent": true
 	},
 	"services_settings" : {
 		"github" : {
@@ -115,6 +114,10 @@
 			"username" : "mbarvian",
 			"api_url" : "https://api.dribbble.com/players/"
 		},
+		"tent" : {
+			"url" : "https://daniel.cupcake.is",
+			"feed_url" : "daniel.cupcake.is"
+		},
 		"twitter" : {
 			"url": "https://twitter.com/lejenome",
 			"username" : "lejenome",
@@ -145,11 +148,6 @@
 			"oauth_client_secret" : "[ENTER FOURSQUARE CLIENT_SECRET HERE, SEE FOURSQUARE SETUP INSTRUCTIONS]",
 		        "oauth_authorize_url" : "https://foursquare.com/oauth2/authenticate",
 		        "oauth_access_token_url" : "https://foursquare.com/oauth2/access_token"
-		},
-		"tent" : {
-			"url":"",
-			"entity_uri" : "[ENTER YOUR ENTITY URI HERE] ex. https://yourname.tent.is",
-			"feed_url" : "[ENTER A URL TO YOUR FEED] ex. https://yourname.tent.is"
 		},
 		"linkedin" : {
 			"url":"https://www.linkedin.com/in/lejenome",

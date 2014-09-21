@@ -11,10 +11,10 @@ List of services to add integration for:
     - Steam		[JS] [CORS]
     - LinkedIn		[JS] [CORS]
     - Tumblr		[JS] [CORS]
+    - Tent.io		[JS] [CORS]
     - Twitter		[PY]
     - Instagram		[PY]
     - Foursquare	[PY]
-    - Tent.io		[PY]
     - Facebook
     - Youtube
     - Netflix
