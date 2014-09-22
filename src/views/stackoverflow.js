@@ -1,6 +1,6 @@
 function stackoverflow(settings) {
 	return Promise.all([
-			asyncGet(settings.api_url + 'users/' + settings.userid + "?site=stackoverflow"),
+			asyncGet(settings.api_url + 'users/' + settings.userid + "?site=stackoverflow&filter=!-*f(6q3e0kZX"),
 			asyncGet(settings.api_url + 'users/' + settings.userid + '/timeline?site=stackoverflow')
 	]).then(function(res){
 		return Promise.resolve({

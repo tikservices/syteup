@@ -1,6 +1,6 @@
 List of services to add integration for:
 
-ASYNC (Promise + JSONP):
+DONE (js + async:promise + JSONP):
 
     - Bitbucket		[DONE]
     - Github		[DONE]
@@ -10,17 +10,19 @@ ASYNC (Promise + JSONP):
     - Flickr		[DONE]
     - Soundcloud	[DONE]
     - Last.fm		[DONE]
+    - Stack Overflow	[DONE]
 
-SYNC (XMLHttpRequest):
+INPROGRESS (python || CORS || sync:XMLHttpRequest with GET):
 
-
-    - Stack Overflow	[JS] [NO-ABOUT_ME]
     - Steam		[JS] [CORS]
     - LinkedIn		[JS] [CORS]
     - Tent.io		[JS] [API NOT WELL DOCUMENTED]
     - Twitter		[PY]
     - Instagram		[PY]
     - Foursquare	[PY]
+
+WICHLIST:
+
     - Facebook
     - Youtube
     - Netflix
@@ -37,7 +39,7 @@ SYNC (XMLHttpRequest):
     - viewbook.com
     - blogger
 
-EXTRA
+EXTRA:
 
     - profilo
     - cv
