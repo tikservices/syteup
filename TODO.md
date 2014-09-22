@@ -1,6 +1,7 @@
 List of services to add integration for:
 
-ASYNC (Promise + JSONP)
+ASYNC (Promise + JSONP):
+
     - Bitbucket		[DONE]
     - Github		[DONE]
     - Dribbble		[DONE]
@@ -9,7 +10,10 @@ ASYNC (Promise + JSONP)
     - Flickr		[DONE]
     - Soundcloud	[DONE]
     - Last.fm		[DONE]
-SYNC (XMLHttpRequest)
+
+SYNC (XMLHttpRequest):
+
+
     - Stack Overflow	[JS] [NO-ABOUT_ME]
     - Steam		[JS] [CORS]
     - LinkedIn		[JS] [CORS]
@@ -32,6 +36,8 @@ SYNC (XMLHttpRequest)
     - Posterous Spaces
     - viewbook.com
     - blogger
+
+EXTRA
 
     - profilo
     - cv
