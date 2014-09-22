@@ -1,13 +1,17 @@
 function soundcloud(settings){
-	var context = {'user_tracks': {'show_artwork': settings.show_artwork,
-		'player_color' : settings.player_color}};
+	return Promise.all([
+			asyncGet(settings.api_url + "users/" + settings.username +".json?client_id=" + settings.client_id),
+			asyncGet(settings.api_url + "users/" + settings.username +"/tracks.json?client_id=" + settings.client_id)
 
-	syncGet(settings.api_url + "users/" + settings.username +".json?client_id=" + settings.client_id, function(res) {
-		context.user_profile = res;
+	]).then(function(res){
+		return {
+			'user_tracks': {
+				'show_artwork': settings.show_artwork,
+				'player_color': settings.player_color,
+				'tracks': res[1]
+			},
+			'user_profile': res[0]
+		};
 	});
-	syncGet(settings.api_url + "users/" + settings.username +"/tracks.json?client_id=" + settings.client_id, function(res) {
-		context.user_tracks.tracks = res;
-	});
-	return context;
 }
 define(function(){return soundcloud;});

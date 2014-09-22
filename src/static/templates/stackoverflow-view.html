@@ -33,9 +33,9 @@
     {{#each timeline}}
       <li>
         <a href="http://stackoverflow.com/users/{{ user_id }}/?tab=activity" class="profile-stackoverflow-name">
-          <strong>{{ action }} {{ creation_date }}</strong>
+          <strong>{{ timeline_type }} {{ creation_date }}</strong>
         </a>
-        <p class="profile-stackoverflow-description">{{ description }}</p>
+        <p class="profile-stackoverflow-description">{{ title }}</p>
         <p class="profile-stackoverflow-details">{{#if detail}}{{detail}}{{/if}}</p>
       </li>
     {{/each}}

@@ -6,10 +6,10 @@ ASYNC (Promise + JSONP)
     - Dribbble		[DONE]
     - Tumblr		[DONE]
     - Wordpress 	[DONE]
-SYNC (XMLHttpRequest)
     - Flickr		[DONE]
     - Soundcloud	[DONE]
     - Last.fm		[DONE]
+SYNC (XMLHttpRequest)
     - Stack Overflow	[JS] [NO-ABOUT_ME]
     - Steam		[JS] [CORS]
     - LinkedIn		[JS] [CORS]

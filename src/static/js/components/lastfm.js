@@ -47,7 +47,7 @@ function setupLastfm(url, el, settings) {
 
      require(["views/lastfm.js", "text!templates/lastfm-profile.html"],
         function(lastfm, lastfm_view) {
-		var lastfm_data = lastfm(settings);
+		lastfm(settings).then(function(lastfm_data){
             if (lastfm_data.error || lastfm_data.length == 0) {
                 window.location = href;
                 return;
@@ -82,9 +82,5 @@ function setupLastfm(url, el, settings) {
             spinner.stop();
 
         });
-
-     return;
-//  }
-
-  window.location = href;
+	});
 }
