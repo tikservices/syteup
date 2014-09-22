@@ -1,5 +1,4 @@
 var embedDisqus = function(settings) {
-  window.disqus_jsut_count = settings.just_count;
   var type = "embed";
   if (settings.just_count)
     type = 'count';

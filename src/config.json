@@ -43,7 +43,7 @@
 		},
 		"tumblr" : {
 			"blog_url" : "lejenome.tumblr.com",
-			"api_url" : "http://api.tumblr.com/v2/blog/",
+			"api_url" : "https://api.tumblr.com/v2/blog/",
 			"api_key" : "8DFsCxDWJckE1sOmMjaAjqV6TgbfbUnF01uGHNefhVMDbBpnLY",
 			"tag_slug" : ""
 		},
@@ -75,7 +75,7 @@
 			"client_id" : "lejenome"
 		},
 		"stackoverflow" : {
-			"url": "http://stackoverflow.com/users/2481592/lejenome",
+			"url": "https://stackoverflow.com/users/2481592/lejenome",
 			"userid" : "2481592",
 			"api_url" : "https://api.stackexchange.com/2.2/"
 		},
@@ -84,9 +84,9 @@
 			"client_id" : "18205706@N06"
 		},
 		"steam" : {
-			"url":"http://steamcommunity.com/id/lejenome",
+			"url":"https://steamcommunity.com/id/lejenome",
 			"username": "lejenome",
-			"api_url" : "http://api.steampowered.com/ISteamUser",
+			"api_url" : "https://api.steampowered.com/ISteamUser",
 			"api_key" : "0FF5714DECD645E76E4A79AB9933DAB8"
 		},
 		"bitbucket" : {
@@ -104,9 +104,9 @@
 			"player_color" : "ff912b"
 		},
 		"lastfm" : {
-			"url":"http://www.last.fm/user/bmoezj",
+			"url":"https://www.last.fm/user/bmoezj",
 			"username": "bmoezj",
-			"api_url" : "http://ws.audioscrobbler.com/2.0/",
+			"api_url" : "https://ws.audioscrobbler.com/2.0/",
 			"api_key" : "c52df19324d791fe6b22d1c80cad14dd"
 		},
 		"dribbble" : {
@@ -116,6 +116,7 @@
 		},
 		"tent" : {
 			"url" : "https://daniel.cupcake.is",
+			"entity_url": "https://daniel.cupcake.is/tent",
 			"feed_url" : "daniel.cupcake.is"
 		},
 		"twitter" : {

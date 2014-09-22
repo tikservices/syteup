@@ -28,11 +28,13 @@ config_r.onload = function() {
 	}
 
 	//SETUP LINKS & BLOG
-	if (settings["blog_platform"] === "wordpress") 
+	if (settings["blog_platform"] === "wordpress")
 		var wpDomain = settings["blogs_settings"]["wordpress"]["blog_url"];
 	var postOffset = 0;
 	window.disqus_enabled = settings["blogs_settings"]["plugins"]["disqus"] || false;
 	window.sharethis_enabled = settings["blogs_settings"]["plugins"]["sharethis"] || false;
+	if(disqus_enabled)
+		window.disqus_just_count = settings["plugins_settings"]["disqus"]["just_count"];
 
 	$(function() {
 		setupLinks(settings);

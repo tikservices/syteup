@@ -39,6 +39,7 @@ function renderBlogPosts(posts) {
 
             if (disqus_enabled)
                 p.disqus_enabled = true;
+		p.disqus_just_count = window.disqus_just_count;
 
             if (p.type == 'text') {
                 var idx = p.body.indexOf('<!-- more -->');
@@ -71,9 +72,8 @@ function renderBlogPosts(posts) {
 }
 
 function fetchTumblrBlogPosts(offset, settings) {
-  var blog_fetch_url = settings.api_url + settings.blog_url + '/posts?offset=' + offset + '&tag=' + settings.tag_slug;
-  $.getJSON(blog_fetch_url, function(blog_posts) {
-    renderBlogPosts(blog_posts.response.posts);
+  asyncGet(settings.api_url + settings.blog_url + '/posts?offset=' + offset + '&tag=' + settings.tag_slug + '&api_key=' + settings.api_key).then(function(res) {
+    renderBlogPosts(res.posts);
   });
 }
 
@@ -88,7 +88,7 @@ function fetchWordpressBlogPosts(offset, settings) {
     wpApiUrl += '&tag=' + tag.replace(/\s/g, '-');
   }
 
-  $.getJSON(wpApiUrl, function(data) {
+  asyncGet(wpApiUrl).then(function(data){
     // Get the data into a similar format as Tumblr so we can reuse the template
     $.each(data.posts, function(i, p) {
         var newTags = [];

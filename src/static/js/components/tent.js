@@ -11,15 +11,11 @@ function setupTent(url, el, settings) {
   $('#tent-link').append(spinner.el);
 
   require(
-    ["json!" + settings.url + "/posts",
-     "json!" + settings.url + "/profile",
-     "json!" + settings.url + "/followers",
-     "json!" + settings.url + "/followings",
-     "json!" + settings.url + "/posts/count",
-     "text!templates/tent-view.html"],
+    ["views/tent.js", "text!templates/tent-view.html"],
 
-    function(tent_posts, tent_profile, tent_followers, tent_followings, tent_posts_count, tent_view) {
-
+    function(tent, tent_view) {
+     tent(settings).then(function(tent_data){
+      [tent_posts, tent_profile, tent_followers, tent_followings, tent_posts_count] = tent_data;
       if (tent_posts.error || tent_posts.length == 0) {
         window.location = href;
           return;
@@ -67,6 +63,7 @@ function setupTent(url, el, settings) {
       })
 
     spinner.stop();
+    });
     });
 
 }

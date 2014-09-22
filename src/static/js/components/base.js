@@ -49,19 +49,23 @@ function syncGet (url, success, headers, failure) {
 	}
 	xhr.send();
 }
-function asyncGet (url, headers) {
+function asyncGet (url, headers, jsonp = "callback") {
 	return new Promise(function(resolve, reject) {
 		$.ajax({
 			url : url,
 			headers: headers,
+			jsonp: jsonp,
 			contentType: 'application/json; charset=utf-8',
 			type: 'GET',
 			dataType: 'jsonp',
 			async : false,
 			success : function(res){
-				if ( "meta" in res && "data" in res && Object.keys(res).length == 2)
-					res = res.data;
-				resolve(res);
+				if ( "meta" in res && Object.keys(res).length == 2)
+					if("data" in res)
+						res = res.data;
+					else if ("response" in res)
+						res = res.response;
+					resolve(res);
 			},
 			error : function(xhr, status){
 				reject(status);
