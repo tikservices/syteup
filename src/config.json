@@ -61,12 +61,12 @@
 		"stackoverflow": true,
 		"bitbucket" : true,
 		"dribbble": true,
-		"steam": true,
+		"steam": false,
 		"twitter": false,
-		"linkedin": true,
+		"linkedin": false,
 		"instagram": false,
 		"foursquare": false,
-		"tent": true
+		"tent": false
 	},
 	"services_settings" : {
 		"github" : {

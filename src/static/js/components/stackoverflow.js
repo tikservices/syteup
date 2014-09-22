@@ -19,7 +19,6 @@ function setupStackoverflow(url, el, settings) {
      require(["views/stackoverflow.js", "text!templates/stackoverflow-view.html"], 
         function(stackoverflow, stackoverflow_view) {
 		stackoverflow(settings).then(function(stackoverflow_data){
-			console.log(stackoverflow_data);
 	    		if (stackoverflow_data.error || stackoverflow_data.length == 0) {
 				window.location = href;
 				return;
@@ -48,8 +47,6 @@ function setupStackoverflow(url, el, settings) {
 				"user": user,
 				"timeline": timeline
 	    		}
-
-			console.log(template_data);
 
 	   		$(template(template_data)).modal().on('hidden', function () {
 				$(this).remove();
