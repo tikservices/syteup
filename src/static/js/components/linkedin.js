@@ -12,7 +12,7 @@ function setupLinkedin(url, el, settings) {
 
   require(["views/linkedin.js", "text!templates/linkedin-view.html"],
     function(linkedin, linkedin_view) {
-	    var linkedin_data = linkedin(settings);
+	    linkedin(settings).then(function(linkedin_data){
         if (linkedin_data.error) {
             window.location = href;
             return;
@@ -33,5 +33,6 @@ function setupLinkedin(url, el, settings) {
         })
 
         spinner.stop();
+    });
     });
 }

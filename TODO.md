@@ -1,13 +1,15 @@
 List of services to add integration for:
 
-    - Flickr		[DONE]
+ASYNC (Promise + JSONP)
+    - Bitbucket		[DONE]
     - Github		[DONE]
+SYNC (XMLHttpRequest)
+    - Flickr		[DONE]
     - Soundcloud	[DONE]
     - Last.fm		[DONE]
     - Wordpress 	[JS] [NO-DISQUS]
     - Stack Overflow	[JS] [NO-ABOUT_ME]
     - Dribbble		[JS] [CORS]
-    - Bitbucket		[JS] [CORS]
     - Steam		[JS] [CORS]
     - LinkedIn		[JS] [CORS]
     - Tumblr		[JS] [CORS]

@@ -13,15 +13,12 @@ function setupDribbble(url, el, settings) {
       return false;
   })
 
-//  if (params.length == 1) {
-//     var username = params[0];
-
      var spinner = new Spinner(spin_opts).spin();
      $('#dribbble-link').append(spinner.el);
 
      require(["views/dribbble.js", "text!templates/dribbble-view.html"],
         function(dribbble, dribbble_view) {
-		var dribbble_data = dribbble(settings);
+		dribbble(settings).then(function(dribbble_data){
             if (dribbble_data.message || dribbble_data.length == 0) {
                 window.location = href;
                 return;
@@ -48,9 +45,5 @@ function setupDribbble(url, el, settings) {
 
             spinner.stop();
         });
-
-     return;
-//  }
-
-  window.location = href;
+	});
 }

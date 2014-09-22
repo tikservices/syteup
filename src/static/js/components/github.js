@@ -13,7 +13,6 @@ function setupGithub(url, el, settings) {
       return false;
   });
 
-//  if (params.length == 1) {
      var username = settings["client_id"];
 
      var spinner = new Spinner(spin_opts).spin();
@@ -21,29 +20,22 @@ function setupGithub(url, el, settings) {
 
      require(["views/github.js", "text!templates/github-profile.html"],
         function(github, github_view) {
-		var github_data = github(settings);
-            if (github_data.error || github_data.length == 0) {
-                window.location = href;
-                return;
-            }
+		github(settings).then(function(github_data){
+	    		if (github_data.error || github_data.length == 0) {
+				window.location = href;
+				return;
+	    		}
+	    		var template = Handlebars.compile(github_view);
+	    		github_data.user.following = numberWithCommas(github_data.user.following)
+		    		github_data.user.followers = numberWithCommas(github_data.user.followers)
 
-            var template = Handlebars.compile(github_view);
-            github_data.user.following = numberWithCommas(github_data.user.following)
-            github_data.user.followers = numberWithCommas(github_data.user.followers)
-
-            $(template(github_data)).modal().on('hidden', function () {
-                $(this).remove();
-                if (currSelection === 'github') {
-                  adjustSelection('home');
-                }
-            })
-
-            spinner.stop();
-
-        });
-
-     return;
-//  }
-
-  window.location = href;
+		    		$(template(github_data)).modal().on('hidden', function () {
+					$(this).remove();
+					if (currSelection === 'github') {
+			      			adjustSelection('home');
+					}
+		    		})
+	    		spinner.stop();
+		});
+	});
 }

@@ -51,6 +51,23 @@ function syncGet (url, success, headers, failure) {
 }
 function asyncGet (url, headers) {
 	return new Promise(function(resolve, reject) {
-		syncGet(url, resolve, headers, reject);
+		$.ajax({
+			url : url,
+			headers: headers,
+			contentType: 'application/json; charset=utf-8',
+			type: 'GET',
+			dataType: 'jsonp',
+			async : false,
+			success : function(res){
+				if ( "meta" in res && "data" in res && Object.keys(res).length == 2)
+					res = res.data;
+				resolve(res);
+			},
+			error : function(xhr, status){
+				reject(status);
+			}
+		});
+
+//		syncGet(url, resolve, headers, reject);
 	});
 }

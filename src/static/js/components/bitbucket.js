@@ -21,28 +21,23 @@ function setupBitbucket(url, el, settings) {
 
      require(["views/bitbucket.js", "text!templates/bitbucket-profile.html"],
         function(bitbucket, bitbucket_view) {
-		var bitbucket_data = bitbucket(settings);
-            if (bitbucket_data.error || bitbucket_data.length == 0) {
-                window.location = href;
-                return;
-            }
+		bitbucket(settings).then(function(bitbucket_data){
+	    		if (bitbucket_data.error || bitbucket_data.length == 0) {
+			window.location = href;
+			return;
+	    		}
 
-            var template = Handlebars.compile(bitbucket_view);
-            bitbucket_data.user.followers = numberWithCommas(bitbucket_data.user.followers)
+	    		var template = Handlebars.compile(bitbucket_view);
+	    		bitbucket_data.user.followers = numberWithCommas(bitbucket_data.user.followers)
 
-            $(template(bitbucket_data)).modal().on('hidden', function () {
-                $(this).remove();
-                if (currSelection === 'bitbucket') {
-                  adjustSelection('home');
-                }
-            })
+		    		$(template(bitbucket_data)).modal().on('hidden', function () {
+					$(this).remove();
+					if (currSelection === 'bitbucket') {
+			      			adjustSelection('home');
+					}
+		    		})
 
-            spinner.stop();
-
-        });
-
-     return;
-//  }
-
-  window.location = href;
+	    		spinner.stop();
+		});
+	});
 }
