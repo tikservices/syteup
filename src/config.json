@@ -64,7 +64,7 @@
 		"steam": false,
 		"twitter": false,
 		"linkedin": false,
-		"instagram": false,
+		"instagram": true,
 		"foursquare": false,
 		"tent": false
 	},
@@ -129,15 +129,10 @@
 			"access_token_secret" : "[ENTER TWITTER USER SECRET HERE, SEE TWITTER SETUP INSTRUCTIONS]"
 		},
 		"instagram" : {
-			"url" :"",
+			"url" :"http://instagram.com/loolapaloosamilano",
 		       "api_url": "https://api.instagram.com/v1/",
-		       "access_token" : "[ENTER INSTAGRAM ACCESS TOKEN HERE, SEE INSTAGRAM SETUP INSTRUCTIONS]",
-		       "user_id" : "[ENTER INSTAGRAM USER_ID HERE, SEE INSTAGRAM SETUP INSTRUCTIONS]",
-		       "client_id" : "[ENTER INSTAGRAM CLIENT_ID HERE, SEE INSTAGRAM SETUP INSTRUCTIONS]",
-		       "oauth_enabled" : false,
-		       "client_secret" : "[ENTER INSTAGRAM CLIENT_SECRET HERE, SEE INSTAGRAM SETUP INSTRUCTIONS]",
-		       "oauth_authorize_url" : "https://api.instagram.com/oauth/authorize",
-		       "oauth_access_token_url" : "https://api.instagram.com/oauth/access_token"
+		       "access_token" : "36902549.f030346.4d9979cd72094a2fb4963c9e707f894f",
+		       "user_id" : "564367677"
 		},
 		"foursquare" : {
 			"url":"https://foursquare.com/user/19396425",

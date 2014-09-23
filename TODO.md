@@ -11,6 +11,7 @@ DONE (js + async:promise + JSONP):
     - Soundcloud	[DONE]
     - Last.fm		[DONE]
     - Stack Overflow	[DONE]
+    - Instagram		[DONE]
 
 INPROGRESS (python || CORS || sync:XMLHttpRequest with GET):
 
@@ -18,7 +19,6 @@ INPROGRESS (python || CORS || sync:XMLHttpRequest with GET):
     - LinkedIn		[JS] [AUTHENTIFICATION FAILURE]
     - Tent.io		[JS] [API NOT WELL DOCUMENTED]
     - Twitter		[PY]
-    - Instagram		[PY]
     - Foursquare	[PY]
 
 WICHLIST:
