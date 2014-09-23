@@ -12,6 +12,7 @@ DONE (js + async:promise + JSONP):
     - Last.fm		[DONE]
     - Stack Overflow	[DONE]
     - Instagram		[DONE]
+    - Youtube		[DONE]
 
 INPROGRESS (python || CORS || sync:XMLHttpRequest with GET):
 
@@ -24,7 +25,6 @@ INPROGRESS (python || CORS || sync:XMLHttpRequest with GET):
 WICHLIST:
 
     - Facebook
-    - Youtube
     - Netflix
     - Picasa
     - Rdio
