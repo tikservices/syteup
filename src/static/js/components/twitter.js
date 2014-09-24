@@ -1,4 +1,4 @@
-
+'use strict';
 function setupTwitter(url, el) {
   var href = el.href;
 

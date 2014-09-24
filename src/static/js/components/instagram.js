@@ -1,4 +1,4 @@
-
+'use strict';
 function setupInstagram(url, el, settings) {
   var href = el.href;
 

@@ -1,4 +1,4 @@
-
+'use strict';
 function setupGplus(url, el, settings) {
   var href = el.href;
 
@@ -11,12 +11,12 @@ function setupGplus(url, el, settings) {
       if (w.length)
           return true;
       return false;
-  })
+  });
 
      var spinner = new Spinner(spin_opts).spin();
      $('#gplus-link').append(spinner.el);
 
-     require(["views/gplus.js", "text!templates/gplus-profile.html"], 
+     require(["views/gplus.js", "text!templates/gplus-profile.html"],
         function(gplus, gplus_view) {
 		gplus(settings).then(function(gplus_data) {
 
@@ -36,7 +36,7 @@ function setupGplus(url, el, settings) {
 				if (currSelection === 'gplus') {
 		      			adjustSelection('home');
 				}
-	    		})
+	    		});
 
 	    		spinner.stop();
 		});

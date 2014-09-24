@@ -1,3 +1,4 @@
+'use strict';
 function setupFoursquare(el) {
   var href = el.href;
 

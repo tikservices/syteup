@@ -1,9 +1,10 @@
+'use strict';
 var config_r = new XMLHttpRequest(),
     settings = {};
 config_r.open('GET', 'config.json', true);
 config_r.overrideMimeType("text/plain");
 config_r.onload = function() {
-	if ( this.status != 200 ) alert("FATAL! CAN'T LOAD CONFIG FILE");
+	if ( this.status !== 200 ) alert("FATAL! CAN'T LOAD CONFIG FILE");
 	settings = JSON.parse(this.responseText);
 
 	//FIELDS SETTINGS
@@ -56,9 +57,9 @@ config_r.onload = function() {
 	});
 
 	var resultsLoaded = false,
-    		reachedEnd    = false, // set to true if no more blog posts left.
 		scrollWait    = false,
 		scrollWaitDur = 250;
+    	window.reachedEnd    = false; // set to true if no more blog posts left.
 
 	$(window).scroll(function() {
 	      	if(!reachedEnd && !resultsLoaded && !scrollWait &&
@@ -78,16 +79,6 @@ config_r.onload = function() {
 
 	//PLUGINS SETTINGS
 	if (settings["plugins"]["woopra"]) {
-		function woopraReady(tracker) {
-			tracker.setDomain(settings["plugins_settings"]["woopra"]["tracking_url"]);
-			tracker.setIdleTimeout(settings["plugins_settings"]["woopra"]["idle_timeout"]);
-
-			if (settings["plugins_settings"]["woopra"]["include_query"])
-				tracker.trackPageview({type:'pageview',url:window.location.pathname+window.location.search,title:document.title});
-			else
-				tracker.track();
-			return false;
-		}
 		(function() {
 			var wsc = document.createElement('script');
 			wsc.src = document.location.protocol+'//static.woopra.com/js/woopra.js';
@@ -119,3 +110,12 @@ config_r.onload = function() {
 config_r.send();
 
 
+function woopraReady(tracker) {
+	tracker.setDomain(settings["plugins_settings"]["woopra"]["tracking_url"]);
+	tracker.setIdleTimeout(settings["plugins_settings"]["woopra"]["idle_timeout"]);
+	if (settings["plugins_settings"]["woopra"]["include_query"])
+		tracker.trackPageview({type:'pageview',url:window.location.pathname+window.location.search,title:document.title});
+	else
+			tracker.track();
+	return false;
+}

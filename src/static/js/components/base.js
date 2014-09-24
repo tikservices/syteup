@@ -1,3 +1,4 @@
+'use strict';
 //Global configs and functions shared between js
 
 function numberWithCommas(x) {

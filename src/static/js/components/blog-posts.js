@@ -1,4 +1,4 @@
-
+'use strict';
 /** renderBlogPosts
  *
  * Takes the response from the blog platform and renders it using

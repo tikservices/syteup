@@ -1,5 +1,5 @@
 {{#with user_info }}
-<div class="profile lastfm modal fade" id="lastfm-profile">
+<div class="profile gplus modal fade" id="gplus-profile">
   <div class="profile-info">
     <button class="close" data-dismiss="modal">×</button>
     {{#if image}}
@@ -46,7 +46,7 @@
       {{ title }}
     </p>
     <ul class="profile-repo-stats">
-      <li>{{ replies }} replies</li> |
+      <li><a href="{{ url }}">{{ replies }} replies</a></li> |
       <li><a href="{{ url }}">{{ plusoners }} +1</a></li> |
       <li><a href="{{ url }}">{{ resharers }} reshares</a></li> |
       <li>{{ published }}</li>

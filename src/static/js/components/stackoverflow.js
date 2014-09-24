@@ -1,4 +1,4 @@
-
+'use strict';
 function setupStackoverflow(url, el, settings) {
   var href = el.href;
 

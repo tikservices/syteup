@@ -1,4 +1,4 @@
-
+'use strict';
 function setupSoundcloud(url, el, settings) {
   var href = el.href;
 

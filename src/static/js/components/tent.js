@@ -1,4 +1,4 @@
-
+'use strict';
 function setupTent(url, el, settings) {
   var href = el.href;
 

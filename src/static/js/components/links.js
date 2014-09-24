@@ -1,3 +1,4 @@
+'use strict';
 var $url;
 
 /*var allComponents = [
@@ -16,7 +17,7 @@ var $url;
 ];*/
 var allComponents = [], enabledServices = [];
 
-currSelection = 'home';
+window.currSelection = 'home';
 
 function setupLinks(settings) {
   allComponents = Object.keys(settings.services);

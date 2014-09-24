@@ -1,3 +1,4 @@
+'use strict';
 function setupLastfm(url, el, settings) {
   var href = el.href;
 

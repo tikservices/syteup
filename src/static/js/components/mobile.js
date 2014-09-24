@@ -1,4 +1,4 @@
-
+'use strict';
 var isMobileView = false;
 
 if (typeof window.matchMedia !== 'undefined') {

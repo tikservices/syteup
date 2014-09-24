@@ -1,4 +1,4 @@
-
+'use strict';
 function setupLinkedin(url, el, settings) {
   var href = el.href;
 

@@ -1,4 +1,4 @@
-
+'use strict';
 function setupDribbble(url, el, settings) {
   var href = el.href;
 
@@ -11,7 +11,7 @@ function setupDribbble(url, el, settings) {
       if (w.length)
           return true;
       return false;
-  })
+  });
 
      var spinner = new Spinner(spin_opts).spin();
      $('#dribbble-link').append(spinner.el);
@@ -19,7 +19,7 @@ function setupDribbble(url, el, settings) {
      require(["views/dribbble.js", "text!templates/dribbble-view.html"],
         function(dribbble, dribbble_view) {
 		dribbble(settings).then(function(dribbble_data){
-            if (dribbble_data.message || dribbble_data.length == 0) {
+            if (dribbble_data.message || dribbble_data.length === 0) {
                 window.location = href;
                 return;
             }
@@ -34,14 +34,14 @@ function setupDribbble(url, el, settings) {
             var template_data = {
                 "user": user,
                 "shots": dribbble_data.shots
-            }
+            };
 
             $(template(template_data)).modal().on('hidden', function () {
                 $(this).remove();
                 if (currSelection === 'dribbble') {
                   adjustSelection('home');
                 }
-            })
+            });
 
             spinner.stop();
         });

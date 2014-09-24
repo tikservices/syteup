@@ -1,4 +1,4 @@
-
+'use strict';
 function setupGithub(url, el, settings) {
   var href = el.href;
 

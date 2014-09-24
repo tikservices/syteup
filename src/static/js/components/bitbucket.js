@@ -1,4 +1,4 @@
-
+'use strict';
 function setupBitbucket(url, el, settings) {
   var href = el.href;
 

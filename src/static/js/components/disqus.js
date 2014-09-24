@@ -1,3 +1,4 @@
+'use strict';
 var embedDisqus = function(settings) {
   var type = "embed";
   if (settings.just_count)
