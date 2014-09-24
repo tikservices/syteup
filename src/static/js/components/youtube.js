@@ -25,7 +25,7 @@ function setupYoutube(url, el, settings) {
 
 			$.each(youtube_data.activities, function(i, t) {
 				t.publishedAt = t.publishedAt.substr(0,	10) + ' ' + t.publishedAt.substr(11, 5); //moment.unix(t.publishedAt).fromNow();
-				t.img = t.thumbnails.default.url;
+				t.img = t.thumbnails['default'].url;
 				if (t.type === 'playlistItem')
 					t.type = 'add to playlist';
 				else if (t.type === 'bulletin')

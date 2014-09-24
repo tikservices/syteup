@@ -239,7 +239,8 @@ define(['module'], function (module) {
         text.get = function (url, callback, errback) {
             var xhr = text.createXhr();
             xhr.open('GET', url, true);
-	    xhr.overrideMimeType("text/plain");
+	    if (xhr.overrideMimeType)
+		    xhr.overrideMimeType("text/plain");
 
             //Allow overrides specified in config
             if (masterConfig.onXhr) {
