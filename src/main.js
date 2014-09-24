@@ -1,6 +1,7 @@
 var config_r = new XMLHttpRequest(),
     settings = {};
 config_r.open('GET', 'config.json', true);
+config_r.overrideMimeType("text/plain");
 config_r.onload = function() {
 	if ( this.status != 200 ) alert("FATAL! CAN'T LOAD CONFIG FILE");
 	settings = JSON.parse(this.responseText);

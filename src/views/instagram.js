@@ -1,7 +1,7 @@
 function instagram(settings) {
 	console.log(settings);
 	if ( settings.next_id ) //just show more instagram photos
-	return 	asyncGet(settings.api_url + 'users/' + settings.user_id + '/media/recent/?access_token=' + settings.access_token + '&max_id=' + settings.user_id)
+	return 	asyncGet(settings.api_url + 'users/' + settings.user_id + '/media/recent/?access_token=' + settings.access_token + '&max_id=' + settings.next_id)
 		.then(function(res) {
 			console.log(res);
 			return Promise.resolve({

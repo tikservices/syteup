@@ -137,10 +137,10 @@
 			"access_token_secret" : "[ENTER TWITTER USER SECRET HERE, SEE TWITTER SETUP INSTRUCTIONS]"
 		},
 		"instagram" : {
-			"url" :"http://instagram.com/loolapaloosamilano",
+			"url" :"http://instagram.com/seanparkerphotography",
 		       "api_url": "https://api.instagram.com/v1/",
 		       "access_token" : "36902549.f030346.4d9979cd72094a2fb4963c9e707f894f",
-		       "user_id" : "564367677"
+		       "user_id" : "19324936"
 		},
 		"foursquare" : {
 			"url":"https://foursquare.com/user/19396425",
