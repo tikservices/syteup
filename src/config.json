@@ -68,7 +68,7 @@
 		"foursquare": false,
 		"tent": false,
 		"youtube": true,
-		"google+": false,
+		"gplus": true,
 		"facebook": false,
 		"netfix": false,
 		"picasa": false,
@@ -164,6 +164,12 @@
 			"url": "https://www.youtube.com/user/minutephysics",
 			"username": "minutephysics",
 			"api_url": "https://www.googleapis.com/youtube/v3/",
+			"api_key": "AIzaSyDf-Arn5LkBeSB6oLzR8Kj6kwXaFleR4GA"
+		},
+		"gplus": {
+			"url": "https://plus.google.com/+MoezBouhlel",
+			"user_id": "115155902038983611068",
+			"api_url": "https://www.googleapis.com/plus/v1/",
 			"api_key": "AIzaSyDf-Arn5LkBeSB6oLzR8Kj6kwXaFleR4GA"
 		}
 	}

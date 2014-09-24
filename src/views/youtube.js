@@ -11,7 +11,6 @@ function youtube(settings) {
 					context.next_page = activities['nextPageToken'];
 					context.activities = activities['items'].map(function(item) {
 						var resource = item['contentDetails'][item['snippet']['type']];
-						console.log(resource);
 						if ( "videoId" in resource )
 							item['snippet']['url'] = "https://www.youtube.com/watch?v=" + resource["videoId"];
 						else if ( resource['resourceId']['channelId'] )
@@ -20,7 +19,6 @@ function youtube(settings) {
 							item['snippet']['url'] = "https://www.youtube.com/watch?v=" + resource['resourceId']["videoId"];
 						return item["snippet"];
 					});
-					console.log(context);
 					return Promise.resolve(context);
 				});
 		});
