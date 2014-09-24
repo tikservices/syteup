@@ -50,7 +50,7 @@ function syncGet (url, success, headers, failure) {
 	}
 	xhr.send();
 }
-function asyncGet (url, headers, jsonp = "callback") {
+function asyncGet (url, headers, jsonp) {
 	return new Promise(function(resolve, reject) {
 		$.ajax({
 			url : url,

@@ -15,7 +15,11 @@ function setupTent(url, el, settings) {
 
     function(tent, tent_view) {
      tent(settings).then(function(tent_data){
-      [tent_posts, tent_profile, tent_followers, tent_followings, tent_posts_count] = tent_data;
+      var tent_posts = tent_data[0],
+	tent_profile = tent_data[1],
+	tent_followers = tent_data[2], 
+	tent_followings = tent_data[3], 
+	tent_posts_count = tent_data[4];
       if (tent_posts.error || tent_posts.length == 0) {
         window.location = href;
           return;
