@@ -23,10 +23,23 @@ function setupGplus(url, el, settings) {
 		       	var template = Handlebars.compile(gplus_view);
 
 			$.each(gplus_data.activities, function(i, t) {
+				if ( t.verb === "post" )
+					t.verb = "posted";
+				else if ( t.verb === "share" )
+					t.verb = "shared";
+				if ( t.title.length > 60 )
+					t.title = t.title.substr(0, 57) + '...';
 				t.replies = t.object.replies.totalItems;
 				t.plusoners = t.object.plusoners.totalItems;
 				t.resharers = t.object.resharers.totalItems;
 				t.published = t.published.substr(0, 10) + ' ' + t.published.substr(11, 5);
+				if ( t.object.attachments && t.object.attachments[0].image ) {
+					t.object.image = t.object.attachments[0].image.url;
+				} else if (t.object.content) {
+					t.object.content =  (new DOMParser()).parseFromString("<div>" + t.object.content + "</div>", "text/xml").documentElement.textContent;
+					if (t.object.content.length > 200)
+						t.object.content = t.object.content.substr(0, 197)  + '...';
+				}
 
 
 			});

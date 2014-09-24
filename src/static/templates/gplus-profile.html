@@ -34,23 +34,26 @@
     <a href="{{ url }}" class="btn">View Google+ Profile</a>
   </div>
 {{/with}}
-  <ul class="profile-repos">
+  <ul class="profile-plus-activities">
     {{#each activities}}
     <li>
-    {{#if object.actor }}
-    <a href="{{ url }}" class="profile-repo-name">{{ verb }} {{ object.actor.displayName }} {{ object.objectType }}</a>
-    {{else}}
-    <a href="{{ url }}" class="profile-repo-name">{{ verb }} a {{ object.objectType }}</a>
-    {{/if}}
-    <p class="profile-repo-text">
+      <p class="plus-activity-verb">{{ verb }} {{#if object.actor }}<a href="{{ object.actor.url }}" class="plus-activity-actor">{{ object.actor.displayName }}</a>{{else}}a{{/if}} {{ object.objectType }}</p>
+    <p class="plus-activity-text">
       {{ title }}
     </p>
-    <ul class="profile-repo-stats">
-      <li><a href="{{ url }}">{{ replies }} replies</a></li> |
-      <li><a href="{{ url }}">{{ plusoners }} +1</a></li> |
-      <li><a href="{{ url }}">{{ resharers }} reshares</a></li> |
-      <li>{{ published }}</li>
-    </ul>
+    {{#if object.image }}
+    <a href="{{ url }}"><img src="{{ object.image }}"></a>
+    {{else}}
+    <p>{{ object.content }}</p>
+    {{/if}}
+    <div class="plus-activity-details">
+	    <ul class="plus-activity-stats">
+	      	    <li class="plus-activity-replies"><a href="{{ url }}">{{ replies }} replies</a></li>
+	      	    <li class="plus-activity-ones"><a href="{{ url }}">{{ plusoners }} +1</a></li>
+	      	    <li class="plus-activity-reshares"><a href="{{ url }}">{{ resharers }} reshares</a></li>
+	    </ul>
+	    <div class="plus-activity-time"><a href="{{ url }}">{{ published }}</a></div>
+    </div>
     </li>
     {{/each}}
   </ul>
