@@ -63,6 +63,7 @@ function setupLastfm(url, el, settings) {
             $.each(lastfm_data.recenttracks.recenttracks.track, function(i, t) {
                 // Lastfm can be really finicky with data and return garbage if
                 // the track is currently playing
+		var date;
                 try {
                     date = t.date['#text']
                 } catch (err) {

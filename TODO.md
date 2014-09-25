@@ -14,10 +14,10 @@ DONE (js + async:promise + JSONP):
     - Instagram       [DONE]
     - Youtube         [DONE]
     - Google+         [DONE]
+    - blogger         [DONE]
 
 INPROGRESS (python || CORS || sync:XMLHttpRequest with GET):
 
-    - blogger         [JS]
     - LinkedIn        [JS] [AUTHENTIFICATION FAILURE]
     - Tent.io         [JS] [API NOT WELL DOCUMENTED]
     - Twitter         [PY]

@@ -5,7 +5,6 @@
  * our Handlebars template.
  */
 function renderBlogPosts(posts) {
-	console.log(posts);
   if (posts.length === 0) {
       window.reachedEnd = true;
   }
@@ -40,7 +39,7 @@ function renderBlogPosts(posts) {
 
             if (window.disqus_enabled)
                 p.disqus_enabled = true;
-		p.disqus_just_count = window.disqus_just_count;
+	    p.disqus_just_count = window.disqus_just_count;
 
             if (p.type === 'text') {
                 var idx = p.body.indexOf('<!-- more -->');
@@ -73,19 +72,18 @@ function renderBlogPosts(posts) {
 }
 
 function fetchBloggerBlogPosts(offset, settings) {
-	if (!offset)
-		offset = '';
-      	return asyncGet(settings.api_url + "blogs/" + settings.blog_id + "/posts?labels=" + settings.tag_slug + "&maxResults=20&pageToken=" + offset + " &fields=items(content%2Cid%2Clabels%2Cpublished%2Ctitle%2Curl)%2CnextPageToken&key=" + settings.api_key).then(function(res) {
+	var params = '?maxResults=20&fields=items(content%2Cid%2Clabels%2Cpublished%2Ctitle%2Curl)%2CnextPageToken&key=' + settings.api_key;
+	if (offset)
+		params += "&pageToken=" + offset;
+	if (settings.tag_slug)
+		params += "&labels=" + settings.tag_slug;
+      	return asyncGet(settings.api_url + "blogs/" + settings.blog_id + "/posts" + params).then(function(res) {
       		offset = res.nextPageToken;
-      		res['items'].map(function(post) {
-      			return {
-      				id : post.id,
-      				date: post.published,
-      				url: post.url,
-      				title: post.title,
-      				body: post.content,
-      				tags: post.labels
-      			};
+      		res['items'].forEach(function(post) {
+			post.date = post.published;
+      			post.body = post.content;
+      			post.tags = post.labels;
+			post.type = "text"; //????
       		});
       		renderBlogPosts(res['items']);
       		return Promise.resolve(offset);

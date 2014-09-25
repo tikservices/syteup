@@ -32,7 +32,7 @@ function setupGplus(url, el, settings) {
 				t.replies = t.object.replies.totalItems;
 				t.plusoners = t.object.plusoners.totalItems;
 				t.resharers = t.object.resharers.totalItems;
-				t.published = t.published.substr(0, 10) + ' ' + t.published.substr(11, 5);
+				t.published = moment.utc(t.published, 'YYYY-MM-DD HH:mm:ss').fromNow();
 				if ( t.object.attachments && t.object.attachments[0].image ) {
 					t.object.image = t.object.attachments[0].image.url;
 				} else if (t.object.content) {
