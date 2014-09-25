@@ -17,14 +17,14 @@ DONE (js + async:promise + JSONP):
 
 INPROGRESS (python || CORS || sync:XMLHttpRequest with GET):
 
-    - Steam           [JS] [CORS]
     - LinkedIn        [JS] [AUTHENTIFICATION FAILURE]
     - Tent.io         [JS] [API NOT WELL DOCUMENTED]
     - Twitter         [PY]
-    - Foursquare      [PY]
 
 WICHLIST:
 
+    - Steam           [SOP] [NO-JSONP]
+    - Foursquare      [DANGEROUS TOKENS]
     - Facebook
     - Netflix
     - Picasa

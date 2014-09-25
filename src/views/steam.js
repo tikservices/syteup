@@ -1,9 +1,22 @@
+'use strict';
 function steam(settings) {
-	var context = {},
-	username_r = new XMLHttpRequest(),
-	user_r = new XMLHttpRequest(),
-	firends_r = new XMLHttpRequest();
+	return Promise.all([
+			asyncGet(settings.api_url + "ISteamUser/GetPlayerSummaries/v0002/?format=json&key=" + settings.api_key + "&steamids=" + settings.user_id),
+			asyncGet(settings.api_url + "ISteamUser/GetFriendList/v0001/?format=json&key=" + settings.api_key + "&steamid=" + settings.user_id),
+			asyncGet(settings.api_url + "IPlayerService/GetOwnedGames/v0001/?format=json&key=" + settings.api_key + "&steamid=" + settings.user_id),
+			asyncGet(settings.api_url + "IPlayerService/GetRecentlyPlayedGames/v0001/?format=json&key=" + settings.api_key + "&steamid=" + settings.user_id)
+	]);
+}
+// http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=440&key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&steamid=76561197972495328
 
+
+	/*
+	var context = {};
+	asyncGet('http://steamcommunity.com/id/' + settings.username + '/games?tab=all&xml=1').then(function(res) {
+		console.log(res);
+});
+}
+/*
 	username_r.open('GET', 'http://steamcommunity.com/id/' + settings.username + '/games?tab=all&xml=1', false);
 	username_r.onload = function() {
 		if(this.status != 200) return;
@@ -55,4 +68,5 @@ function steam(settings) {
 	context.recent_games = games_array;
 	return context;
 }
+*/
 define(function(){return steam;});

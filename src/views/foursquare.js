@@ -1,24 +1,13 @@
+'use strict';
 function foursquare(settings){
-	var context = {},
-	user_r = new XMLHttpRequest(),
-	checkins_r = new XMLHttpRequest();
 
-    user_r = requests.get('{0}users/self?oauth_token={1}&v=20120812'.format(
-        settings.FOURSQUARE_API_URL,
-        settings.FOURSQUARE_ACCESS_TOKEN))
-
-    user_data = json.loads(user_r.text)
-    user_response = user_data.get('response', {})
-    user_info = user_response.get('user', None)
-
-    checkins_r = requests.get('{0}users/self/checkins?oauth_token={1}&v=20120812'.format(
-        settings.FOURSQUARE_API_URL,
-        settings.FOURSQUARE_ACCESS_TOKEN))
-
-    checkins_data = json.loads(checkins_r.text)
-    checkins_response = checkins_data.get('response', {})
-    checkins = checkins_response.get('checkins', None)
-
+	return Promise.all([
+			asyncGet(settings.api_url + "users/self?v=20120812&oauth_token=" + settings.access_token),
+			asyncGet(settings.api_url + "users/self/checkins?v=20120812&oauth_token=" + settings.access_token)
+	]).then(function(res){
+		console.log(res);
+		var checkins = res[1]['response']['checkins'];
+/*
     if not settings.FOURSQUARE_SHOW_CURRENT_DAY:
         valid_checkins = []
         now = datetime.datetime.now()
@@ -29,8 +18,12 @@ function foursquare(settings){
                 if (now - created_at_dt) > datetime.timedelta(days=1):
                     valid_checkins.append(c)
         checkins['items'] = valid_checkins
+			*/
+		return Promise.resolve({
+			user: res[0]['response']['user'],
+			checkins: checkins
+		});
+	});
+}
+define(function(){return foursquare;});
 
-    context = {'user': user_info, 'checkins': checkins}
-
-    return HttpResponse(content=json.dumps(context), status=checkins_r.status_code,
-                        content_type=checkins_r.headers['content-type'])
