@@ -26,30 +26,30 @@ config_r.onload = function() {
 	if (settings["services"]["flickr"])
 		window.flickr_id = settings["services_settings"]["flickr"]["id"];
 	if(settings["services"]["tent"]) {
-		window.tent_entity_uri = settings["services_settings"]["tent"]["entity_uri"],
+		window.tent_entity_uri = settings["services_settings"]["tent"]["entity_uri"];
 		window.tent_feed_uri = settings["services_settings"]["tent"]["feed_url"];
 	}
 
 	//SETUP LINKS & BLOG
-	if (settings["blog_platform"] === "wordpress")
-		var wpDomain = settings["blogs_settings"]["wordpress"]["blog_url"];
-	var postOffset = 0;
+	var postOffset;
 	window.disqus_enabled = settings["blogs_settings"]["plugins"]["disqus"] || false;
 	window.sharethis_enabled = settings["blogs_settings"]["plugins"]["sharethis"] || false;
-	if(disqus_enabled)
+	if(window.disqus_enabled)
 		window.disqus_just_count = settings["plugins_settings"]["disqus"]["just_count"];
 
 	$(function() {
 		setupLinks(settings);
-	      	fetchBlogPosts(postOffset, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"]);
- 		if (disqus_enabled)
+	      	fetchBlogPosts(postOffset, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"]).then(function(offset) {
+			postOffset = offset;
+		});
+ 		if (window.disqus_enabled)
 		      $('body').bind('blog-post-loaded', function() {
 			      embedDisqus(settings["plugins_settings"]["disqus"]);
 		      });
-		if (sharethis_enabled) {
+		if (window.sharethis_enabled) {
 			var switchTo5x = true;
 			var jsfile  = document.createElement('script');
-			jsfile.src = "http://w.sharethis.com/button/buttons.js"
+			jsfile.src = "http://w.sharethis.com/button/buttons.js";
 			jsfile.type = 'text/javascript';
 			//jsfile.async = true;
 			document.body.appendChild(jsfile);
@@ -63,12 +63,15 @@ config_r.onload = function() {
     	window.reachedEnd    = false; // set to true if no more blog posts left.
 
 	$(window).scroll(function() {
-	      	if(!reachedEnd && !resultsLoaded && !scrollWait &&
+	      	if(!window.reachedEnd && !resultsLoaded && !scrollWait &&
 			  	($(window).scrollTop() + $(window).height() > $(document).height()/1.2)) {
 		  	resultsLoaded = true;
-		  	postOffset += 20;
-			fetchBlogPosts(postOffset, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"]);
 		  	scrollWait = true;
+//		  	postOffset += 20;
+		  	fetchBlogPosts(postOffset, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"]).then(function(offset) {
+				postOffset = offset;
+				scrollWait = false;
+		  	});
 		  	// Only load posts at most every scrollWaitDur milliseconds.
 			setTimeout(function() { scrollWait = false; }, scrollWaitDur);
 	      	}
@@ -95,7 +98,7 @@ config_r.onload = function() {
 		_gaq.push(['_trackPageview']);
 		(function() {
 			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			ga.src = ('https:' === document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 		})();
 	}

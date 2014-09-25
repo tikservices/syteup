@@ -17,6 +17,7 @@ DONE (js + async:promise + JSONP):
 
 INPROGRESS (python || CORS || sync:XMLHttpRequest with GET):
 
+    - blogger         [JS]
     - LinkedIn        [JS] [AUTHENTIFICATION FAILURE]
     - Tent.io         [JS] [API NOT WELL DOCUMENTED]
     - Twitter         [PY]
@@ -37,7 +38,6 @@ WICHLIST:
     - trakt
     - Posterous Spaces
     - viewbook.com
-    - blogger
 
 EXTRA:
 

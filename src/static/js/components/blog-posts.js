@@ -5,15 +5,16 @@
  * our Handlebars template.
  */
 function renderBlogPosts(posts) {
+	console.log(posts);
   if (posts.length === 0) {
-      reachedEnd = true;
+      window.reachedEnd = true;
   }
   
   //Update this every time there are changes to the required 
   //templates since it's cached every time
   require.config({
     urlArgs: "bust=v2" 
-  })
+  });
 
   require(["text!templates/blog-post-text.html",
           "text!templates/blog-post-photo.html",
@@ -35,29 +36,29 @@ function renderBlogPosts(posts) {
 
         $('.loading').remove();
         $.each(posts, function(i, p) {
-            p.formated_date = moment.utc(p.date, 'YYYY-MM-DD HH:mm:ss').local().format('MMMM DD, YYYY')
+            p.formated_date = moment.utc(p.date, 'YYYY-MM-DD HH:mm:ss').local().format('MMMM DD, YYYY');
 
-            if (disqus_enabled)
+            if (window.disqus_enabled)
                 p.disqus_enabled = true;
 		p.disqus_just_count = window.disqus_just_count;
 
-            if (p.type == 'text') {
+            if (p.type === 'text') {
                 var idx = p.body.indexOf('<!-- more -->');
                 if (idx > 0) {
-                    p.body = p.body.substring(0, idx)
+                    p.body = p.body.substring(0, idx);
                     p.show_more = true;
                 }
                 $('#blog-posts').append(text_template(p));
             }
-            else if (p.type == 'photo')
+            else if (p.type === 'photo')
                 $('#blog-posts').append(photo_template(p));
-            else if (p.type == 'link')
+            else if (p.type === 'link')
                 $('#blog-posts').append(link_template(p));
-            else if (p.type == 'video')
+            else if (p.type === 'video')
                 $('#blog-posts').append(video_template(p));
-            else if (p.type == 'audio')
+            else if (p.type === 'audio')
                 $('#blog-posts').append(audio_template(p));
-            else if (p.type == 'quote')
+            else if (p.type === 'quote')
                 $('#blog-posts').append(quote_template(p));
 
         });
@@ -71,13 +72,38 @@ function renderBlogPosts(posts) {
      });
 }
 
+function fetchBloggerBlogPosts(offset, settings) {
+	if (!offset)
+		offset = '';
+      	return asyncGet(settings.api_url + "blogs/" + settings.blog_id + "/posts?labels=" + settings.tag_slug + "&maxResults=20&pageToken=" + offset + " &fields=items(content%2Cid%2Clabels%2Cpublished%2Ctitle%2Curl)%2CnextPageToken&key=" + settings.api_key).then(function(res) {
+      		offset = res.nextPageToken;
+      		res['items'].map(function(post) {
+      			return {
+      				id : post.id,
+      				date: post.published,
+      				url: post.url,
+      				title: post.title,
+      				body: post.content,
+      				tags: post.labels
+      			};
+      		});
+      		renderBlogPosts(res['items']);
+      		return Promise.resolve(offset);
+      	});
+}
+
 function fetchTumblrBlogPosts(offset, settings) {
-  asyncGet(settings.api_url + settings.blog_url + '/posts?offset=' + offset + '&tag=' + settings.tag_slug + '&api_key=' + settings.api_key).then(function(res) {
-    renderBlogPosts(res.posts);
-  });
+	if(!offset)
+		offset = 0;
+      	return asyncGet(settings.api_url + settings.blog_url + '/posts?offset=' + offset + '&tag=' + settings.tag_slug + '&api_key=' + settings.api_key).then(function(res) {
+	    	renderBlogPosts(res.posts);
+	      	return Promise.resolve(offset + 20);
+      	});
 }
 
 function fetchWordpressBlogPosts(offset, settings) {
+	if(!offset)
+		offset = 0;
 	var tag = settings.tag_slug;
   var wpApiUrl = [settings.api_url , '/sites/', settings.blog_url, '/posts/?callback=?'].join('');
 
@@ -88,7 +114,7 @@ function fetchWordpressBlogPosts(offset, settings) {
     wpApiUrl += '&tag=' + tag.replace(/\s/g, '-');
   }
 
-  asyncGet(wpApiUrl).then(function(data){
+  return asyncGet(wpApiUrl).then(function(data){
     // Get the data into a similar format as Tumblr so we can reuse the template
     $.each(data.posts, function(i, p) {
         var newTags = [];
@@ -112,6 +138,7 @@ function fetchWordpressBlogPosts(offset, settings) {
         }
     });
     renderBlogPosts(data.posts);
+    return Promise.resolve(offset + 20);
   });
 }
 
@@ -122,14 +149,8 @@ function fetchWordpressBlogPosts(offset, settings) {
  * @param tag String Optional argument to specify to load posts with a certain tag.
  * @param platform String Optional argument to specify which blog platform to fetch from. Defaults to 'tumblr'.
  */
-function fetchBlogPosts(offset, tag, platform) {
-  if (platform === 'wordpress') {
-      fetchWordpressBlogPosts(offset, tag);
-  }
-  else {
-      // set default platform as Tumblr
-      fetchTumblrBlogPosts(offset, tag);
-  }
+function fetchBlogPosts(offset, settings, platform) {
+	return window['fetch' + platform[0].toUpperCase() + platform.slice(1) + "BlogPosts"](offset, settings);
 }
 
 function adjustBlogHeaders() {
@@ -165,7 +186,7 @@ function setupBlogHeaderScroll() {
         i = offsets.length;
 
     for (i; i--;) {
-      if (activeTarget != targets[i] && scrollTop > offsets[i] && (!offsets[i + 1] || scrollTop < offsets[i + 1])) {
+      if (activeTarget !== targets[i] && scrollTop > offsets[i] && (!offsets[i + 1] || scrollTop < offsets[i + 1])) {
 
           var hgroup = $(activeTarget).find("hgroup");
           var margintop = '';
@@ -185,7 +206,7 @@ function setupBlogHeaderScroll() {
           $("h3 a[href=" + activeTarget + "]").attr('style', '').addClass("active");
       }
 
-      if (activeTarget && activeTarget != targets[i] && scrollTop + 50 >= offsets[i] && (!offsets[i + 1] || scrollTop + 50 <= offsets[i + 1])) {
+      if (activeTarget && activeTarget !== targets[i] && scrollTop + 50 >= offsets[i] && (!offsets[i + 1] || scrollTop + 50 <= offsets[i + 1])) {
 
           // if it's close to the new target scroll the current target up
           $("h3 a[href=" + activeTarget + "]")
@@ -197,7 +218,7 @@ function setupBlogHeaderScroll() {
               });
       }
 
-      if (activeTarget == targets[i] && scrollTop > offsets[i] - 50  && (!offsets[i + 1] || scrollTop <= offsets[i + 1] - 50)) {
+      if (activeTarget === targets[i] && scrollTop > offsets[i] - 50  && (!offsets[i + 1] || scrollTop <= offsets[i + 1] - 50)) {
           // if the current target is not fixed make it fixed.
           if (!$("h3 a[href=" + activeTarget + "]").hasClass("active")) {
               $("h3 a[href=" + activeTarget + "]").attr('style', '').addClass("active");
