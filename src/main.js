@@ -34,7 +34,34 @@ config_r.onload = function() {
 			setupLinks(settings);
 			resolve();
 		}).then(setupBlog(settings))
-		.then(setupPlugins(settings));
+		.then(setupPlugins(settings)).
+		then(function() {
+			var style = document.createElement("style");
+			style.appendChild(document.createTextNode(""));
+			document.head.appendChild(style);
+			style.sheet.insertRule("#control-panel a { display: inline-block; margin: 5px; border: solid 1px; padding: 5px;}", 0);
+			style.sheet.insertRule("#control-panel a.clicked {background-color: green}", 0);
+			style.sheet.insertRule("#control-panel a.unclicked {background-color: red}", 0);
+
+			$(document).bind('DOMSubtreeModified',function(){
+				if (!$("#control-panel")[0]) return;
+				$(document).unbind("DOMSubtreeModified");
+				$.each($(".main-nav li a"), function(i, e) {
+					console.log($("#ontrol-panel"));
+					$('#control-panel').append("<a class='clicked' data-id='" + e.id + "'>#"+ e.id + "</a>");
+				});
+				$("#control-panel a").click(function(){
+					var id = this.dataset["id"];
+					if (this.className === "clicked") {
+						this.className = "unclicked";
+						$("#" + id).parent().hide(300);
+					} else {
+						this.className = "clicked";
+						$("#" + id).parent().show(300);
+					}
+				});
+			});
+		});
 	});
 };
 config_r.send();

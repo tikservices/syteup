@@ -1,7 +1,7 @@
 {
 	"version" : 0.1,
 	"deployment_mode" : "dev",
-	"blog_platform" : "blogger",
+	"blog_platform" : "wordpress",
 	"fields": {
 		"username" : "lejenome",
 		"realname" : "Moez Bouhlel",
@@ -42,8 +42,8 @@
 			"sharethis": false
 		},
 		"blogger" : {
-			"blog_url" : "http://chrome.blogspot.com/",
-			"blog_id": "2250394496987063687",
+			"blog_url" : "http://lejenome.blogspot.com/",
+			"blog_id": "2944650223686076530",
 			"api_url": "https://www.googleapis.com/blogger/v3/",
 			"api_key": "AIzaSyDf-Arn5LkBeSB6oLzR8Kj6kwXaFleR4GA",
 			"tag_slug" : ""
@@ -137,7 +137,7 @@
 			"url": "https://facebook.com/legenome",
 			"username": "legenome",
 			"api_url": "https://graph.facebook.com/v2.1/",
-			"access_token": "CAAKpfrF3JjQBAPs3Utw70FIwMEyfeJnQ3N2Nwd5AOvprFbpLtAZBRt2zauKKZCZAG6zZB2glEICVfZCeyUGRTYzflJip9GWpRlVk6tkNyz594bgeppOhpTZCSjM5hpkAVnkfHmcZCwHY5oyPdntkWSH8w2Ov62G7dSa0IUHLRj9mduypeTGJNcXckyXzZBZB5zTmZCZBZCVORBkngOSgYMvjZCKyC" 
+			"access_token": "CAAKpfrF3JjQBAFztOZCJE3TGuLvmGZBrxPmGUVq9Bgpp0W8otDDA4bam5zF5RKB8p3qrQQJS8avzPW99G8p0UwKk7U1EZADMk3sp3IyaF8aZCCUYBZA7HEA12ThjIkm5jgafSYsIvLmRSQMXqZC1fk4V8eJ0oYcHXSKHbhWCrbne1DO66nYgU2"
 		},
 		"tent" : {
 			"url" : "https://daniel.cupcake.is",
