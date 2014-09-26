@@ -47,7 +47,6 @@ config_r.onload = function() {
 				if (!$("#control-panel")[0]) return;
 				$(document).unbind("DOMSubtreeModified");
 				$.each($(".main-nav li a"), function(i, e) {
-					console.log($("#ontrol-panel"));
 					$('#control-panel').append("<a class='clicked' data-id='" + e.id + "'>#"+ e.id + "</a>");
 				});
 				$("#control-panel a").click(function(){
@@ -88,13 +87,13 @@ function setupBlog(settings) {
 		window.disqus_shortname = settings["plugins_settings"]["disqus"]["shortname"];
 	}
 
+	window.reachedEnd    = false; // set to true if no more blog posts left.
 	return fetchBlogPosts(postOffset, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"]).then(function(offset) {
 		postOffset = offset;
 
 		var resultsLoaded = false,
 		scrollWait    = false,
 		scrollWaitDur = 250;
-		window.reachedEnd    = false; // set to true if no more blog posts left.
 		$(window).scroll(function() {
 			if(!window.reachedEnd && !resultsLoaded && !scrollWait &&
 					($(window).scrollTop() + $(window).height() > $(document).height()/1.2)) {

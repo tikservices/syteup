@@ -79,6 +79,8 @@ function fetchBloggerBlogPosts(offset, settings) {
 		params += "&labels=" + settings.tag_slug;
       	return asyncGet(settings.api_url + "blogs/" + settings.blog_id + "/posts" + params).then(function(res) {
       		offset = res.nextPageToken;
+		if (!offset)
+			window.reachedEnd = true;
       		res['items'].forEach(function(post) {
 			post.date = post.published;
       			post.body = post.content;
