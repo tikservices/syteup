@@ -25,7 +25,9 @@
     </p>
   </div>
   <ul class="profile-stats">
+    {{#if circledByCount }}
     <li><a href="{{ url }}"><strong>{{ circledByCount }}</strong> followers</a></li>
+    {{/if}}
     {{#if plusOneCount}}
     <li><a href="{{ url }}"><strong>{{ plusOneCount }}</strong> plus</a></li>
     {{/if}}
