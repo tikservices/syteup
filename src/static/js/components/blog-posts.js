@@ -73,20 +73,22 @@ function renderBlogPosts(posts, clearPosts) {
      });
 }
 
-function fetchBloggerBlogPosts(offset, settings, post_id) {
+function fetchBloggerBlogPosts(offset, settings, posts_options) {
 	var params = '?maxResults=20&fields=items(content%2Cid%2Clabels%2Cpublished%2Ctitle%2Curl)%2CnextPageToken&key=' + settings.api_key;
 	if (offset)
 		params += "&pageToken=" + offset;
-	if (settings.tag_slug)
+	if (posts_options && posts_options.tag)
+		params += "&labels=" + posts_options.tag;
+	else if (settings.tag_slug)
 		params += "&labels=" + settings.tag_slug;
-	if (post_id)
-		params = "/" + post_id + '?content%2Cid%2Clabels%2Cpublished%2Ctitle%2Curl&key=' + settings.api_key;
+	if (posts_options && posts_options.id)
+		params = "/" + posts_options.id + '?content%2Cid%2Clabels%2Cpublished%2Ctitle%2Curl&key=' + settings.api_key;
       	return asyncGet(settings.api_url + "blogs/" + settings.blog_id + "/posts" + params).then(function(res) {
-		var clearPosts = post_id || !offset;
+		var clearPosts = (posts_options && posts_options.id) || !offset;
       		offset = res.nextPageToken;
 		if (!offset)
 			window.reachedEnd = true;
-		if (post_id)
+		if (posts_options && posts_options.id)
 			res ={items: [res]};
 		res['items'].forEach(function(post) {
 			post.date = post.published;
@@ -100,32 +102,39 @@ function fetchBloggerBlogPosts(offset, settings, post_id) {
 	});
 }
 
-function fetchTumblrBlogPosts(offset, settings, post_id) {
-	if(!post_id)
-		post_id = '';
-	else
-		post_id = "&id=" + post_id;
+function fetchTumblrBlogPosts(offset, settings, posts_options) {
+	var post_id = '', tags = "";
+	if(posts_options && posts_options.id)
+		post_id = "&id=" + posts_options.id;
+	else if (posts_options && posts_options.tag)
+		tags = posts_options.tag;
+	else if(settings.tag_slug)
+		tags = settings.tag_slug;
 	if(!offset)
 		offset = 0;
-      	return asyncGet(settings.api_url + settings.blog_url + '/posts?offset=' + offset + '&tag=' + settings.tag_slug + '&api_key=' + settings.api_key + post_id).then(function(res) {
-	    	renderBlogPosts(res.posts, post_id || !offset);
+      	return asyncGet(settings.api_url + settings.blog_url + '/posts?offset=' + offset + '&tag=' + tags + '&api_key=' + settings.api_key + post_id).then(function(res) {
+	    	renderBlogPosts(res.posts, (posts_options && posts_options.id) || !offset);
 	      	return Promise.resolve(offset + 20);
       	});
 }
 
-function fetchWordpressBlogPosts(offset, settings, post_id) {
-	if(!post_id)
-		post_id = '';
+function fetchWordpressBlogPosts(offset, settings, posts_options) {
+	var post_id = '', tags = '';
+	if(posts_options && posts_options.id)
+		post_id = posts_options.id;
+	else if (posts_options && posts_options.tag)
+		tags = posts_options.tag;
+	else if (settings.tag_slug)
+		tags = settings.tag_slug;
 	if(!offset)
 		offset = 0;
-	var tag = settings.tag_slug;
       	var wpApiUrl = [settings.api_url , '/sites/', settings.blog_url, '/posts/', post_id, '?callback=?'].join('');
 
       	if (offset > 0) {
 	    	wpApiUrl += '&offset=' + offset;
       	}
-      	if (tag) {
-	    	wpApiUrl += '&tag=' + tag.replace(/\s/g, '-');
+      	if (tags) {
+	    	wpApiUrl += '&tag=' + tags.replace(/\s/g, '-');
       	}
 
       	return asyncGet(wpApiUrl).then(function(data){
@@ -133,7 +142,7 @@ function fetchWordpressBlogPosts(offset, settings, post_id) {
 	    	// Get the data into a similar format as Tumblr so we can reuse the template
 		if (data.error)
 			data = {found: 0, posts: []};
-		else if(post_id)
+		else if(posts_options && posts_options.id)
 	    		data = {found: 1, posts: [data]};
 	    	$.each(data.posts, function(i, p) {
 			var newTags = [];
@@ -156,7 +165,7 @@ function fetchWordpressBlogPosts(offset, settings, post_id) {
 		      		p.date = p.date.substring(0, p.date.lastIndexOf('-'));
 			}
 	    	});
-	    	renderBlogPosts(data.posts, post_id || !offset);
+	    	renderBlogPosts(data.posts, (posts_options && posts_options.id) || !offset);
 	    	return Promise.resolve(offset + 20);
       	});
 }
@@ -168,10 +177,10 @@ function fetchWordpressBlogPosts(offset, settings, post_id) {
  * @param tag String Optional argument to specify to load posts with a certain tag.
  * @param platform String Optional argument to specify which blog platform to fetch from. Defaults to 'tumblr'.
  */
-function fetchBlogPosts(offset, settings, platform, post_id) {
-	if ( post_id )
+function fetchBlogPosts(offset, settings, platform, posts_options) {
+	if ( posts_options && posts_options.id )
 		window.reachedEnd = true;
-	return window['fetch' + platform[0].toUpperCase() + platform.slice(1) + "BlogPosts"](offset, settings, post_id);
+	return window['fetch' + platform[0].toUpperCase() + platform.slice(1) + "BlogPosts"](offset, settings, posts_options);
 }
 
 function adjustBlogHeaders() {

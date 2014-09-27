@@ -75,16 +75,28 @@ function woopraReady(tracker) {
 }
 
 function setupBlog(settings) {
-	var postOffset, post_id;
+	var postOffset, posts_options;
 	$(document).on("click", ".post-link", function() {
-		console.log(this.dataset);
-		if ( this.dataset['id'])
-		       fetchBlogPosts(0, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"], this.dataset['id']);
+		if ( this.dataset['id']) {
+			posts_options = {id: this.dataset['id']};
+ 			fetchBlogPosts(0, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"], posts_options);
+		}
 		postOffset = 0;
 	});
+	$(document).on("click", ".tag-link", function() {
+		if ( this.textContent) {
+			window.reachedEnd    = false;
+			posts_options = {tag: this.textContent};
+ 			fetchBlogPosts(0, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"], posts_options).then(function(offset) {
+				postOffset = offset;
+			});
+		}
+	});
 	$('#home-link').on("click", function() {
-		if (location.hash.substr(0,2) != "#!") return;
+		if (location.hash.substr(0,2) !== "#!") return;
 		location.hash = "";
+		posts_options = undefined;
+		window.reachedEnd    = false;
 	        fetchBlogPosts(0, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"]).then(function(offset) {
 			postOffset = offset;
 		});
@@ -99,9 +111,11 @@ function setupBlog(settings) {
 	}
 
 	window.reachedEnd    = false; // set to true if no more blog posts left.
-	if ( location.hash.substr(0, 7) == "#!post/" )
-		post_id = location.hash.slice(7).split("#")[0];
-	return fetchBlogPosts(postOffset, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"], post_id).then(function(offset) {
+	if ( location.hash.substr(0, 7) === "#!post/" )
+		posts_options = {id: location.hash.slice(7).split("#")[0]};
+	else if ( location.hash.substr(0, 6) === "#!tag/" )
+		posts_options = {tag: location.hash.slice(6).split("#")[0]};
+	return fetchBlogPosts(0, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"], posts_options).then(function(offset) {
 		postOffset = offset;
 
 		var resultsLoaded = false,
@@ -112,7 +126,7 @@ function setupBlog(settings) {
 					($(window).scrollTop() + $(window).height() > $(document).height()/1.2)) {
 				resultsLoaded = true;
 				scrollWait = true;
-				fetchBlogPosts(postOffset, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"]).then(function(offset) {
+				fetchBlogPosts(postOffset, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"], posts_options).then(function(offset) {
 					postOffset = offset;
 					scrollWait = false;
 				});

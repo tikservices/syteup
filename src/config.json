@@ -1,7 +1,7 @@
 {
 	"version" : 0.1,
 	"deployment_mode" : "dev",
-	"blog_platform" : "wordpress",
+	"blog_platform" : "blogger",
 	"fields": {
 		"username" : "lejenome",
 		"realname" : "Moez Bouhlel",
@@ -42,8 +42,8 @@
 			"sharethis": false
 		},
 		"blogger" : {
-			"blog_url" : "http://lejenome.blogspot.com/",
-			"blog_id": "2944650223686076530",
+			"blog_url" : "http://blogsofnote.blogspot.com/",
+			"blog_id": "3024673",
 			"api_url": "https://www.googleapis.com/blogger/v3/",
 			"api_key": "AIzaSyDf-Arn5LkBeSB6oLzR8Kj6kwXaFleR4GA",
 			"tag_slug" : ""
