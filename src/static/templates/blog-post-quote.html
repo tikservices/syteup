@@ -1,6 +1,6 @@
 <article id="{{ id }}">
   <hgroup>
-    <h2><a class="post-link" href="#!post/{{ id }}">Quote</a></h2>
+    <h2><a class="post-link" data-id="{{ id }}" href="#!post/{{ id }}">Quote</a></h2>
     <h3><a href="#{{ id }}">{{ formated_date }}</a></h3>
   </hgroup>
   <blockquote>
@@ -21,7 +21,7 @@
     {{#if disqus_enabled }}
     {{#if disqus_just_count}}
     <div id="disqus_thread" class="disqus-thread">
-      <a href="#!post/{{ id }}#disqus_thread" class="comments post-link"></a>
+      <a data-id="{{ id }}" href="#!post/{{ id }}#disqus_thread" class="comments post-link"></a>
     </div>
     {{else}}
     <div class="disqus_show_comments" data-id="{{id}}">

@@ -43,9 +43,7 @@ config_r.onload = function() {
 			style.sheet.insertRule("#control-panel a.clicked {background-color: green}", 0);
 			style.sheet.insertRule("#control-panel a.unclicked {background-color: red}", 0);
 
-			$(document).bind('DOMSubtreeModified',function(){
-				if (!$("#control-panel")[0]) return;
-				$(document).unbind("DOMSubtreeModified");
+			$('body').bind('blog-post-loaded', function(){
 				$.each($(".main-nav li a"), function(i, e) {
 					$('#control-panel').append("<a class='clicked' data-id='" + e.id + "'>#"+ e.id + "</a>");
 				});
@@ -77,9 +75,22 @@ function woopraReady(tracker) {
 }
 
 function setupBlog(settings) {
-	//SETUP LINKS & BLOG
-	var postOffset;
+	var postOffset, post_id;
+	$(document).on("click", ".post-link", function() {
+		console.log(this.dataset);
+		if ( this.dataset['id'])
+		       fetchBlogPosts(0, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"], this.dataset['id']);
+		postOffset = 0;
+	});
+	$('#home-link').on("click", function() {
+		if (location.hash.substr(0,2) != "#!") return;
+		location.hash = "";
+	        fetchBlogPosts(0, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"]).then(function(offset) {
+			postOffset = offset;
+		});
+	});
 
+	//SETUP LINKS & BLOG
 	window.disqus_enabled = settings["blogs_settings"]["plugins"]["disqus"] || false;
 	window.sharethis_enabled = settings["blogs_settings"]["plugins"]["sharethis"] || false;
 	if(window.disqus_enabled) {
@@ -88,7 +99,9 @@ function setupBlog(settings) {
 	}
 
 	window.reachedEnd    = false; // set to true if no more blog posts left.
-	return fetchBlogPosts(postOffset, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"]).then(function(offset) {
+	if ( location.hash.substr(0, 7) == "#!post/" )
+		post_id = location.hash.slice(7).split("#")[0];
+	return fetchBlogPosts(postOffset, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"], post_id).then(function(offset) {
 		postOffset = offset;
 
 		var resultsLoaded = false,
