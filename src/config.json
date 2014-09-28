@@ -13,7 +13,8 @@
 		"google_analytics" : false,
 		"woopra": false,
 		"rss" : true,
-		"sitemap" : false
+		"sitemap" : false,
+		"control_panel": true
 	},
 	"plugins_settings": {
 		"google_analytics": {

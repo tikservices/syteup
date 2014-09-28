@@ -12,8 +12,6 @@ config_r.onload = function() {
 	document.getElementById("field-realname").textContent = settings["fields"]["realname"];
 	document.getElementById("field-description").textContent = settings["fields"]["description"];
 	document.getElementById("field-url").textContent = settings["fields"]["url"];
-/*	document.getElementById("field-email").href = "mailto:" + settings["fields"]["email"] +
-	       	"?subject=Hello";*/
 	document.head.getElementsByTagName("title")[0].textContent = settings["fields"]["username"] +
 		" [" + settings["fields"]["realname"] + "]";
 
@@ -34,34 +32,7 @@ config_r.onload = function() {
 			setupLinks(settings);
 			resolve();
 		}).then(setupBlog(settings))
-		.then(setupPlugins(settings)).
-		then(function() {
-			var style = document.createElement("style");
-			style.appendChild(document.createTextNode(""));
-			document.head.appendChild(style);
-			style.sheet.insertRule(".control-panel-btn { display: inline-block; margin: 5px;}", 0);
-			style.sheet.insertRule(".control-panel-btn a { line-height: 25px; padding: 5px; margin: 0; border: solid 1px;}", 0);
-			style.sheet.insertRule(".control-panel-btn a.clicked {background-color: green}", 0);
-			style.sheet.insertRule(".control-panel-btn a.unclicked {background-color: red}", 0);
-
-			$('body').bind('blog-post-loaded', function(){
-				if (! $("#control-panel")[0] ) return;
-				$.each($(".main-nav li a"), function(i, e) {
-					$('#control-panel').append("<div class='control-panel-btn'><a class='clicked' data-id='" + e.id + "'>#"+ e.id + "</a></div>");
-				});
-				$(".control-panel-btn a").click(function(){
-					var id = this.dataset["id"];
-					if (this.className === "clicked") {
-						this.className = "unclicked";
-						$("#" + id).parent().hide(300);
-					} else {
-						this.className = "clicked";
-						$("#" + id).parent().show(300);
-					}
-				});
-				$("#control-panel").removeAttr("id");
-			});
-		});
+		.then(setupPlugins(settings));
 	});
 };
 config_r.send();
@@ -187,6 +158,33 @@ function setupPlugins(settings) {
 		rss.title = "RSS";
 		rss.href = settings["plugins_settings"]["rss"]["url"];
 		document.head.appendChild(rss);
+	}
+	if (settings["plugins"]["control_panel"]) {
+		var style = document.createElement("style");
+		style.appendChild(document.createTextNode(""));
+		document.head.appendChild(style);
+		style.sheet.insertRule(".control-panel-btn { display: inline-block; margin: 5px;}", 0);
+		style.sheet.insertRule(".control-panel-btn a { line-height: 25px; padding: 5px; margin: 0; border: solid 1px;}", 0);
+		style.sheet.insertRule(".control-panel-btn a.clicked {background-color: green}", 0);
+		style.sheet.insertRule(".control-panel-btn a.unclicked {background-color: red}", 0);
+
+		$('body').bind('blog-post-loaded', function(){
+			if (! $("#control-panel")[0] ) return;
+			$.each($(".main-nav li a"), function(i, e) {
+				$('#control-panel').append("<div class='control-panel-btn'><a class='clicked' data-id='" + e.id + "'>#"+ e.id + "</a></div>");
+			});
+			$(".control-panel-btn a").click(function(){
+				var id = this.dataset["id"];
+				if (this.className === "clicked") {
+					this.className = "unclicked";
+					$("#" + id).parent().hide(300);
+				} else {
+					this.className = "clicked";
+					$("#" + id).parent().show(300);
+				}
+			});
+			$("#control-panel").removeAttr("id");
+		});
 	}
 	return Promise.resolve();
 }

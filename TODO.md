@@ -15,6 +15,7 @@ DONE (js + async:promise + JSONP):
     - Youtube         [DONE]
     - Google+         [DONE]
     - blogger         [DONE]
+    - Facebook        [DONE]
 
 INPROGRESS (python || CORS || sync:XMLHttpRequest with GET):
 
@@ -26,9 +27,8 @@ WICHLIST:
 
     - Steam           [SOP] [NO-JSONP]
     - Foursquare      [DANGEROUS TOKENS]
-    - Facebook
+    - Picasa          [Deprecated]
     - Netflix
-    - Picasa
     - Rdio
     - Spotify
     - Etsy
