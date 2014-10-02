@@ -28,7 +28,7 @@
 		"js-beautify": "*"
 	},
 	"scripts": {
-		"lint": "make lint",
-		"test": "make pre-commit"
+		"test": "make test -j1",
+		"pre-commit": "make -j1"
 	}
 }
