@@ -1,3 +1,4 @@
+/*
 # -*- coding: utf-8 -*-
 import requests
 
@@ -31,3 +32,4 @@ def rss(request):
 
     return HttpResponse(content=new_content, status=r.status_code,
                         content_type=r.headers['content-type'])
+*/
