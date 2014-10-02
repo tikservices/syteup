@@ -1,3 +1,4 @@
+/*
 function convertWordpressResponse(post) {
     post['id'] = post['ID'];
     post['body'] = post['content'];
@@ -142,3 +143,4 @@ def strip_tags(html):
     s = MLStripper()
     s.feed(html)
     return s.get_data()
+*/
