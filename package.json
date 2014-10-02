@@ -1,0 +1,34 @@
+{
+	"name": "syteup",
+	"version": "0.1.0",
+	"description": "simple packaged website with social integration",
+	"homepage": "https://github.com/lejenome/syteup",
+	"licence": "MIT",
+	"author": "Moez Bouhlel (https//github.com/lejenome/) <bmoez.j@gmail.com>",
+	"contributors": [
+		"https://github.com/lejenome/syteup/graphs/contributors"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/lejenome/syteup"
+	},
+	"bugs": {
+		"url": "https://github.com/lejenome/syteup/issues"
+	},
+	"keywords": [
+		"website",
+		"social",
+		"webapp",
+		"blog",
+		"news"
+	],
+	"devDependencies": {
+		"jshint": "*",
+		"fixmyjs": "*",
+		"js-beautify": "*"
+	},
+	"scripts": {
+		"lint": "jshint src/",
+		"test": "npm run lint"
+	}
+}

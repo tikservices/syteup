@@ -1,6 +1,2 @@
-*.pyc
-.DS_Store
-.idea
-personal_syte_settings.py
-.elasticbeanstalk/
-.vagrant/
+node_modules
+npm-debug.log

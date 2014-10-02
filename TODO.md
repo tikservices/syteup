@@ -34,6 +34,9 @@ WICHLIST:
     - Etsy
     - Fitbit
     - Slideshare
+    - scribd
+    - speakerdeck
+    - deviantart
     - Quora
     - trakt
     - Posterous Spaces
