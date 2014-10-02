@@ -1,2 +1,4 @@
 .git
 node_modules
+src/static/js/libs
+src/static/less
