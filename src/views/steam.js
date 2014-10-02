@@ -1,16 +1,17 @@
 'use strict';
+
 function steam(settings) {
-	return Promise.all([
-			asyncGet(settings.api_url + "ISteamUser/GetPlayerSummaries/v0002/?format=json&key=" + settings.api_key + "&steamids=" + settings.user_id),
-			asyncGet(settings.api_url + "ISteamUser/GetFriendList/v0001/?format=json&key=" + settings.api_key + "&steamid=" + settings.user_id),
-			asyncGet(settings.api_url + "IPlayerService/GetOwnedGames/v0001/?format=json&key=" + settings.api_key + "&steamid=" + settings.user_id),
-			asyncGet(settings.api_url + "IPlayerService/GetRecentlyPlayedGames/v0001/?format=json&key=" + settings.api_key + "&steamid=" + settings.user_id)
-	]);
-}
-// http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=440&key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&steamid=76561197972495328
+        return Promise.all([
+            asyncGet(settings.api_url + "ISteamUser/GetPlayerSummaries/v0002/?format=json&key=" + settings.api_key + "&steamids=" + settings.user_id),
+            asyncGet(settings.api_url + "ISteamUser/GetFriendList/v0001/?format=json&key=" + settings.api_key + "&steamid=" + settings.user_id),
+            asyncGet(settings.api_url + "IPlayerService/GetOwnedGames/v0001/?format=json&key=" + settings.api_key + "&steamid=" + settings.user_id),
+            asyncGet(settings.api_url + "IPlayerService/GetRecentlyPlayedGames/v0001/?format=json&key=" + settings.api_key + "&steamid=" + settings.user_id)
+        ]);
+    }
+    // http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=440&key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&steamid=76561197972495328
 
 
-	/*
+/*
 	var context = {};
 	asyncGet('http://steamcommunity.com/id/' + settings.username + '/games?tab=all&xml=1').then(function(res) {
 		console.log(res);
@@ -69,4 +70,6 @@ function steam(settings) {
 	return context;
 }
 */
-define(function(){return steam;});
+define(function() {
+    return steam;
+});

@@ -9,9 +9,7 @@ if (typeof window.matchMedia !== 'undefined') {
 }
 
 $(function() {
-  $('#mobile-nav-btn').click(function() {
-     $('.main-section').toggleClass('nav-opened');
-  });
+    $('#mobile-nav-btn').click(function() {
+        $('.main-section').toggleClass('nav-opened');
+    });
 });
-
-
