@@ -2,7 +2,7 @@
 
 # DESCRPTION: a pre-commit hook to beautify the code, fix simple coding styles and lint it
 # NOTE: need to install npm dependencies 'npm install --dev'
-# INSTALL: cp pre-commit .git/hooks/pre-commit
+# INSTALL: cp pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
 
 echo "Running pre-commit hook! should take some seconds"
 make -j1
