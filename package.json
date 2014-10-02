@@ -28,7 +28,7 @@
 		"js-beautify": "*"
 	},
 	"scripts": {
-		"lint": "jshint src/",
-		"test": "npm run lint"
+		"lint": "make lint",
+		"test": "make pre-commit"
 	}
 }
