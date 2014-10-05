@@ -37,7 +37,7 @@ function setupDribbble(url, el, settings) {
                     "shots": dribbble_data.shots
                 };
 
-                $(template(template_data)).modal().on('hidden', function() {
+                $(template(template_data)).modal().on('hidden.bs.modal', function() {
                     $(this).remove();
                     if (currSelection === 'dribbble') {
                         adjustSelection('home');

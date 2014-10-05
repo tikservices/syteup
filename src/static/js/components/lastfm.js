@@ -75,7 +75,7 @@ function setupLastfm(url, el, settings) {
                     t.formatted_date = moment.utc(date, 'DD MMM YYYY, HH:mm').fromNow();
                 });
 
-                $(template(lastfm_data)).modal().on('hidden', function() {
+                $(template(lastfm_data)).modal().on('hidden.bs.modal', function() {
                     $(this).remove();
                     if (currSelection === 'lastfm') {
                         adjustSelection('home');

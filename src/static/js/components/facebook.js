@@ -55,7 +55,7 @@ function setupFacebook(url, el, settings) {
 
                 });
 
-                $(template(facebook_data)).modal().on('hidden', function() {
+                $(template(facebook_data)).modal().on('hidden.bs.modal', function() {
                     $(this).remove();
                     if (currSelection === 'facebook') {
                         adjustSelection('home');

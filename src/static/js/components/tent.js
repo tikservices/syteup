@@ -68,7 +68,7 @@ function setupTent(url, el, settings) {
                     "posts": posts
                 };
 
-                $(template(template_data)).modal().on('hidden', function() {
+                $(template(template_data)).modal().on('hidden.bs.modal', function() {
                     $(this).remove();
                     if (currSelection === 'tent') {
                         adjustSelection('home');

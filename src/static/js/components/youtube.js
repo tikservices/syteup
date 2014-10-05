@@ -34,7 +34,7 @@ function setupYoutube(url, el, settings) {
                 });
 
 
-                $(template(youtube_data)).modal().on('hidden', function() {
+                $(template(youtube_data)).modal().on('hidden.bs.modal', function() {
                     $(this).remove();
                     if (currSelection === 'youtube') {
                         adjustSelection('home');

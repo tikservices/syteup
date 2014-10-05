@@ -36,7 +36,7 @@ function setupInstagram(url, el, settings) {
                     p.formated_date = moment.unix(parseInt(p.created_time)).fromNow();
                 });
 
-                $modal = $(template(instagram_data)).modal().on('hidden', function() {
+                $modal = $(template(instagram_data)).modal().on('hidden.bs.modal', function() {
                     $(this).remove();
                     if (currSelection === 'instagram') {
                         adjustSelection('home');

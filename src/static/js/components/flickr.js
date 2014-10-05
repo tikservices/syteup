@@ -32,7 +32,7 @@ function setupFlickr(url, el, settings) {
                     p.formated_date = moment.unix(Date.parse(p.date_taken) / 1000).fromNow();
                 });
 
-                $modal = $(template(flickr_data)).modal().on('hidden', function() {
+                $modal = $(template(flickr_data)).modal().on('hidden.bs.modal', function() {
                     $(this).remove();
                     if (currSelection === 'flickr') {
                         adjustSelection('home');

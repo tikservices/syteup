@@ -26,7 +26,7 @@ function setupSoundcloud(url, el, settings) {
                 }
                 var template = Handlebars.compile(soundcloud_view);
 
-                $(template(soundcloud_data)).modal().on('hidden', function() {
+                $(template(soundcloud_data)).modal().on('hidden.bs.modal', function() {
                     $(this).remove();
                     if (currSelection === 'soundcloud') {
                         adjustSelection('home');

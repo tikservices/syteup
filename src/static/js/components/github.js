@@ -30,7 +30,7 @@ function setupGithub(url, el, settings) {
                 github_data.user.following = numberWithCommas(github_data.user.following);
                 github_data.user.followers = numberWithCommas(github_data.user.followers);
 
-                $(template(github_data)).modal().on('hidden', function() {
+                $(template(github_data)).modal().on('hidden.bs.modal', function() {
                     $(this).remove();
                     if (currSelection === 'github') {
                         adjustSelection('home');

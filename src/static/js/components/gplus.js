@@ -45,7 +45,7 @@ function setupGplus(url, el, settings) {
 
                 });
 
-                $(template(gplus_data)).modal().on('hidden', function() {
+                $(template(gplus_data)).modal().on('hidden.bs.modal', function() {
                     $(this).remove();
                     if (currSelection === 'gplus') {
                         adjustSelection('home');

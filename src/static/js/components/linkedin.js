@@ -26,7 +26,7 @@ function setupLinkedin(url, el, settings) {
                 linkedin_data.profile['numNetworkUpdates'] = linkedin_data.network_updates['_total'];
                 linkedin_data.profile['location_name'] = linkedin_data.profile['location']['name'];
 
-                $(template(linkedin_data)).modal().on('hidden', function() {
+                $(template(linkedin_data)).modal().on('hidden.bs.modal', function() {
                     $(this).remove();
                     if (currSelection === 'linkedin') {
                         adjustSelection('home');

@@ -63,7 +63,7 @@ function setupTwitter(url, el) {
                     "tweets": tweets
                 };
 
-                $(template(template_data)).modal().on('hidden', function() {
+                $(template(template_data)).modal().on('hidden.bs.modal', function() {
                     $(this).remove();
                     if (currSelection === 'twitter') {
                         adjustSelection('home');

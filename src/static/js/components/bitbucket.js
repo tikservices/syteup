@@ -31,7 +31,7 @@ function setupBitbucket(url, el, settings) {
                 var template = Handlebars.compile(bitbucket_view);
                 bitbucket_data.user.followers = numberWithCommas(bitbucket_data.user.followers);
 
-                $(template(bitbucket_data)).modal().on('hidden', function() {
+                $(template(bitbucket_data)).modal().on('hidden.bs.modal', function() {
                     $(this).remove();
                     if (currSelection === 'bitbucket') {
                         adjustSelection('home');

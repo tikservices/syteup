@@ -49,7 +49,7 @@ function setupStackoverflow(url, el, settings) {
                     "timeline": timeline
                 };
 
-                $(template(template_data)).modal().on('hidden', function() {
+                $(template(template_data)).modal().on('hidden.bs.modal', function() {
                     $(this).remove();
                     if (currSelection === 'stackoverflow') {
                         adjustSelection('home');

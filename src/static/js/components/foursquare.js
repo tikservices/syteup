@@ -42,7 +42,7 @@ function setupFoursquare(rl, el, settings) {
                     }
                 });
 
-                $(template(foursquare_data)).modal().on('hidden', function() {
+                $(template(foursquare_data)).modal().on('hidden.bs.modal', function() {
                     $(this).remove();
                     if (currSelection === 'foursquare') {
                         adjustSelection('home');
