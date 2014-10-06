@@ -47,7 +47,6 @@ function setupLinks(settings) {
         main_nav.appendChild(li);
     }
 
-
     //PROCESS LINKS CLICK EVENT
     $("a").click(function(e) {
         if (e.which === 2)

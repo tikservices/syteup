@@ -26,7 +26,6 @@ function linkedin(settings) {
         });
     });
 
-
 }
 define(function() {
     return linkedin;

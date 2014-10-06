@@ -9,8 +9,6 @@ function twitter(settings) {
 
     //************************************************.............?????????
 
-
-
     timeline_r.onload = function() {
         if (this.status !== 200) return;
         context = JSON.parse(this.responseText);
@@ -18,13 +16,13 @@ function twitter(settings) {
     timeline_r.send();
 
     /*    statuses_in_dict = []
-        for s in statuses:
-            statuses_in_dict.append(json.loads(s.AsJsonString()))
+            for s in statuses:
+                statuses_in_dict.append(json.loads(s.AsJsonString()))
 
-        return HttpResponse(content=json.dumps(statuses_in_dict),
-                            status=200,
-                            content_type="application/json")
-    			*/
+            return HttpResponse(content=json.dumps(statuses_in_dict),
+                                status=200,
+                                content_type="application/json")
+    */
     return context;
 }
 define(function() {

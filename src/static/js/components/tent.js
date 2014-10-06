@@ -36,7 +36,6 @@ function setupTent(url, el, settings) {
 
                 var template = Handlebars.compile(tent_view);
 
-
                 var user = tent_profile["https://tent.io/types/info/basic/v0.1.0"];
 
                 user.entity_url = tent_profile["https://tent.io/types/info/core/v0.1.0"].entity;

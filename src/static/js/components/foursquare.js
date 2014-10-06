@@ -3,7 +3,6 @@
 function setupFoursquare(rl, el, settings) {
     var href = el.href;
 
-
     var spinner = new Spinner(spin_opts).spin();
     $("#foursquare-link").append(spinner.el);
 

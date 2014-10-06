@@ -52,7 +52,6 @@ function setupFacebook(url, el, settings) {
                     if (p.message && p.message.length > 200)
                         p.message = p.message.substr(0, 197) + "...";
 
-
                 });
 
                 $(template(facebook_data)).modal().on("hidden.bs.modal", function() {

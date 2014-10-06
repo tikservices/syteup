@@ -33,7 +33,6 @@ function setupYoutube(url, el, settings) {
                         t.type = "post";
                 });
 
-
                 $(template(youtube_data)).modal().on("hidden.bs.modal", function() {
                     $(this).remove();
                     if (currSelection === "youtube") {

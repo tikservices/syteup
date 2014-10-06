@@ -97,7 +97,7 @@ function renderBlogPosts(posts, clearPosts) {
         window.reachedEnd = true;
     }
 
-    //Update this every time there are changes to the required 
+    //Update this every time there are changes to the required
     //templates since it's cached every time
     require.config({
         urlArgs: "bust=v2"
@@ -271,9 +271,10 @@ function fetchWordpressBlogPosts(offset, settings, posts_options) {
 /**
  * fetchBlogPosts
  *
- * @param offset Number The offset at which to start loading posts.
- * @param tag String Optional argument to specify to load posts with a certain tag.
- * @param platform String Optional argument to specify which blog platform to fetch from. Defaults to 'tumblr'.
+ * @param {(Number|String)} offset The offset at which to start loading posts.
+ * @param {Object} settings current blogging platform settings from config.json
+ * @param {String} platform argument to specify which blog platform to fetch from. Defaults to 'tumblr'.
+ * @param {Object} posts_options Optional set searched post options
  */
 function fetchBlogPosts(offset, settings, platform, posts_options) {
     if (posts_options && posts_options.id)

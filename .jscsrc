@@ -1,11 +1,11 @@
 {
 	"preset": "google",
 	"excludeFiles": ["node_modules", "src/static/js/libs", "src/static/less"],
-	"fileExtensions": [".js", ".json"],
+	"fileExtensions": [".js"],
 	"validateIndentation": null,
 	"validateQuoteMarks": "\"",
 	"maximumLineLength": 500,
-	"requireCamelCaseOrUpperCaseIdentifiers": "ignoreProperties",
+	"requireCamelCaseOrUpperCaseIdentifiers": null,
 	"requireMultipleVarDecl": null,
 	"disallowMultipleVarDecl": null,
 	"requireCurlyBraces": null

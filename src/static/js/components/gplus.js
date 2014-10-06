@@ -42,7 +42,6 @@ function setupGplus(url, el, settings) {
                             t.object.content = t.object.content.substr(0, 197) + "...";
                     }
 
-
                 });
 
                 $(template(gplus_data)).modal().on("hidden.bs.modal", function() {

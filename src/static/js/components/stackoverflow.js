@@ -27,7 +27,6 @@ function setupStackoverflow(url, el, settings) {
 
                 var template = Handlebars.compile(stackoverflow_view);
 
-
                 var user = stackoverflow_data.user;
                 var badge_count = user.badge_counts.bronze + user.badge_counts.silver + user.badge_counts.gold;
                 user.badge_count = badge_count;
