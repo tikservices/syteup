@@ -16,23 +16,23 @@ function woopraReady(tracker) {
 }
 
 function setupBlog(settings) {
-    var postOffset, posts_options;
+    var postOffset, postsOpts;
     $(document).on("click", ".post-link", function() {
         if (this.dataset["id"]) {
-            posts_options = {
+            postsOpts = {
                 id: this.dataset["id"]
             };
-            fetchBlogPosts(0, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"], posts_options);
+            fetchBlogPosts(0, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"], postsOpts);
         }
         postOffset = 0;
     });
     $(document).on("click", ".tag-link", function() {
         if (this.textContent) {
             window.reachedEnd = false;
-            posts_options = {
+            postsOpts = {
                 tag: this.textContent
             };
-            fetchBlogPosts(0, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"], posts_options).then(function(offset) {
+            fetchBlogPosts(0, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"], postsOpts).then(function(offset) {
                 postOffset = offset;
             });
         }
@@ -40,7 +40,7 @@ function setupBlog(settings) {
     $("#home-link").on("click", function() {
         if (location.hash.substr(0, 2) !== "#!") return;
         location.hash = "";
-        posts_options = undefined;
+        postsOpts = undefined;
         window.reachedEnd = false;
         fetchBlogPosts(0, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"]).then(function(offset) {
             postOffset = offset;
@@ -57,14 +57,14 @@ function setupBlog(settings) {
 
     window.reachedEnd = false; // set to true if no more blog posts left.
     if (location.hash.substr(0, 7) === "#!post/")
-        posts_options = {
+        postsOpts = {
             id: location.hash.slice(7).split("#")[0]
         };
     else if (location.hash.substr(0, 6) === "#!tag/")
-        posts_options = {
+        postsOpts = {
             tag: location.hash.slice(6).split("#")[0]
         };
-    return fetchBlogPosts(0, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"], posts_options).then(function(offset) {
+    return fetchBlogPosts(0, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"], postsOpts).then(function(offset) {
         postOffset = offset;
 
         var resultsLoaded = false,
@@ -75,7 +75,7 @@ function setupBlog(settings) {
                 ($(window).scrollTop() + $(window).height() > $(document).height() / 1.2)) {
                 resultsLoaded = true;
                 scrollWait = true;
-                fetchBlogPosts(postOffset, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"], posts_options).then(function(offset) {
+                fetchBlogPosts(postOffset, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"], postsOpts).then(function(offset) {
                     postOffset = offset;
                     scrollWait = false;
                 });
@@ -170,12 +170,12 @@ function setupPlugins(settings) {
     }
     return Promise.resolve();
 }
-var config_r = new XMLHttpRequest();
-config_r.open("GET", "config.json", true);
-if (config_r.overrideMimeType)
-    config_r.overrideMimeType("text/plain");
-config_r.onload = function() {
-    if (this.status !== 200) alert("FATAL! CAN'T LOAD CONFIG FILE");
+var xhr = new XMLHttpRequest();
+xhr.open("GET", "config.json", true);
+if (xhr.overrideMimeType)
+    xhr.overrideMimeType("text/plain");
+xhr.onload = function() {
+    if (this.status !== 200 && this.status !== 0 /*local request*/ ) alert("FATAL! CAN'T LOAD CONFIG FILE");
     settings = JSON.parse(this.responseText);
 
     //FIELDS SETTINGS
@@ -196,7 +196,6 @@ config_r.onload = function() {
         window.tent_feed_uri = settings["services_settings"]["tent"]["feed_url"];
     }
 
-
     $(function() {
         new Promise(function(resolve, reject) {
                 setupLinks(settings);
@@ -205,4 +204,4 @@ config_r.onload = function() {
             .then(setupPlugins(settings));
     });
 };
-config_r.send();
+xhr.send();

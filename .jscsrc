@@ -2,8 +2,12 @@
 	"preset": "google",
 	"excludeFiles": ["node_modules", "src/static/js/libs", "src/static/less"],
 	"fileExtensions": [".js", ".json"],
-	"validateIndentation": 4,
+	"validateIndentation": null,
 	"validateQuoteMarks": "\"",
-	"maximumLineLength": 500
+	"maximumLineLength": 500,
+	"requireCamelCaseOrUpperCaseIdentifiers": "ignoreProperties",
+	"requireMultipleVarDecl": null,
+	"disallowMultipleVarDecl": null,
+	"requireCurlyBraces": null
 }
 
