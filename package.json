@@ -25,7 +25,8 @@
 	"devDependencies": {
 		"jshint": "*",
 		"fixmyjs": "*",
-		"js-beautify": "*"
+		"js-beautify": "*",
+		"jscs": "*"
 	},
 	"scripts": {
 		"test": "make test -j1",
