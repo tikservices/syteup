@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
 function twitter(settings) {
     var context = {},
         timeline_r = new XMLHttpRequest();
 
-    timeline_r.open('GET', settings.api_url + 'statuses/user_timeline.json?' +
-        'count=50&include_rts=true&exclude_replies=true&screen_name=' + settings.username, false);
+    timeline_r.open("GET", settings.api_url + "statuses/user_timeline.json?" +
+        "count=50&include_rts=true&exclude_replies=true&screen_name=" + settings.username, false);
 
     //************************************************.............?????????
 
@@ -23,7 +23,7 @@ function twitter(settings) {
 
         return HttpResponse(content=json.dumps(statuses_in_dict),
                             status=200,
-                            content_type='application/json')
+                            content_type="application/json")
     			*/
     return context;
 }

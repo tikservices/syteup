@@ -1,14 +1,14 @@
-'use strict';
+"use strict";
 
 function setupGithub(url, el, settings) {
     var href = el.href;
 
-    if ($('#github-profile').length > 0) {
+    if ($("#github-profile").length > 0) {
         window.location = href;
         return;
     }
 
-    var params = url.attr('path').split('/').filter(function(w) {
+    var params = url.attr("path").split("/").filter(function(w) {
         if (w.length)
             return true;
         return false;
@@ -17,7 +17,7 @@ function setupGithub(url, el, settings) {
     var username = settings["client_id"];
 
     var spinner = new Spinner(spin_opts).spin();
-    $('#github-link').append(spinner.el);
+    $("#github-link").append(spinner.el);
 
     require(["views/github.js", "text!templates/github-profile.html"],
         function(github, github_view) {
@@ -30,10 +30,10 @@ function setupGithub(url, el, settings) {
                 github_data.user.following = numberWithCommas(github_data.user.following);
                 github_data.user.followers = numberWithCommas(github_data.user.followers);
 
-                $(template(github_data)).modal().on('hidden.bs.modal', function() {
+                $(template(github_data)).modal().on("hidden.bs.modal", function() {
                     $(this).remove();
-                    if (currSelection === 'github') {
-                        adjustSelection('home');
+                    if (currSelection === "github") {
+                        adjustSelection("home");
                     }
                 });
                 spinner.stop();

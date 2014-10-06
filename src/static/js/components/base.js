@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 //Global configs and functions shared between js
 
 function numberWithCommas(x) {
@@ -20,18 +20,18 @@ window.spin_opts = {
     width: 2,
     radius: 4,
     rotate: 9,
-    color: '#4c4c4c',
+    color: "#4c4c4c",
     speed: 1.5,
     trail: 40,
     shadow: false,
     hwaccel: true,
-    className: 'spinner',
+    className: "spinner",
     zIndex: 2e9
 };
 
 function syncGet(url, success, headers, failure) {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', url, false);
+    xhr.open("GET", url, false);
     xhr.onload = function() {
         if (this.status !== 200) {
             if (failure) failure();
@@ -57,9 +57,9 @@ function asyncGet(url, headers, jsonp) {
             url: url,
             headers: headers,
             jsonp: jsonp,
-            contentType: 'application/json; charset=utf-8',
-            type: 'GET',
-            dataType: 'jsonp',
+            contentType: "application/json; charset=utf-8",
+            type: "GET",
+            dataType: "jsonp",
             async: false,
             success: function(res) {
                 if ("meta" in res && Object.keys(res).length === 2)

@@ -1,14 +1,14 @@
-'use strict';
+"use strict";
 
 function setupBitbucket(url, el, settings) {
     var href = el.href;
 
-    if ($('#bitbucket-profile').length > 0) {
+    if ($("#bitbucket-profile").length > 0) {
         window.location = href;
         return;
     }
 
-    var params = url.attr('path').split('/').filter(function(w) {
+    var params = url.attr("path").split("/").filter(function(w) {
         if (w.length)
             return true;
         return false;
@@ -18,7 +18,7 @@ function setupBitbucket(url, el, settings) {
     //     var username = params[0];
 
     var spinner = new Spinner(spin_opts).spin();
-    $('#bitbucket-link').append(spinner.el);
+    $("#bitbucket-link").append(spinner.el);
 
     require(["views/bitbucket.js", "text!templates/bitbucket-profile.html"],
         function(bitbucket, bitbucket_view) {
@@ -31,10 +31,10 @@ function setupBitbucket(url, el, settings) {
                 var template = Handlebars.compile(bitbucket_view);
                 bitbucket_data.user.followers = numberWithCommas(bitbucket_data.user.followers);
 
-                $(template(bitbucket_data)).modal().on('hidden.bs.modal', function() {
+                $(template(bitbucket_data)).modal().on("hidden.bs.modal", function() {
                     $(this).remove();
-                    if (currSelection === 'bitbucket') {
-                        adjustSelection('home');
+                    if (currSelection === "bitbucket") {
+                        adjustSelection("home");
                     }
                 });
 

@@ -1,17 +1,17 @@
-'use strict';
+"use strict";
 var flickr_template;
 var flickr_spinner;
 
 function setupFlickr(url, el, settings) {
     var href = el.href;
 
-    if ($('#flickr-profile').length > 0) {
+    if ($("#flickr-profile").length > 0) {
         window.location = href;
         return;
     }
 
     flickr_spinner = new Spinner(spin_opts).spin();
-    $('#flickr-link').append(flickr_spinner.el);
+    $("#flickr-link").append(flickr_spinner.el);
 
     require(["views/flickr.js", "text!templates/flickr-view.html?test=2"],
         function(flickr, flickr_view) {
@@ -32,10 +32,10 @@ function setupFlickr(url, el, settings) {
                     p.formated_date = moment.unix(Date.parse(p.date_taken) / 1000).fromNow();
                 });
 
-                $modal = $(template(flickr_data)).modal().on('hidden.bs.modal', function() {
+                $modal = $(template(flickr_data)).modal().on("hidden.bs.modal", function() {
                     $(this).remove();
-                    if (currSelection === 'flickr') {
-                        adjustSelection('home');
+                    if (currSelection === "flickr") {
+                        adjustSelection("home");
                     }
                 });
 

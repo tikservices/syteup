@@ -1,21 +1,21 @@
-'use strict';
+"use strict";
 
 function setupStackoverflow(url, el, settings) {
     var href = el.href;
 
-    if ($('#stackoverflow-profile').length > 0) {
+    if ($("#stackoverflow-profile").length > 0) {
         window.location = href;
         return;
     }
 
-    var params = url.attr('path').split('/').filter(function(w) {
+    var params = url.attr("path").split("/").filter(function(w) {
         if (w.length)
             return true;
         return false;
     });
 
     var spinner = new Spinner(spin_opts).spin();
-    $('#stackoverflow-link').append(spinner.el);
+    $("#stackoverflow-link").append(spinner.el);
 
     require(["views/stackoverflow.js", "text!templates/stackoverflow-view.html"],
         function(stackoverflow, stackoverflow_view) {
@@ -49,10 +49,10 @@ function setupStackoverflow(url, el, settings) {
                     "timeline": timeline
                 };
 
-                $(template(template_data)).modal().on('hidden.bs.modal', function() {
+                $(template(template_data)).modal().on("hidden.bs.modal", function() {
                     $(this).remove();
-                    if (currSelection === 'stackoverflow') {
-                        adjustSelection('home');
+                    if (currSelection === "stackoverflow") {
+                        adjustSelection("home");
                     }
                 });
 

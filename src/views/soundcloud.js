@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 function soundcloud(settings) {
     return Promise.all([
@@ -7,12 +7,12 @@ function soundcloud(settings) {
 
     ]).then(function(res) {
         return {
-            'user_tracks': {
-                'show_artwork': settings.show_artwork,
-                'player_color': settings.player_color,
-                'tracks': res[1]
+            "user_tracks": {
+                "show_artwork": settings.show_artwork,
+                "player_color": settings.player_color,
+                "tracks": res[1]
             },
-            'user_profile': res[0]
+            "user_profile": res[0]
         };
     });
 }

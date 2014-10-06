@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 var isMobileView = false;
 
-if (typeof window.matchMedia !== 'undefined') {
+if (typeof window.matchMedia !== "undefined") {
     var mediaQuery = window.matchMedia("(max-width:799px)");
     if (mediaQuery.matches) {
         isMobileView = true;
@@ -9,7 +9,7 @@ if (typeof window.matchMedia !== 'undefined') {
 }
 
 $(function() {
-    $('#mobile-nav-btn').click(function() {
-        $('.main-section').toggleClass('nav-opened');
+    $("#mobile-nav-btn").click(function() {
+        $(".main-section").toggleClass("nav-opened");
     });
 });

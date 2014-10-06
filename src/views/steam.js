@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 function steam(settings) {
         return Promise.all([

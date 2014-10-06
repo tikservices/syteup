@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 var settings = {};
 
 function woopraReady(tracker) {
@@ -6,7 +6,7 @@ function woopraReady(tracker) {
     tracker.setIdleTimeout(settings["plugins_settings"]["woopra"]["idle_timeout"]);
     if (settings["plugins_settings"]["woopra"]["include_query"])
         tracker.trackPageview({
-            type: 'pageview',
+            type: "pageview",
             url: window.location.pathname + window.location.search,
             title: document.title
         });
@@ -18,9 +18,9 @@ function woopraReady(tracker) {
 function setupBlog(settings) {
     var postOffset, posts_options;
     $(document).on("click", ".post-link", function() {
-        if (this.dataset['id']) {
+        if (this.dataset["id"]) {
             posts_options = {
-                id: this.dataset['id']
+                id: this.dataset["id"]
             };
             fetchBlogPosts(0, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"], posts_options);
         }
@@ -37,7 +37,7 @@ function setupBlog(settings) {
             });
         }
     });
-    $('#home-link').on("click", function() {
+    $("#home-link").on("click", function() {
         if (location.hash.substr(0, 2) !== "#!") return;
         location.hash = "";
         posts_options = undefined;
@@ -91,14 +91,14 @@ function setupBlog(settings) {
             }
         });
         if (window.disqus_enabled)
-            $('body').bind('blog-post-loaded', function() {
+            $("body").bind("blog-post-loaded", function() {
                 embedDisqus(settings["plugins_settings"]["disqus"]);
             });
         if (window.sharethis_enabled) {
             var switchTo5x = true;
-            var jsfile = document.createElement('script');
+            var jsfile = document.createElement("script");
             jsfile.src = "http://w.sharethis.com/button/buttons.js";
-            jsfile.type = 'text/javascript';
+            jsfile.type = "text/javascript";
             //jsfile.async = true;
             document.body.appendChild(jsfile);
             stLight.options({
@@ -112,29 +112,29 @@ function setupBlog(settings) {
 function setupPlugins(settings) {
     if (settings["plugins"]["woopra"]) {
         (function() {
-            var wsc = document.createElement('script');
-            wsc.src = document.location.protocol + '//static.woopra.com/js/woopra.js';
-            wsc.type = 'text/javascript';
+            var wsc = document.createElement("script");
+            wsc.src = document.location.protocol + "//static.woopra.com/js/woopra.js";
+            wsc.type = "text/javascript";
             wsc.async = true;
-            var ssc = document.getElementsByTagName('script')[0];
+            var ssc = document.getElementsByTagName("script")[0];
             ssc.parentNode.insertBefore(wsc, ssc);
         })();
     }
     if (settings["plugins"]["google_analytics"]) {
         var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', settings["plugins_settings"]["google_analytics"]["tracking_id"]]);
-        _gaq.push(['_trackPageview']);
+        _gaq.push(["_setAccount", settings["plugins_settings"]["google_analytics"]["tracking_id"]]);
+        _gaq.push(["_trackPageview"]);
         (function() {
-            var ga = document.createElement('script');
-            ga.type = 'text/javascript';
+            var ga = document.createElement("script");
+            ga.type = "text/javascript";
             ga.async = true;
-            ga.src = ('https:' === document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0];
+            ga.src = ("https:" === document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";
+            var s = document.getElementsByTagName("script")[0];
             s.parentNode.insertBefore(ga, s);
         })();
     }
     if (settings["plugins"]["rss"]) {
-        var rss = document.createElement('link');
+        var rss = document.createElement("link");
         rss.rel = "alternate";
         rss.type = "application/rss+xml";
         rss.title = "RSS";
@@ -150,10 +150,10 @@ function setupPlugins(settings) {
         style.sheet.insertRule(".control-panel-btn a.clicked {background-color: green}", 0);
         style.sheet.insertRule(".control-panel-btn a.unclicked {background-color: red}", 0);
 
-        $('body').bind('blog-post-loaded', function() {
+        $("body").bind("blog-post-loaded", function() {
             if (!$("#control-panel")[0]) return;
             $.each($(".main-nav li a"), function(i, e) {
-                $('#control-panel').append("<div class='control-panel-btn'><a class='clicked' data-id='" + e.id + "'>#" + e.id + "</a></div>");
+                $("#control-panel").append("<div class='control-panel-btn'><a class='clicked' data-id='" + e.id + "'>#" + e.id + "</a></div>");
             });
             $(".control-panel-btn a").click(function() {
                 var id = this.dataset["id"];
@@ -171,7 +171,7 @@ function setupPlugins(settings) {
     return Promise.resolve();
 }
 var config_r = new XMLHttpRequest();
-config_r.open('GET', 'config.json', true);
+config_r.open("GET", "config.json", true);
 if (config_r.overrideMimeType)
     config_r.overrideMimeType("text/plain");
 config_r.onload = function() {

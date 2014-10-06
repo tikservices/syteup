@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
 function tentLinkify(text) {
     text = text.replace(/(https?:\/\/\S+)/gi, function(s) {
-        return '<a href="' + s + '">' + s + '</a>';
+        return "<a href='" + s + "'>" + s + "</a>";
     });
 
     return text;
@@ -11,13 +11,13 @@ function tentLinkify(text) {
 function setupTent(url, el, settings) {
     var href = el.href;
 
-    if ($('#tent-profile').length > 0) {
+    if ($("#tent-profile").length > 0) {
         window.location = href;
         return;
     }
 
     var spinner = new Spinner(spin_opts).spin();
-    $('#tent-link').append(spinner.el);
+    $("#tent-link").append(spinner.el);
 
     require(
         ["views/tent.js", "text!templates/tent-view.html"],
@@ -68,10 +68,10 @@ function setupTent(url, el, settings) {
                     "posts": posts
                 };
 
-                $(template(template_data)).modal().on('hidden.bs.modal', function() {
+                $(template(template_data)).modal().on("hidden.bs.modal", function() {
                     $(this).remove();
-                    if (currSelection === 'tent') {
-                        adjustSelection('home');
+                    if (currSelection === "tent") {
+                        adjustSelection("home");
                     }
                 });
 

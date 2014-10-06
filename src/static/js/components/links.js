@@ -1,24 +1,10 @@
-'use strict';
+"use strict";
 var $url;
 
-/*var allComponents = [
-  'instagram',
-  'twitter',
-  'github',
-  'dribbble',
-  'lastfm',
-  'soundcloud',
-  'bitbucket',
-  'foursquare',
-  'tent',
-  'steam',
-  'stackoverflow',
-  'linkedin'
-];*/
 var allComponents = [],
     enabledServices = [];
 
-window.currSelection = 'home';
+window.currSelection = "home";
 
 function setupLinks(settings) {
     var li, link, service;
@@ -63,7 +49,7 @@ function setupLinks(settings) {
 
 
     //PROCESS LINKS CLICK EVENT
-    $('a').click(function(e) {
+    $("a").click(function(e) {
         if (e.which === 2)
             return;
         e.preventDefault();
@@ -72,16 +58,16 @@ function setupLinks(settings) {
         if (this.href === $url)
             return;
 
-        var url = $.url(this.href.replace('/#!', ''));
+        var url = $.url(this.href.replace("/#!", ""));
         $url = this.href;
-        if (this.id === 'home-link' /*&& window.location.pathname == '/'*/ ) {
-            adjustSelection('home');
+        if (this.id === "home-link" /*&& window.location.pathname == "/"*/ ) {
+            adjustSelection("home");
             return;
         } else {
             var i;
             for (i = 0; i < enabledServices.length; i++) {
                 var service = enabledServices[i];
-                if (this.id === service + '-link') {
+                if (this.id === service + "-link") {
                     var setupFunct = "setup" + service[0].toUpperCase() + service.slice(1);
                     adjustSelection(service, window[setupFunct].bind(this, url, this, settings["services_settings"][service]));
                     return;
@@ -97,10 +83,10 @@ function adjustSelection(component, callback) {
     var transition,
         $currProfileEl;
 
-    if (currSelection !== 'home') {
-        $currProfileEl = $('#' + currSelection + '-profile');
-        transition = $.support.transition && $currProfileEl.hasClass('fade');
-        $currProfileEl.modal('hide');
+    if (currSelection !== "home") {
+        $currProfileEl = $("#" + currSelection + "-profile");
+        transition = $.support.transition && $currProfileEl.hasClass("fade");
+        $currProfileEl.modal("hide");
         if (callback) {
             if (transition) {
                 $currProfileEl.one($.support.transition.end, callback);
@@ -112,10 +98,10 @@ function adjustSelection(component, callback) {
         callback();
     }
 
-    $('.main-nav').children('li').removeClass('sel');
-    $('#' + component + '-link').parent().addClass('sel');
+    $(".main-nav").children("li").removeClass("sel");
+    $("#" + component + "-link").parent().addClass("sel");
 
-    if (component === 'home')
+    if (component === "home")
         $url = null;
 
     window.currSelection = component;

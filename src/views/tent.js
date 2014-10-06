@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 function tent(settings) {
     return Promise.all([

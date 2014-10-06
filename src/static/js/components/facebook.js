@@ -1,21 +1,21 @@
-'use strict';
+"use strict";
 
 function setupFacebook(url, el, settings) {
     var href = el.href;
 
-    if ($('#facebook-profile').length > 0) {
+    if ($("#facebook-profile").length > 0) {
         window.location = href;
         return;
     }
 
-    var params = url.attr('path').split('/').filter(function(w) {
+    var params = url.attr("path").split("/").filter(function(w) {
         if (w.length)
             return true;
         return false;
     });
 
     var spinner = new Spinner(spin_opts).spin();
-    $('#facebook-link').append(spinner.el);
+    $("#facebook-link").append(spinner.el);
 
     require(["views/facebook.js", "text!templates/facebook-profile.html"],
         function(facebook, facebook_view) {
@@ -36,7 +36,7 @@ function setupFacebook(url, el, settings) {
 
                 facebook_data.posts.forEach(function(p) {
                     p.url = facebook_data.url + "/posts/" + p.id;
-                    p.updated_time = moment.utc(p.updated_time || p.created_time, 'YYYY-MM-DD HH:mm:ss').fromNow();
+                    p.updated_time = moment.utc(p.updated_time || p.created_time, "YYYY-MM-DD HH:mm:ss").fromNow();
                     if (p.likes)
                         p.likes = p.likes.data.length;
                     else
@@ -55,10 +55,10 @@ function setupFacebook(url, el, settings) {
 
                 });
 
-                $(template(facebook_data)).modal().on('hidden.bs.modal', function() {
+                $(template(facebook_data)).modal().on("hidden.bs.modal", function() {
                     $(this).remove();
-                    if (currSelection === 'facebook') {
-                        adjustSelection('home');
+                    if (currSelection === "facebook") {
+                        adjustSelection("home");
                     }
                 });
 

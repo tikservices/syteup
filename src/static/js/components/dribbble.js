@@ -1,21 +1,21 @@
-'use strict';
+"use strict";
 
 function setupDribbble(url, el, settings) {
     var href = el.href;
 
-    if ($('#dribbble-profile').length > 0) {
+    if ($("#dribbble-profile").length > 0) {
         window.location = href;
         return;
     }
 
-    var params = url.attr('path').split('/').filter(function(w) {
+    var params = url.attr("path").split("/").filter(function(w) {
         if (w.length)
             return true;
         return false;
     });
 
     var spinner = new Spinner(spin_opts).spin();
-    $('#dribbble-link').append(spinner.el);
+    $("#dribbble-link").append(spinner.el);
 
     require(["views/dribbble.js", "text!templates/dribbble-view.html"],
         function(dribbble, dribbble_view) {
@@ -37,10 +37,10 @@ function setupDribbble(url, el, settings) {
                     "shots": dribbble_data.shots
                 };
 
-                $(template(template_data)).modal().on('hidden.bs.modal', function() {
+                $(template(template_data)).modal().on("hidden.bs.modal", function() {
                     $(this).remove();
-                    if (currSelection === 'dribbble') {
-                        adjustSelection('home');
+                    if (currSelection === "dribbble") {
+                        adjustSelection("home");
                     }
                 });
 

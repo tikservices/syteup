@@ -1,0 +1,9 @@
+{
+	"preset": "google",
+	"excludeFiles": ["node_modules", "src/static/js/libs", "src/static/less"],
+	"fileExtensions": [".js", ".json"],
+	"validateIndentation": 4,
+	"validateQuoteMarks": "\"",
+	"maximumLineLength": 500
+}
+

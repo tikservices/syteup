@@ -1,16 +1,16 @@
-'use strict';
+"use strict";
 
 function twitterLinkify(text) {
     text = text.replace(/(https?:\/\/\S+)/gi, function(s) {
-        return '<a href="' + s + '">' + s + '</a>';
+        return "<a href='" + s + "'>" + s + "</a>";
     });
 
     text = text.replace(/(^|) @(\w+)/gi, function(s) {
-        return '<a href="http://twitter.com/' + s + '">' + s + '</a>';
+        return "<a href='http://twitter.com/" + s + "'>" + s + "</a>";
     });
 
     text = text.replace(/(^|) #(\w+)/gi, function(s) {
-        return '<a href="http://search.twitter.com/search?q=' + s.replace(/#/, '%23') + '">' + s + '</a>';
+        return "<a href='http://search.twitter.com/search?q=" + s.replace(/#/, "%23") + "'>" + s + "</a>";
     });
 
     return text;
@@ -19,12 +19,12 @@ function twitterLinkify(text) {
 function setupTwitter(url, el) {
     var href = el.href;
 
-    if ($('#twitter-profile').length > 0) {
+    if ($("#twitter-profile").length > 0) {
         window.location = href;
         return;
     }
 
-    var params = url.attr('path').split('/').filter(function(w) {
+    var params = url.attr("path").split("/").filter(function(w) {
         if (w.length)
             return true;
         return false;
@@ -34,7 +34,7 @@ function setupTwitter(url, el) {
         var username = params[0];
 
         var spinner = new Spinner(spin_opts).spin();
-        $('#twitter-link').append(spinner.el);
+        $("#twitter-link").append(spinner.el);
 
         require(["json!/twitter/" + username, "text!templates/twitter-view.html"],
             function(twitter_data, twitter_view) {
@@ -63,10 +63,10 @@ function setupTwitter(url, el) {
                     "tweets": tweets
                 };
 
-                $(template(template_data)).modal().on('hidden.bs.modal', function() {
+                $(template(template_data)).modal().on("hidden.bs.modal", function() {
                     $(this).remove();
-                    if (currSelection === 'twitter') {
-                        adjustSelection('home');
+                    if (currSelection === "twitter") {
+                        adjustSelection("home");
                     }
                 });
 
