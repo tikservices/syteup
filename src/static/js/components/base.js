@@ -1,6 +1,8 @@
 "use strict";
 //Global configs and functions shared between js
 
+window.NO_MORE_DATA = -2;
+
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }

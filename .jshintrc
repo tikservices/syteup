@@ -61,5 +61,6 @@
     "predef"       : ["numberWithCommas", "Spinner", "spin_opts",
     "require", "Handlebars", "currSelection", "adjustSelection",
     "define", "asyncGet", "moment", "setupLinks", "fetchBlogPosts",
-    "embedDisqus", "stLight", "prettyPrint"]
+    "embedDisqus", "stLight", "prettyPrint", "setupService",
+    "NO_MORE_DATA"]
 }

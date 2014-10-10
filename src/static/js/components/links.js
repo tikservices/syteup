@@ -68,7 +68,11 @@ function setupLinks(settings) {
                 var service = enabledServices[i];
                 if (this.id === service + "-link") {
                     var setupFunct = "setup" + service[0].toUpperCase() + service.slice(1);
-                    adjustSelection(service, window[setupFunct].bind(this, url, this, settings["services_settings"][service]));
+		    //TODO: get ride of old code
+		    if(window[service + "Service"]) // if service code updated to lastest syteup service design
+			    adjustSelection(service, setupService.bind(this, service, url, this, settings["services_settings"][service]));
+		    else
+			    adjustSelection(service, window[setupFunct].bind(this, url, this, settings["services_settings"][service]));
                     return;
                 }
             }
