@@ -3,11 +3,12 @@ List of services to add integration for:
 DONE (new service code design):
 
     - Instagram       [DONE]
+    - Youtube         [DONE]
+    - Github          [DONE]
 
 ALMOST (js + async:promise + JSONP):
 
     - Bitbucket       [DONE]
-    - Github          [DONE]
     - Dribbble        [DONE]
     - Tumblr          [DONE]
     - Wordpress       [DONE]
@@ -15,7 +16,6 @@ ALMOST (js + async:promise + JSONP):
     - Soundcloud      [DONE]
     - Last.fm         [DONE]
     - Stack Overflow  [DONE]
-    - Youtube         [DONE]
     - Google+         [DONE]
     - blogger         [DONE]
     - Facebook        [DONE]
