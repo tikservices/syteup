@@ -1,6 +1,7 @@
 (function(window) {
     "use strict";
     var DISPLAY_NAME = "Bitbucket";
+    var API_URL = "https://api.bitbucket.org/1.0/";
 
     function setupBitbucket(bitbucketData, settings) {
         bitbucketData.user.followers = numberWithCommas(bitbucketData.user.followers);
@@ -10,8 +11,8 @@
     function fetchData(settings) {
         var context = {};
         return Promise.all([
-            asyncGet(settings.api_url + "users/" + settings.username + "?jsoncallback=mainRequest"),
-            asyncGet(settings.api_url + "users/" + settings.username + "/followers?jsoncallback=followersRequest")
+            asyncGet(API_URL + "users/" + settings.username + "?jsoncallback=mainRequest"),
+            asyncGet(API_URL + "users/" + settings.username + "/followers?jsoncallback=followersRequest")
         ]).then(function(res) {
             context = res[0];
             context["user"]["followers"] = res[1]["count"];
@@ -23,7 +24,7 @@
             if (settings.show_forks) {
                 return Promise.all(
                     context["repositories"].map(function(repo) {
-                        return asyncGet(settings.api_url + "repositories/" + settings.username + "/" + repo["slug"] + "?jsoncallback=forksRequest");
+                        return asyncGet(API_URL + "repositories/" + settings.username + "/" + repo["slug"] + "?jsoncallback=forksRequest");
                     })).then(function(forks) {
                     var i = 0;
                     forks.forEach(function(fork) {
