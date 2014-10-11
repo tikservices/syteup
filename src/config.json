@@ -85,7 +85,6 @@
     "services_settings": {
         "github": {
             "url": "https://github.com/lejenome",
-            "api_url": "https://api.github.com/",
             "client_id": "lejenome"
         },
         "stackoverflow": {
