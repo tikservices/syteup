@@ -3,15 +3,15 @@
     var DISPLAY_NAME = "Youtube";
     var API_URL = "https://www.googleapis.com/youtube/v3/";
 
-    function setupYoutube(youtube_data, settings) {
-        if (youtube_data.message || youtube_data.length === 0) {
+    function setupYoutube(youtubeData, settings) {
+        if (youtubeData.message || youtubeData.activities.length === 0) {
             return;
         }
 
-        youtube_data.statistics.url = settings.url;
-        youtube_data.channel.url = settings.url;
+        youtubeData.statistics.url = settings.url;
+        youtubeData.channel.url = settings.url;
 
-        $.each(youtube_data.activities, function(i, t) {
+        $.each(youtubeData.activities, function(i, t) {
             t.publishedAt = moment.utc(t.publishedAt, "YYYY-MM-DD HH:mm:ss").fromNow();
             t.img = t.thumbnails["default"].url;
             if (t.type === "playlistItem")
@@ -19,7 +19,7 @@
             else if (t.type === "bulletin")
                 t.type = "post";
         });
-
+	return youtubeData;
     }
 
     function fetchData(settings) {
