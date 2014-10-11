@@ -1,28 +1,29 @@
 (function(window) {
-"use strict";
-var DISPLAY_NAME = "Flickr";
-function setupFlickr(flickrData, settings) {
-                if (flickrData.items === 0) {
-                    return;
-                }
+    "use strict";
+    var DISPLAY_NAME = "Flickr";
 
-                flickrData.title = flickrData.title.substring(13);
+    function setupFlickr(flickrData, settings) {
+        if (flickrData.items === 0) {
+            return;
+        }
 
-                $.each(flickrData.items, function(i, p) {
-                    p.formated_date = moment.unix(Date.parse(p.date_taken) / 1000).fromNow();
-                });
+        flickrData.title = flickrData.title.substring(13);
 
-		return flickrData;
-}
+        $.each(flickrData.items, function(i, p) {
+            p.formated_date = moment.unix(Date.parse(p.date_taken) / 1000).fromNow();
+        });
 
-function fetchData(settings) {
-    return asyncGet("http://api.flickr.com/services/feeds/photos_public.gne?id=" + settings.client_id + "&format=json&lang=en-us", {}, "jsoncallback");
-}
+        return flickrData;
+    }
 
-window.flickrService = {
-	displayName: DISPLAY_NAME,
-	template: "templates/flickr-view.html",
-	setup: setupFlickr,
-	fetch: fetchData
-};
+    function fetchData(settings) {
+        return asyncGet("http://api.flickr.com/services/feeds/photos_public.gne?id=" + settings.client_id + "&format=json&lang=en-us", {}, "jsoncallback");
+    }
+
+    window.flickrService = {
+        displayName: DISPLAY_NAME,
+        template: "templates/flickr-view.html",
+        setup: setupFlickr,
+        fetch: fetchData
+    };
 })(window);
