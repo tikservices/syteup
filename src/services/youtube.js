@@ -19,7 +19,7 @@
             else if (t.type === "bulletin")
                 t.type = "post";
         });
-	return youtubeData;
+        return youtubeData;
     }
 
     function fetchData(settings) {
