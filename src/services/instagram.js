@@ -5,7 +5,6 @@
     var nextId;
 
     function setupInstagram(instagramData, settings) {
-        settings.pagination = undefined; // if we already showed instagram profile, clean max_id
 
         if (instagramData.media === 0) {
             return;
@@ -31,16 +30,6 @@
     }
 
     function fetchData(settings) {
-        if (nextId) //just show more instagram photos
-            return asyncGet(API_URL + "users/" + settings.user_id + "/media/recent/?access_token=" + settings.access_token + "&max_id=" + nextId)
-            .then(function(res) {
-                nextId = res["pagination"]["next_max_id"];
-                return Promise.resolve({
-                    "media": res["data"],
-                    "pagination": nextId
-                });
-            });
-        else
             return Promise.all([
                 asyncGet(API_URL + "users/" + settings.user_id + "/?access_token=" + settings.access_token),
                 asyncGet(API_URL + "users/" + settings.user_id + "/media/recent/?access_token=" + settings.access_token)
@@ -49,14 +38,21 @@
                 return Promise.resolve({
                     "user": res[0], //data was exported to the root by asyncGet function
                     "media": res[1]["data"],
-                    "pagination": nextId
+		    "pagination": nextId
                 });
             });
     }
 
     function fetchMore(settings) {
         if (nextId)
-            return fetchData(settings);
+            return asyncGet(API_URL + "users/" + settings.user_id + "/media/recent/?access_token=" + settings.access_token + "&max_id=" + nextId)
+            .then(function(res) {
+                nextId = res["pagination"]["next_max_id"];
+                return Promise.resolve({
+                    "media": res["data"],
+		    "pagination" : nextId
+                });
+            });
         else
             return Promise.reject(NO_MORE_DATA);
     }

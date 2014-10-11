@@ -70,7 +70,8 @@ function setupService(service, url, el, settings) {
 
                 // fetch more service data && add it to the modal
                 $service.fetchMore(settings).then(function(serviceMoreData) {
-                    $("." + service + " .profile-data").append(moreTemplate(serviceMoreData, settings));
+			serviceMoreData = $service.setupMore(serviceMoreData, settings);
+                    $("." + service + " .profile-data").append(moreTemplate(serviceMoreData));
                     spinnerMore.stop();
                 }).catch(function(error) {
                     if (error === NO_MORE_DATA) {
