@@ -23,7 +23,7 @@
     {{/with}}
   </ul>
   {{/with}}
-  <ul class="profile-shots">
+  <ul class="profile-shots profile-data">
     {{#each media}}
     <li>
       <a href="{{ link }}" class="profile-shot">
@@ -50,9 +50,7 @@
     {{/each}}
   </ul>
   {{#if pagination}}
-  {{#with pagination}}
-  <button class="load-more-button" id="load-more-pics" data-control-next="{{ next_max_id }}">Load more...</button>
-  {{/with}}
+  <button class="load-more-button" id="load-more-data">Load more...</button>
   {{/if}}
 </div>
 

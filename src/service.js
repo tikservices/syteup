@@ -62,21 +62,22 @@ function setupService(service, url, el, settings) {
 
         // If service support fetching more data
         if ($service.supportMore) {
-            // compile the template for More data
             var moreTemplate = Handlebars.compile(viewMore);
 
-            var spinnerMore = new Spinner(spin_opts).spin();
-            $("#load-more-data").append(spinnerMore.el);
+            $modal.find("#load-more-data").click(function(e) {
+                var spinnerMore = new Spinner(spin_opts).spin();
+                $(this).append(spinnerMore.el);
 
-            // fetch more service data && add it to the modal
-            $service.fetchMore(settings).then(function(serviceMoreData) {
-                $("." + service + " .profile-data").append(moreTemplate(serviceMoreData, settings));
-                spinnerMore.stop();
-            }).catch(function(error) {
-                if (error === NO_MORE_DATA) {
-                    $("." + service + " #load-more-data").remove();
-                }
-                spinnerMore.stop();
+                // fetch more service data && add it to the modal
+                $service.fetchMore(settings).then(function(serviceMoreData) {
+                    $("." + service + " .profile-data").append(moreTemplate(serviceMoreData, settings));
+                    spinnerMore.stop();
+                }).catch(function(error) {
+                    if (error === NO_MORE_DATA) {
+                        $(this).remove();
+                    }
+                    spinnerMore.stop();
+                });
             });
 
         }
@@ -84,5 +85,6 @@ function setupService(service, url, el, settings) {
         spinner.stop();
     }).catch(function(error) {
         //TODO
+        console.error("service " + service + " failed on setup of fetching data and templates");
     });
 }

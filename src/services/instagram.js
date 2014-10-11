@@ -5,7 +5,7 @@
     var nextId;
 
     function setupInstagram(instagramData, settings) {
-        nextId = undefined; // if we already showed instagram profile, clean max_id
+        settings.pagination = undefined; // if we already showed instagram profile, clean max_id
 
         if (instagramData.media === 0) {
             return;
@@ -32,11 +32,12 @@
 
     function fetchData(settings) {
         if (nextId) //just show more instagram photos
-            return asyncGet(API_URL + "users/" + settings.user_id + "/media/recent/?access_token=" + settings.access_token + "&max_id=" + settings.next_id)
+            return asyncGet(API_URL + "users/" + settings.user_id + "/media/recent/?access_token=" + settings.access_token + "&max_id=" + nextId)
             .then(function(res) {
+                nextId = res["pagination"]["next_max_id"];
                 return Promise.resolve({
                     "media": res["data"],
-                    "pagination": res["pagination"]
+                    "pagination": nextId
                 });
             });
         else
@@ -44,10 +45,11 @@
                 asyncGet(API_URL + "users/" + settings.user_id + "/?access_token=" + settings.access_token),
                 asyncGet(API_URL + "users/" + settings.user_id + "/media/recent/?access_token=" + settings.access_token)
             ]).then(function(res) {
+                nextId = res[1]["pagination"]["next_max_id"];
                 return Promise.resolve({
                     "user": res[0], //data was exported to the root by asyncGet function
                     "media": res[1]["data"],
-                    "pagination": res[1]["pagination"]
+                    "pagination": nextId
                 });
             });
     }
@@ -59,13 +61,13 @@
             return Promise.reject(NO_MORE_DATA);
     }
     window.instagramService = {
-        setup: setupInstagram,
-        fetch: fetchData,
         displayName: DISPLAY_NAME,
-        fetchMore: fetchMore,
-        setupMore: setupInstagramMore,
         template: "templates/instagram-view.html",
         templateMore: "templates/instagram-view-more.html",
-        supportMore: true
+        setup: setupInstagram,
+        fetch: fetchData,
+        supportMore: true,
+        fetchMore: fetchMore,
+        setupMore: setupInstagramMore
     };
 })(window);
