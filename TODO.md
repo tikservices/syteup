@@ -5,20 +5,20 @@ DONE (new service code design):
     - Instagram       [DONE]
     - Youtube         [DONE]
     - Github          [DONE]
-
-ALMOST (js + async:promise + JSONP):
-
     - Bitbucket       [DONE]
     - Dribbble        [DONE]
-    - Tumblr          [DONE]
-    - Wordpress       [DONE]
     - Flickr          [DONE]
     - Soundcloud      [DONE]
     - Last.fm         [DONE]
     - Stack Overflow  [DONE]
     - Google+         [DONE]
-    - blogger         [DONE]
     - Facebook        [DONE]
+
+ALMOST (js + async:promise + JSONP):
+
+    - Wordpress       [DONE]
+    - Tumblr          [DONE]
+    - blogger         [DONE]
 
 INPROGRESS (python || CORS || sync:XMLHttpRequest with GET):
 
