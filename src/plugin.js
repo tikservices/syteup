@@ -8,6 +8,7 @@ function setupPlugins(settings) {
                 continue;
             }
             $plugin.setup(settings["plugins_settings"][plugin]);
+            console.log("Plugin Setuped:", plugin);
         }
     return Promise.resolve();
 }

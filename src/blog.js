@@ -33,6 +33,8 @@ function setupBlog(settings) {
 
     //SETUP LINKS & BLOG
     window.sharethis_enabled = settings["blogs_settings"]["plugins"]["sharethis"] || false;
+    if (settings["blogs_settings"]["plugins"]["disqus"])
+        window.disqusPlugin.setup(settings["plugins_settings"]["disqus"]);
 
     window.reachedEnd = false; // set to true if no more blog posts left.
     if (location.hash.substr(0, 7) === "#!post/")
@@ -69,8 +71,6 @@ function setupBlog(settings) {
                 resultsLoaded = false;
             }
         });
-        if (window.disqus_enabled)
-            window.disqusPlugin.setup(settings["plugins_settings"]["disqus"]);
         if (window.sharethis_enabled) {
             var switchTo5x = true;
             var jsfile = document.createElement("script");

@@ -85,8 +85,9 @@ function setupService(service, url, el, settings) {
         }
 
         spinner.stop();
+        console.info("Service Setuped:", service);
     }).catch(function(error) {
         //TODO
-        console.error("service " + service + " failed on setup of fetching data and templates");
+        console.error("Service Not Setuped:", service);
     });
 }
