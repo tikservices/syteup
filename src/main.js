@@ -109,67 +109,6 @@ function setupBlog(settings) {
     });
 }
 
-function setupPlugins(settings) {
-    if (settings["plugins"]["woopra"]) {
-        (function() {
-            var wsc = document.createElement("script");
-            wsc.src = document.location.protocol + "//static.woopra.com/js/woopra.js";
-            wsc.type = "text/javascript";
-            wsc.async = true;
-            var ssc = document.getElementsByTagName("script")[0];
-            ssc.parentNode.insertBefore(wsc, ssc);
-        })();
-    }
-    if (settings["plugins"]["google_analytics"]) {
-        var _gaq = _gaq || [];
-        _gaq.push(["_setAccount", settings["plugins_settings"]["google_analytics"]["tracking_id"]]);
-        _gaq.push(["_trackPageview"]);
-        (function() {
-            var ga = document.createElement("script");
-            ga.type = "text/javascript";
-            ga.async = true;
-            ga.src = ("https:" === document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(ga, s);
-        })();
-    }
-    if (settings["plugins"]["rss"]) {
-        var rss = document.createElement("link");
-        rss.rel = "alternate";
-        rss.type = "application/rss+xml";
-        rss.title = "RSS";
-        rss.href = settings["plugins_settings"]["rss"]["url"];
-        document.head.appendChild(rss);
-    }
-    if (settings["plugins"]["control_panel"]) {
-        var style = document.createElement("style");
-        style.appendChild(document.createTextNode(""));
-        document.head.appendChild(style);
-        style.sheet.insertRule(".control-panel-btn { display: inline-block; margin: 5px;}", 0);
-        style.sheet.insertRule(".control-panel-btn a { line-height: 25px; padding: 5px; margin: 0; border: solid 1px;}", 0);
-        style.sheet.insertRule(".control-panel-btn a.clicked {background-color: green}", 0);
-        style.sheet.insertRule(".control-panel-btn a.unclicked {background-color: red}", 0);
-
-        $("body").bind("blog-post-loaded", function() {
-            if (!$("#control-panel")[0]) return;
-            $.each($(".main-nav li a"), function(i, e) {
-                $("#control-panel").append("<div class='control-panel-btn'><a class='clicked' data-id='" + e.id + "'>#" + e.id + "</a></div>");
-            });
-            $(".control-panel-btn a").click(function() {
-                var id = this.dataset["id"];
-                if (this.className === "clicked") {
-                    this.className = "unclicked";
-                    $("#" + id).parent().hide(300);
-                } else {
-                    this.className = "clicked";
-                    $("#" + id).parent().show(300);
-                }
-            });
-            $("#control-panel").removeAttr("id");
-        });
-    }
-    return Promise.resolve();
-}
 var xhr = new XMLHttpRequest();
 xhr.open("GET", "config.json", true);
 if (xhr.overrideMimeType)

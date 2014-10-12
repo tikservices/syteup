@@ -31,6 +31,12 @@ window.spin_opts = {
     zIndex: 2e9
 };
 
+function formatModuleName(module) {
+    return module.replace(/_(.)/g, function(match, p1) {
+        return p1.toUpperCase();
+    });
+}
+
 function syncGet(url, success, headers, failure) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, false);

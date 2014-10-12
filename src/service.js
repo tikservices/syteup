@@ -9,12 +9,13 @@ function setupService(service, url, el, settings) {
         return;
     }
     if (!window[service + "Service"]) {
+        console.error("Service Not Found:", service);
         window.location = href;
         return;
     }
 
     // set $service to the current service object
-    var $service = window[service + "Service"];
+    var $service = window[formatModuleName(service) + "Service"];
 
     // show spinner
     var spinner = new Spinner(spin_opts).spin();
