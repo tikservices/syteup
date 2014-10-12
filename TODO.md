@@ -1,51 +1,58 @@
-List of services to add integration for:
+List of services/blogs/plugins to add integration for:
 
 DONE (new service code design):
 
-    - Instagram       [DONE]
-    - Youtube         [DONE]
-    - Github          [DONE]
-    - Bitbucket       [DONE]
-    - Dribbble        [DONE]
-    - Flickr          [DONE]
-    - Soundcloud      [DONE]
-    - Last.fm         [DONE]
-    - Stack Overflow  [DONE]
-    - Google+         [DONE]
-    - Facebook        [DONE]
+    - service / Instagram       [DONE]
+    - service / Youtube         [DONE]
+    - service / Github          [DONE]
+    - service / Bitbucket       [DONE]
+    - service / Dribbble        [DONE]
+    - service / Flickr          [DONE]
+    - service / Soundcloud      [DONE]
+    - service / Last.fm         [DONE]
+    - service / Stack Overflow  [DONE]
+    - service / Google+         [DONE]
+    - service / Facebook        [DONE]
+    - plugin / Rss             [DONE]
+    - plugin / ControlPanel    [DONE]
+    - plugin / GoogleAnalytics [DONE]
+    - plugin / Woopra          [DONE]
 
 ALMOST (js + async:promise + JSONP):
 
-    - Wordpress       [DONE]
-    - Tumblr          [DONE]
-    - blogger         [DONE]
+    - blog / Wordpress       [DONE]
+    - blog / Tumblr          [DONE]
+    - blog / blogger         [DONE]
+    - plugin / Disqus          [DONE]
+    - plugin / ShareThis       [DONE]
 
 INPROGRESS (python || CORS || sync:XMLHttpRequest with GET):
 
-    - LinkedIn        [JS] [AUTHENTIFICATION FAILURE]
-    - Tent.io         [JS] [API NOT WELL DOCUMENTED]
-    - Twitter         [PY]
+    - service / LinkedIn        [JS] [AUTHENTIFICATION FAILURE]
+    - service / Tent.io         [JS] [API NOT WELL DOCUMENTED]
+    - service / Twitter         [PY]
 
 WICHLIST:
 
-    - Steam           [SOP] [NO-JSONP]
-    - Foursquare      [DANGEROUS TOKENS]
-    - Picasa          [Deprecated]
-    - Netflix
-    - Rdio
-    - Spotify
-    - Etsy
-    - Fitbit
-    - Slideshare
-    - scribd
-    - speakerdeck
-    - deviantart
-    - Quora
-    - trakt
-    - Posterous Spaces
-    - viewbook.com
+    - service / Steam           [SOP] [NO-JSONP]
+    - service / Foursquare      [DANGEROUS TOKENS]
+    - service / Picasa          [Deprecated]
+    - service / Netflix
+    - service / Rdio
+    - service / Spotify
+    - service / Etsy
+    - service / Fitbit
+    - service / Slideshare
+    - service / scribd
+    - service / speakerdeck
+    - service / deviantart
+    - service / Quora
+    - service / trakt
+    - service / Posterous Spaces
+    - service / viewbook.com
+    - plugin / Sitemap
 
 EXTRA:
 
-    - profilo
-    - cv
+    - service / profilo
+    - service / cv

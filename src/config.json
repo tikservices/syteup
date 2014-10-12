@@ -10,7 +10,7 @@
         "email": "bmoez.j@gmail.com"
     },
     "plugins": {
-        "google_analytics": false,
+        "google_analytics": true,
         "woopra": false,
         "rss": true,
         "sitemap": false,
@@ -18,7 +18,7 @@
     },
     "plugins_settings": {
         "google_analytics": {
-            "tracking_id": ""
+            "tracking_id": "UA-28759938-2"
         },
         "woopra": {
             "tracking_domain": "",
