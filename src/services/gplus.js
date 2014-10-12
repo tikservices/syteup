@@ -1,6 +1,6 @@
 (function(window) {
     "use strict";
-    var DISPLAY_NAME = "gplus";
+    var DISPLAY_NAME = "Google+";
     var API_URL = "https://www.googleapis.com/plus/v1/";
 
     function setupGplus(gplusData, settings) {

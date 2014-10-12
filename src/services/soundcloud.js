@@ -1,6 +1,6 @@
 (function(window) {
     "use strict";
-    var DISPLAY_NAME = "soundcloud";
+    var DISPLAY_NAME = "SoundCloud";
     var API_URL = "https://api.soundcloud.com/";
 
     function setupSoundcloud(soundcloudData, settings) {

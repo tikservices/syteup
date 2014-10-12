@@ -1,6 +1,6 @@
 (function(window) {
     "use strict";
-    var DISPLAY_NAME = "lastfm";
+    var DISPLAY_NAME = "Last.fm";
     var API_URL = "https://ws.audioscrobbler.com/2.0/";
 
     function setupLastfm(lastfmData, settings) {

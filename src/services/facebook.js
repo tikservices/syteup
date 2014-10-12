@@ -1,6 +1,6 @@
 (function(window) {
     "use strict";
-    var DISPLAY_NAME = "facebook";
+    var DISPLAY_NAME = "Facebook";
     var API_URL = "https://graph.facebook.com/v2.1/";
 
     function setupFacebook(facebookData, settings) {

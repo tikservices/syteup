@@ -1,6 +1,6 @@
 (function(window) {
     "use strict";
-    var DISPLAY_NAME = "stackoverflow";
+    var DISPLAY_NAME = "StackOverflow";
     var API_URL = "https://api.stackexchange.com/2.2/";
 
     function setupStackoverflow(stackoverflowData, settings) {

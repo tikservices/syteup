@@ -1,6 +1,6 @@
 (function(window) {
     "use strict";
-    var DISPLAY_NAME = "twitter";
+    var DISPLAY_NAME = "Twitter";
     var API_URL = "https://api.twitter.com/1.1/";
 
     function twitterLinkify(text) {

@@ -1,6 +1,6 @@
 (function(window) {
     "use strict";
-    var DISPLAY_NAME = "steam";
+    var DISPLAY_NAME = "Steam";
     var API_URL = "";
 
     function setupSteam(steamData, settings) {

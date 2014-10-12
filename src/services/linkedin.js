@@ -1,6 +1,6 @@
 (function(window) {
     "use strict";
-    var DISPLAY_NAME = "linkedin";
+    var DISPLAY_NAME = "LinkedIn";
     var API_URL = "https://api.linkedin.com/v1";
 
     function setupLinkedin(linkedinData, settings) {

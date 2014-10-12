@@ -1,6 +1,6 @@
 (function(window) {
     "use strict";
-    var DISPLAY_NAME = "tent";
+    var DISPLAY_NAME = "Tent.io";
 
     function tentLinkify(text) {
         text = text.replace(/(https?:\/\/\S+)/gi, function(s) {

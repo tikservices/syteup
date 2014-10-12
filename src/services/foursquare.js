@@ -1,6 +1,6 @@
 (function(window) {
     "use strict";
-    var DISPLAY_NAME = "foursquare";
+    var DISPLAY_NAME = "Foursquare";
     var API_URL = "";
 
     function setupFoursquare(foursquareData, settings) {

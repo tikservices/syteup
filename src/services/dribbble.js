@@ -1,6 +1,6 @@
 (function(window) {
     "use strict";
-    var DISPLAY_NAME = "dribbble";
+    var DISPLAY_NAME = "Dribbble";
     var API_URL = "https://api.dribbble.com/players/";
 
     function setupDribbble(dribbbleData, settings) {

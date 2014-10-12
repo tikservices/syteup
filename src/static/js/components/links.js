@@ -32,7 +32,10 @@ function setupLinks(settings) {
         li = document.createElement("li");
         link = document.createElement("a");
         link.href = settings["services_settings"][service]["url"];
-        link.textContent = service; //????????
+	if (window[service + "Service"])
+		link.textContent = window[service + "Service"].displayName;
+	else
+		link.textContent = service[0].upperCase + service.slice(1);
         link.id = service + "-link";
         li.appendChild(link);
         main_nav.appendChild(li);
