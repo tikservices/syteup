@@ -56,7 +56,7 @@
     }
     window.foursquareService = {
         displayName: DISPLAY_NAME,
-        template: "foursquare-profile.html",
+        template: "foursquare.html",
         setup: setupFoursquare,
         fetch: fetchData
     };

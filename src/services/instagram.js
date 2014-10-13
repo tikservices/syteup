@@ -58,8 +58,8 @@
     }
     window.instagramService = {
         displayName: DISPLAY_NAME,
-        template: "instagram-view.html",
-        templateMore: "instagram-view-more.html",
+        template: "instagram.html",
+        templateMore: "instagram-more.html",
         setup: setupInstagram,
         fetch: fetchData,
         supportMore: true,

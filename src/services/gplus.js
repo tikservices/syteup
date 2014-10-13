@@ -45,7 +45,7 @@
     }
     window.gplusService = {
         displayName: DISPLAY_NAME,
-        template: "gplus-profile.html",
+        template: "gplus.html",
         setup: setupGplus,
         fetch: fetchData
     };

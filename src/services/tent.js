@@ -60,7 +60,7 @@
     }
     window.tentService = {
         displayName: DISPLAY_NAME,
-        template: "tent-view.html",
+        template: "tent.html",
         setup: setupTent,
         fetch: fetchData
     };

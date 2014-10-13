@@ -25,7 +25,7 @@
     }
     window.soundcloudService = {
         displayName: DISPLAY_NAME,
-        template: "soundcloud-profile.html",
+        template: "soundcloud.html",
         setup: setupSoundcloud,
         fetch: fetchData
     };

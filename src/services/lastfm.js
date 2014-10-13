@@ -65,7 +65,7 @@
     }
     window.lastfmService = {
         displayName: DISPLAY_NAME,
-        template: "lastfm-profile.html",
+        template: "lastfm.html",
         setup: setupLastfm,
         fetch: fetchData
     };

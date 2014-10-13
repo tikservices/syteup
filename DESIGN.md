@@ -10,6 +10,7 @@
 
 - Structure of a blog module
     - TODO LATER
+
 - Structure of a service module
     - config.json : services.<service_name> : boolean (enabled/disabled)
     - config.json : services_settings.<service_name> : object of service
@@ -36,6 +37,7 @@
       insert data into and show it by syteup
     - templates/<services-name>-more.html : (optional) service template to show
       more items
+
 - Structure of a plugin module
     - plugins/<plugin-name>.js
 

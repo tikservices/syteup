@@ -41,7 +41,7 @@
 
     window.bitbucketService = {
         displayName: DISPLAY_NAME,
-        template: "bitbucket-profile.html",
+        template: "bitbucket.html",
         setup: setupBitbucket,
         fetch: fetchData
     };

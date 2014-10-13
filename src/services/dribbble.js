@@ -20,7 +20,7 @@
     }
     window.dribbbleService = {
         displayName: DISPLAY_NAME,
-        template: "dribbble-view.html",
+        template: "dribbble.html",
         setup: setupDribbble,
         fetch: fetchData
     };

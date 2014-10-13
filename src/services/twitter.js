@@ -66,7 +66,7 @@
     }
     window.twitterService = {
         displayName: DISPLAY_NAME,
-        template: "twitter-view.html",
+        template: "twitter.html",
         setup: setupTwitter,
         fetch: fetchData
     };

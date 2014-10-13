@@ -86,7 +86,7 @@
         */
     window.steamService = {
         displayName: DISPLAY_NAME,
-        template: "steam-profile.html",
+        template: "steam.html",
         setup: setupSteam,
         fetch: fetchData
     };
