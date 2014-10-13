@@ -52,7 +52,7 @@ function setupBlog(settings) {
             scrollWait = false,
             scrollWaitDur = 250;
         $(window).scroll(function() {
-            if (!window.reachedEnd && !resultsLoaded && !scrollWait &&
+            if (!window.reachedEnd && !resultsLoaded && !scrollWait && postOffset &&
                 ($(window).scrollTop() + $(window).height() > $(document).height() / 1.2)) {
                 resultsLoaded = true;
                 scrollWait = true;

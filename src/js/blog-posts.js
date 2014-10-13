@@ -161,113 +161,6 @@ function renderBlogPosts(posts, clearPosts) {
         });
 }
 
-function fetchBloggerBlogPosts(offset, settings, posts_options) {
-    var params = "?maxResults=20&fields=items(content%2Cid%2Clabels%2Cpublished%2Ctitle%2Curl)%2CnextPageToken&key=" + settings.api_key;
-    if (offset)
-        params += "&pageToken=" + offset;
-    if (posts_options && posts_options.tag)
-        params += "&labels=" + posts_options.tag;
-    else if (settings.tag_slug)
-        params += "&labels=" + settings.tag_slug;
-    if (posts_options && posts_options.id)
-        params = "/" + posts_options.id + "?content%2Cid%2Clabels%2Cpublished%2Ctitle%2Curl&key=" + settings.api_key;
-    return asyncGet(settings.api_url + "blogs/" + settings.blog_id + "/posts" + params).then(function(res) {
-        var clearPosts = (posts_options && posts_options.id) || !offset;
-        offset = res.nextPageToken;
-        if (!offset)
-            window.reachedEnd = true;
-        if (posts_options && posts_options.id)
-            res = {
-                items: [res]
-            };
-        res["items"].forEach(function(post) {
-            post.date = post.published;
-            post.body = post.content;
-            post.tags = post.labels;
-            post.tags = post.labels;
-            post.type = "text"; //????
-        });
-        renderBlogPosts(res["items"], clearPosts);
-        return Promise.resolve(offset);
-    });
-}
-
-function fetchTumblrBlogPosts(offset, settings, posts_options) {
-    var post_id = "",
-        tags = "";
-    if (posts_options && posts_options.id)
-        post_id = "&id=" + posts_options.id;
-    else if (posts_options && posts_options.tag)
-        tags = posts_options.tag;
-    else if (settings.tag_slug)
-        tags = settings.tag_slug;
-    if (!offset)
-        offset = 0;
-    return asyncGet(settings.api_url + settings.blog_url + "/posts?offset=" + offset + "&tag=" + tags + "&api_key=" + settings.api_key + post_id).then(function(res) {
-        renderBlogPosts(res.posts, (posts_options && posts_options.id) || !offset);
-        return Promise.resolve(offset + 20);
-    });
-}
-
-function fetchWordpressBlogPosts(offset, settings, posts_options) {
-    var post_id = "",
-        tags = "";
-    if (posts_options && posts_options.id)
-        post_id = posts_options.id;
-    else if (posts_options && posts_options.tag)
-        tags = posts_options.tag;
-    else if (settings.tag_slug)
-        tags = settings.tag_slug;
-    if (!offset)
-        offset = 0;
-    var wpApiUrl = [settings.api_url, "/sites/", settings.blog_url, "/posts/", post_id, "?callback=?"].join("");
-
-    if (offset > 0) {
-        wpApiUrl += "&offset=" + offset;
-    }
-    if (tags) {
-        wpApiUrl += "&tag=" + tags.replace(/\s/g, "-");
-    }
-
-    return asyncGet(wpApiUrl).then(function(data) {
-
-        // Get the data into a similar format as Tumblr so we can reuse the template
-        if (data.error)
-            data = {
-                found: 0,
-                posts: []
-            };
-        else if (posts_options && posts_options.id)
-            data = {
-                found: 1,
-                posts: [data]
-            };
-        $.each(data.posts, function(i, p) {
-            var newTags = [];
-            p.id = p.ID;
-            p.body = p.content;
-            p.content = null;
-            if (p.type === "post") {
-                p.type = "text";
-            }
-            for (var tag in p.tags) {
-                if (p.tags.hasOwnProperty(tag))
-                    newTags.push(tag);
-            }
-            p.tags = newTags;
-            // TODO: figure out how to preserve timezone info and make it consistent with
-            // python's datetime.strptime
-            if (p.date.lastIndexOf("+") > 0) {
-                p.date = p.date.substring(0, p.date.lastIndexOf("+"));
-            } else {
-                p.date = p.date.substring(0, p.date.lastIndexOf("-"));
-            }
-        });
-        renderBlogPosts(data.posts, (posts_options && posts_options.id) || !offset);
-        return Promise.resolve(offset + 20);
-    });
-}
-
 /**
  * fetchBlogPosts
  *
@@ -279,5 +172,27 @@ function fetchWordpressBlogPosts(offset, settings, posts_options) {
 function fetchBlogPosts(offset, settings, platform, posts_options) {
     if (posts_options && posts_options.id)
         window.reachedEnd = true;
-    return window["fetch" + platform[0].toUpperCase() + platform.slice(1) + "BlogPosts"](offset, settings, posts_options);
+    //return window["fetch" + platform[0].toUpperCase() + platform.slice(1) + "BlogPosts"](offset, settings, posts_options);
+    var $blog = window[formatModuleName(platform) + "Blog"];
+    if (!$blog) return Promise.reject(MODULE_NOT_FOUND);
+    var posts;
+    if (posts_options && posts_options.id)
+        posts = $blog.fetchPost(settings, posts_options.id);
+    else if (posts_options && posts_options.tag)
+        if (offset)
+            posts = $blog.fetchTagMore(settings, posts_options.tag);
+        else
+            posts = $blog.fetchTag(settings, posts_options.tag);
+    else if (offset)
+        posts = $blog.fetchMore(settings);
+    else
+        posts = $blog.fetch(settings);
+    return posts.then(function(data) {
+        if (!data || data.length === 0)
+            return Promise.resolve(false);
+        renderBlogPosts(data, (posts_options && posts_options.id) || !offset);
+        return Promise.resolve(true);
+    }).catch(function(error) {
+        return Promise.resolve(false);
+    });
 }

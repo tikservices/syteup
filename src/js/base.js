@@ -1,7 +1,9 @@
 "use strict";
 //Global configs and functions shared between js
 
+window.UNKNOWN_ERROR = -1;
 window.NO_MORE_DATA = -2;
+window.MODULE_NOT_FOUND = -3;
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

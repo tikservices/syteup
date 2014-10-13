@@ -63,5 +63,5 @@
     "define", "asyncGet", "moment", "setupLinks", "fetchBlogPosts",
     "embedDisqus", "stLight", "prettyPrint",
     "setupService", "setupPlugins", "setupBlog",
-    "formatModuleName",  "NO_MORE_DATA"]
+    "formatModuleName",  "NO_MORE_DATA", "MODULE_NOT_FOUND", "UNKNOWN_ERROR"]
 }
