@@ -13,15 +13,31 @@
 - Structure of a service module
     - config.json : services.<service_name> : boolean (enabled/disabled)
     - config.json : services_settings.<service_name> : object of service
-      settings
-    - static/js/components/<service_name>.js : setup<Service_name> function
-      called by setupLinks for to manipulate service template
-    - static/templates/<service_name>-{view,profile}.html : service templateto
+      settings to be passed to service obj functs later
+    - services/<service-name>.js : window.<serviceName>Service object
+      called by setupService for to manipulate service template
+      - window.<serviceName>Service.displayName: display name of service (with
+	up case letters and special letter
+      - window.<serviceName>Service.setup: funct to setup fetched data to be
+	passed to the template
+      - window.<serviceName>Service.fetch: funct to fetch data from service
+	server
+      - window.<serviceName>Service.template: file name of template inside
+	templates/
+      - window.<serviceName>Service.supportMore: (optional) bool setted to true if service
+	module support showing more data (with 'Load More...' button)
+      - window.<serviceName>Service.setupMore: (optional) funct to setup fetched more data to be
+	passed to the more template
+      - window.<serviceName>Service.fetchMore: (optional) funct to fetch more data from service
+	server
+      - window.<serviceName>Service.templateMore: (optional) file name of more template inside
+	templates/
+    - templates/<service-name>.html : service template to
       insert data into and show it by syteup
-    - views/<service_name>.js : <service_name> AMD function called by
-      setup<Service_name> function to get service data from service server (api restful calls) and retrun an object of data
+    - templates/<services-name>-more.html : (optional) service template to show
+      more items
 - Structure of a plugin module
-    - static/js/components/<plugin_name>.js
+    - plugins/<plugin-name>.js
 
 OLD DESIGN DOCUMENTATION, TO DELETE LATTER
 

@@ -26,7 +26,7 @@
 
     window.githubService = {
         displayName: DISPLAY_NAME,
-        template: "templates/github-profile.html",
+        template: "github-profile.html",
         setup: setupGithub,
         fetch: fetchData
     };

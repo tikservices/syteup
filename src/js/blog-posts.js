@@ -103,12 +103,12 @@ function renderBlogPosts(posts, clearPosts) {
         urlArgs: "bust=v2"
     });
 
-    require(["text!templates/blog-post-text.html",
-            "text!templates/blog-post-photo.html",
-            "text!templates/blog-post-link.html",
-            "text!templates/blog-post-video.html",
-            "text!templates/blog-post-audio.html",
-            "text!templates/blog-post-quote.html"
+    require(["text!blog-post-text.html",
+            "text!blog-post-photo.html",
+            "text!blog-post-link.html",
+            "text!blog-post-video.html",
+            "text!blog-post-audio.html",
+            "text!blog-post-quote.html"
         ],
 
         function(text_post_template, photo_post_template,

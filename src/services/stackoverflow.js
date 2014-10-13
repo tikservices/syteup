@@ -39,7 +39,7 @@
     }
     window.stackoverflowService = {
         displayName: DISPLAY_NAME,
-        template: "templates/stackoverflow-view.html",
+        template: "stackoverflow-view.html",
         setup: setupStackoverflow,
         fetch: fetchData
     };

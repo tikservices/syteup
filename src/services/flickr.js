@@ -22,7 +22,7 @@
 
     window.flickrService = {
         displayName: DISPLAY_NAME,
-        template: "templates/flickr-view.html",
+        template: "flickr-view.html",
         setup: setupFlickr,
         fetch: fetchData
     };

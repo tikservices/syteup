@@ -8,10 +8,10 @@ function numberWithCommas(x) {
 }
 
 require.config({
-    baseUrl: "./",
+    baseUrl: "templates/",
     paths: {
-        "text": "js/libs/text",
-        "json": "js/libs/json"
+        "text": "../js/libs/text",
+        "json": "../js/libs/json"
     },
     waitSeconds: 15
 });

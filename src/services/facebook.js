@@ -42,7 +42,7 @@
     }
     window.facebookService = {
         displayName: DISPLAY_NAME,
-        template: "templates/facebook-profile.html",
+        template: "facebook-profile.html",
         setup: setupFacebook,
         fetch: fetchData
     };

@@ -49,7 +49,7 @@
     }
     window.youtubeService = {
         displayName: DISPLAY_NAME,
-        template: "templates/youtube-profile.html",
+        template: "youtube-profile.html",
         setup: setupYoutube,
         fetch: fetchData
     };

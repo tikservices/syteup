@@ -40,7 +40,7 @@
     }
     window.linkedinService = {
         displayName: DISPLAY_NAME,
-        template: "templates/linkedin-view.html",
+        template: "linkedin-view.html",
         setup: setupLinkedin,
         fetch: fetchData
     };
