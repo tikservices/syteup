@@ -1,6 +1,6 @@
 {
 	"preset": "google",
-	"excludeFiles": ["node_modules", "src/static/js/libs", "src/static/less"],
+	"excludeFiles": ["node_modules", "src/js/libs", "src/less"],
 	"fileExtensions": [".js"],
 	"validateIndentation": null,
 	"validateQuoteMarks": "\"",

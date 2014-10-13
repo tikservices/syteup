@@ -5,7 +5,7 @@
 
     function setupFacebook(facebookData, settings) {
         facebookData.url = "https://facebook.com/" + settings.username;
-        facebookData.image = "static/imgs/pic.png";
+        facebookData.image = "imgs/pic.png";
 
         facebookData.posts = facebookData.statuses.data.concat(facebookData.links.data);
 
