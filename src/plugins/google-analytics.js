@@ -12,9 +12,6 @@
         var firstScript = document.getElementsByTagName("script")[0];
         link.async = true;
         link.src = "https://www.google-analytics.com/analytics.js";
-        link.onreadystatechange = link.onload = link.onabort = link.onerror = link.onhashchange = function(e) {
-            console.log("analytics.js loadt state:", this.readyState || e);
-        };
         firstScript.parentNode.insertBefore(link, firstScript);
         // push actions
         if (window.location.host === "localhost" || window.location.host === "172.0.0.1" || window.location.host === "")
@@ -23,19 +20,12 @@
             });
         else
             ga("create", settings["tracking_id"], "auto");
-        ga(function() {
-            console.log("YAH!!!!! analytics.js library done loading");
-        });
-
         ga("set", "forceSSL", true);
         ga("set", "anonymizeIp", true);
 
         ga("send", "pageview", {
             "title": "Syteup",
-            "page": "index.html",
-            "hitCallback": function() {
-                console.log("YEH!!! analytics.js done sending data");
-            }
+            "page": "index.html"
         });
         //ga('send', 'timing', 'jQuery', 'Load Library', 20, 'Google CDN')
         //ga('send', 'exception', {
