@@ -1,13 +1,18 @@
 {
-	"preset": "google",
-	"excludeFiles": ["node_modules", "src/js/libs", "src/less"],
-	"fileExtensions": [".js"],
-	"validateIndentation": null,
-	"validateQuoteMarks": "\"",
-	"maximumLineLength": 160,
-	"requireCamelCaseOrUpperCaseIdentifiers": null,
-	"requireMultipleVarDecl": null,
-	"disallowMultipleVarDecl": null,
-	"requireCurlyBraces": null
+  "preset": "google",
+  "excludeFiles": [
+    "node_modules",
+    "src/js/libs",
+    "src/less"
+  ],
+  "fileExtensions": [
+    ".js"
+  ],
+  "validateIndentation": null,
+  "validateQuoteMarks": "\"",
+  "maximumLineLength": 160,
+  "requireCamelCaseOrUpperCaseIdentifiers": null,
+  "requireMultipleVarDecl": null,
+  "disallowMultipleVarDecl": null,
+  "requireCurlyBraces": null
 }
-
