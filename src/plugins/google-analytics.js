@@ -1,5 +1,4 @@
 (function(window) {
-    /* global ga */
     "use strict";
 
     function setupGoogleAnalytics(settings) {

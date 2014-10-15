@@ -7,7 +7,6 @@ var allComponents = [],
 window.currSelection = "home";
 
 function setupLinks(settings) {
-    var li, link, service;
     allComponents = Object.keys(settings.services);
     allComponents.forEach(function(service) {
         if (settings["services"][service]) enabledServices.push(service);
@@ -16,41 +15,38 @@ function setupLinks(settings) {
     //CREATE LINKS ITEMS FOR ENABLED SERVICES
     var main_nav = document.getElementsByClassName("main-nav")[0];
     main_nav.innerHTML = "";
-    if (settings["blog_platform"].length) {
-        var blog = settings["blog_platform"];
-        li = document.createElement("li");
-        link = document.createElement("a");
-        link.href = "/";
-        link.id = "home-link";
-        link.textContent = "Home";
-        li.appendChild(link);
-        main_nav.appendChild(li);
-    }
+    if (settings["blog_platform"].length)
+	    addLinkItem(main_nav, "/", "home-link", "Home");
     var i;
     for (i = 0; i < enabledServices.length; i++) {
-        service = enabledServices[i];
-        li = document.createElement("li");
-        link = document.createElement("a");
-        link.href = settings["services_settings"][service]["url"];
+        var service = enabledServices[i];
+	var text;
         if (window[service + "Service"])
-            link.textContent = window[service + "Service"].displayName;
+            text = window[service + "Service"].displayName;
         else
-            link.textContent = service[0].upperCase + service.slice(1);
-        link.id = service + "-link";
-        li.appendChild(link);
-        main_nav.appendChild(li);
+            text = service[0].upperCase + service.slice(1);
+	addLinkItem(main_nav, settings["service_settings"][service]["url"],
+			service + "-link", text);
     }
     if (settings["fields"]["email"].length) {
-        li = document.createElement("li");
-        link = document.createElement("a");
-        link.href = "mailto:" + settings["fields"]["email"] + "?subject=Hello";
-        link.textContent = "Contact";
-        link.id = "contact-link";
-        li.appendChild(link);
-        main_nav.appendChild(li);
+	    addLinkItem(main_nav,  "mailto:" + settings["fields"]["email"] + "?subject=Hello", "contact-link", "Contact");
     }
 
-    //PROCESS LINKS CLICK EVENT
+    linkClickHandler(settings);
+}
+
+function addLinkItem(main_nav, href, id, text) {
+	var li, link;
+        li = document.createElement("li");
+        link = document.createElement("a");
+        link.href = href;
+        link.id = id;
+        link.textContent = text;
+        li.appendChild(link);
+        main_nav.appendChild(li);
+}
+
+function linkClickHandler(settings) {
     $("a").click(function(e) {
         if (e.which === 2)
             return;
@@ -70,18 +66,12 @@ function setupLinks(settings) {
             for (i = 0; i < enabledServices.length; i++) {
                 var service = enabledServices[i];
                 if (this.id === service + "-link") {
-                    var setupFunct = "setup" + service[0].toUpperCase() + service.slice(1);
-                    //TODO: get ride of old code
-                    if (window[service + "Service"]) // if service code updated to lastest syteup service design
-                        adjustSelection(service, setupService.bind(this, service, url, this, settings["services_settings"][service]));
-                    else
-                        adjustSelection(service, window[setupFunct].bind(this, url, this, settings["services_settings"][service]));
+                    adjustSelection(service, setupService.bind(this, service, url, this, settings["services_settings"][service]));
                     return;
                 }
             }
         }
         window.location = this.href;
-
     });
 }
 

@@ -2,7 +2,7 @@ pre-commit: beautify fix test
 test: lint style-check
 fix: fix-js
 fix-js:
-	find src/ \( -path src/less -o -path src/js/libs \) -prune -a -type f -o -name "*.js" -or -name "*.json" | xargs -n 1 fixmyjs -l
+	find src/ \( -path src/less -o -path src/js/libs \) -prune -a -type f -o -name "*.js" -or -name "*.json" | xargs -n 1 fixmyjs -c .jshintrc
 lint: lint-js lint-json
 lint-json:
 	ls .jsbeautifyrc .jshintrc .jscsrc package.json | xargs -n 1 jsonlint -ip
