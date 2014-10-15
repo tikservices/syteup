@@ -25,7 +25,7 @@ function setupLinks(settings) {
             text = window[service + "Service"].displayName;
         else
             text = service[0].upperCase + service.slice(1);
-	addLinkItem(main_nav, settings["service_settings"][service]["url"],
+	addLinkItem(main_nav, settings["services_settings"][service]["url"],
 			service + "-link", text);
     }
     if (settings["fields"]["email"].length) {
