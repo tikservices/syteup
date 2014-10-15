@@ -18,7 +18,8 @@
             if (t.object.attachments && t.object.attachments[0].image) {
                 t.object.image = t.object.attachments[0].image.url;
             } else if (t.object.content) {
-                t.object.content = (new DOMParser()).parseFromString("<div>" + t.object.content + "</div>", "text/xml").documentElement.textContent;
+                t.object.content = (new DOMParser()).parseFromString("<div>" + t.object.content + "</div>", "text/xml")
+                    .documentElement.textContent;
                 if (t.object.content.length > 200)
                     t.object.content = t.object.content.substr(0, 197) + "...";
             }
@@ -30,8 +31,16 @@
     function fetchData(settings) {
         var context = {};
         return Promise.all([
-            asyncGet(API_URL + "people/" + settings.user_id + "?fields=circledByCount%2CcurrentLocation%2CdisplayName%2Cimage%2Furl%2Cnickname%2Coccupation%2CplacesLived%2CplusOneCount%2Ctagline%2Curl&key=" + settings.api_key),
-            asyncGet(API_URL + "people/" + settings.user_id + "/activities/public?maxResults=20&fields=items(annotation%2Cobject(actor(displayName%2Curl)%2Cattachments(content%2CdisplayName%2Cimage%2CobjectType%2Cthumbnails)%2Ccontent%2CobjectType%2Cplusoners%2FtotalItems%2Creplies%2FtotalItems%2Cresharers%2FtotalItems%2Curl)%2Cpublished%2Ctitle%2Curl%2Cverb)%2CnextPageToken&key=" + settings.api_key)
+            asyncGet(API_URL + "people/" + settings.user_id +
+                "?fields=circledByCount%2CcurrentLocation%2CdisplayName%2C" +
+                "image%2Furl%2Cnickname%2Coccupation%2CplacesLived%2CplusOneCount%2Ctagline%2Curl" +
+                "&key=" + settings.api_key),
+            asyncGet(API_URL + "people/" + settings.user_id + "/activities/public" +
+                "?maxResults=20&fields=items(annotation%2Cobject(actor(displayName%2Curl)" +
+                "%2Cattachments(content%2CdisplayName%2Cimage%2CobjectType%2Cthumbnails)" +
+                "%2Ccontent%2CobjectType%2Cplusoners%2FtotalItems%2Creplies%2F" +
+                "totalItems%2Cresharers%2FtotalItems%2Curl)%2Cpublished%2Ctitle%2Curl%2Cverb)%2C" +
+                "nextPageToken&key=" + settings.api_key)
         ]).then(function(res) {
             context.newt_page = res[1]["nextPageToken"];
             if (!res[0]["currentLocation"] && res[0]["placesLived"])

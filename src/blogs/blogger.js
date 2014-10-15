@@ -1,11 +1,14 @@
 (function(window) {
     "use strict";
 
+    var API_URL = "https://www.googleapis.com/blogger/v3/";
     var nextId = 0;
 
     function getPosts(settings, postId, tag, offset) {
 
-        var params = "?maxResults=20&fields=items(content%2Cid%2Clabels%2Cpublished%2Ctitle%2Curl)%2CnextPageToken&key=" + settings.api_key;
+        var params = "?maxResults=20&key=" + settings.api_key +
+            "&fields=items(content%2Cid%2Clabels%2Cpublished%2Ctitle%2Curl)" +
+            "%2CnextPageToken";
         if (offset && nextId)
             params += "&pageToken=" + nextId;
         if (tag)
@@ -13,8 +16,11 @@
         else if (settings.tag_slug)
             params += "&labels=" + tag;
         if (postId)
-            params = "/" + postId + "?content%2Cid%2Clabels%2Cpublished%2Ctitle%2Curl&key=" + settings.api_key;
-        return asyncGet(settings.api_url + "blogs/" + settings.blog_id + "/posts" + params).then(function(res) {
+            params = "/" + postId + "?key=" + settings.api_key +
+            "&content%2Cid%2Clabels%2Cpublished%2Ctitle%2Curl";
+        return asyncGet(API_URL + "blogs/" + settings.blog_id + "/posts" +
+            params
+        ).then(function(res) {
             nextId = res.nextPageToken;
             if (!nextId)
                 window.reachedEnd = true;

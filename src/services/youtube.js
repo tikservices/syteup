@@ -30,7 +30,8 @@
                 context.statistics = channels["items"][0]["statistics"];
                 context.id = channels["items"][0]["id"];
                 context.username = settings.username;
-                return asyncGet(API_URL + "activities?part=snippet%2CcontentDetails&channelId=" + context.id + "&maxResults=20&fields=items(contentDetails%2Csnippet)%2CnextPageToken&key=" + settings.api_key)
+                return asyncGet(API_URL + "activities?part=snippet%2CcontentDetails&channelId=" +
+                        context.id + "&maxResults=20&fields=items(contentDetails%2Csnippet)%2CnextPageToken&key=" + settings.api_key)
                     .then(function(activities) {
                         context.next_page = activities["nextPageToken"];
                         context.activities = activities["items"].map(function(item) {

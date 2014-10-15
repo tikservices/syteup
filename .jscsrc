@@ -4,7 +4,7 @@
 	"fileExtensions": [".js"],
 	"validateIndentation": null,
 	"validateQuoteMarks": "\"",
-	"maximumLineLength": 500,
+	"maximumLineLength": 160,
 	"requireCamelCaseOrUpperCaseIdentifiers": null,
 	"requireMultipleVarDecl": null,
 	"disallowMultipleVarDecl": null,

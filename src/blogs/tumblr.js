@@ -1,6 +1,7 @@
 (function(window) {
     "use strict";
 
+    var API_URL = "https://api.tumblr.com/v2/blog/";
     var nextId = 0;
 
     function getPosts(settings, postId, tag, offset) {
@@ -13,10 +14,11 @@
             params += "&tag=" + settings.tag_slug;
         if (offset)
             params = "&offset=" + nextId;
-        return asyncGet(settings.api_url + settings.blog_url + "/posts" + params).then(function(res) {
-            nextId += 20;
-            return Promise.resolve(res.posts);
-        });
+        return asyncGet(API_URL + settings.blog_url + "/posts" + params)
+            .then(function(res) {
+                nextId += 20;
+                return Promise.resolve(res.posts);
+            });
     }
 
     function fetchPosts(settings) {

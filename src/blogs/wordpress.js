@@ -1,6 +1,7 @@
 (function(window) {
     "use strict";
 
+    var API_URL = "https://public-api.wordpress.com/rest/v1";
     var nextId = 0;
 
     function getPosts(settings, postId, tag, offset) {
@@ -14,10 +15,11 @@
             params += "?tag=" + settings.tag_slug.replace(/\s/g, "-");
         if (offset && nextId)
             params += (params ? "&" : "?") + "offset=" + nextId;
-        var wpApiUrl = [settings.api_url, "/sites/", settings.blog_url, "/posts/", post_id, params].join("");
+        var wpApiUrl = [API_URL, "/sites/", settings.blog_url, "/posts/",
+            post_id, params
+        ].join("");
 
         return asyncGet(wpApiUrl).then(function(data) {
-            // Get the data into a similar format as Tumblr so we can reuse the template
             if (data.error)
                 data = {
                     found: 0,
@@ -41,8 +43,8 @@
                         newTags.push(tag);
                 }
                 p.tags = newTags;
-                // TODO: figure out how to preserve timezone info and make it consistent with
-                // python's datetime.strptime
+                // TODO: figure out how to preserve timezone info and make it
+                // consistent with python's datetime.strptime
                 if (p.date.lastIndexOf("+") > 0) {
                     p.date = p.date.substring(0, p.date.lastIndexOf("+"));
                 } else {
