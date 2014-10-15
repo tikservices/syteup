@@ -9,7 +9,28 @@
       Analytics,...), they are independent of any service and loaded after services, they are define on 'plugins' option as boolean item (enabled or disabled), and every plugin settigns are availbale at 'plugins_settings'.<plugin_name>
 
 - Structure of a blog module
-    - TODO LATER
+    - config.json : blog_platform : name of blog platform to use (tumblr,
+      wordpress, blogger,... from blogs/)
+    - config.json : blogs_settings.<blog_pltaform_name> : obj of blog platform
+      settings
+    - blogs/<blog-platform-name>.js : window.<blogPlatformName>Blog : object of
+      funct called by fetchBlogPosts to fetch and return a posts arrays throw Promise.resolve
+      - fetch: funct to fetch the lastest posts from the blog
+      - fetchMore: funct to fetch posts from the blog starting from the lastest offset
+      - fetchPost: funct to fetch one post
+      - fetchTag: funct to fetch posts within given Tag from the blog
+      - fetchTagMore: funct to fetch posts within given Tag from the blog
+	starting from the lastest offset
+      - NOTE: all these functs return a resolved Promise with with passing
+	posts as array every post structured as follow:
+	- title: title of post
+	- body: the body (content) of the post
+	- id: id of the post on the blog
+	- formated_date: string :formated date of the lastest update time (using
+	  moment.fromNow funct
+	- tags: (optional) array of tags of the post
+	- type: (optional) string: type of post
+	  (text/audio/photo/link/video/quote) like on tumblr posts
 
 - Structure of a service module
     - config.json : services.<service_name> : boolean (enabled/disabled)
@@ -17,29 +38,36 @@
       settings to be passed to service obj functs later
     - services/<service-name>.js : window.<serviceName>Service object
       called by setupService for to manipulate service template
-      - window.<serviceName>Service.displayName: display name of service (with
+      - displayName: display name of service (with
 	up case letters and special letter
-      - window.<serviceName>Service.setup: funct to setup fetched data to be
+      - setup: funct to setup fetched data to be
 	passed to the template
-      - window.<serviceName>Service.fetch: funct to fetch data from service
+      - fetch: funct to fetch data from service
 	server
-      - window.<serviceName>Service.template: file name of template inside
+      - template: file name of template inside
 	templates/
-      - window.<serviceName>Service.supportMore: (optional) bool setted to true if service
+      - supportMore: (optional) bool setted to true if service
 	module support showing more data (with 'Load More...' button)
-      - window.<serviceName>Service.setupMore: (optional) funct to setup fetched more data to be
+      - setupMore: (optional) funct to setup fetched more data to be
 	passed to the more template
-      - window.<serviceName>Service.fetchMore: (optional) funct to fetch more data from service
+      - fetchMore: (optional) funct to fetch more data from service
 	server
-      - window.<serviceName>Service.templateMore: (optional) file name of more template inside
+      - templateMore: (optional) file name of more template inside
 	templates/
     - templates/<service-name>.html : service template to
       insert data into and show it by syteup
     - templates/<services-name>-more.html : (optional) service template to show
       more items
 
-- Structure of a plugin module
-    - plugins/<plugin-name>.js
+- Structure of a plugin module (plugins for syteup or syteup blog module)
+    - config.json : plugins.<plugin_name> : bool (enable/disable) if it is a
+      syteup plugin
+    - config.json : blogs_settings.plugins.<plugin_name> : bool (enable/disable
+      if it is a plugin for the blog module
+    - config.json: plugins_settings.<plugin_name>: obj of the plgin settings
+    - plugins/<plugin-name>.js : window.<pluginName>Plugin : object of plugin
+      functions called by either the syteup or the blog module:
+      - setup: funct to setup the plugin
 
 OLD DESIGN DOCUMENTATION, TO DELETE LATTER
 

@@ -27,6 +27,7 @@
             "title": "Syteup",
             "page": "index.html"
         });
+	// TODO: send perfermance timing & exceptions/errors reports??
         //ga('send', 'timing', 'jQuery', 'Load Library', 20, 'Google CDN')
         //ga('send', 'exception', {
         //  'exDescription': 'DatabaseError',
