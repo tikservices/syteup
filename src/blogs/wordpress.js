@@ -1,9 +1,7 @@
-(function(window) {
+(function (window) {
     "use strict";
-
     var API_URL = "https://public-api.wordpress.com/rest/v1";
     var nextId = 0;
-
     function getPosts(settings, postId, tag, offset) {
         var post_id = "";
         var params = "";
@@ -15,11 +13,15 @@
             params += "?tag=" + settings.tag_slug.replace(/\s/g, "-");
         if (offset && nextId)
             params += (params ? "&" : "?") + "offset=" + nextId;
-        var wpApiUrl = [API_URL, "/sites/", settings.blog_url, "/posts/",
-            post_id, params
-        ].join("");
-
-        return asyncGet(wpApiUrl).then(function(data) {
+        var wpApiUrl = [
+                API_URL,
+                "/sites/",
+                settings.blog_url,
+                "/posts/",
+                post_id,
+                params
+            ].join("");
+        return asyncGet(wpApiUrl).then(function (data) {
             if (data.error)
                 data = {
                     found: 0,
@@ -30,7 +32,7 @@
                     found: 1,
                     posts: [data]
                 };
-            $.each(data.posts, function(i, p) {
+            $.each(data.posts, function (i, p) {
                 var newTags = [];
                 p.id = p.ID;
                 p.body = p.content;
@@ -55,30 +57,24 @@
             return Promise.resolve(data.posts);
         });
     }
-
     function fetchPosts(settings) {
         nextId = 0;
         return getPosts(settings, undefined, undefined, false);
     }
-
     function fetchMorePosts(settings) {
         return getPosts(settings, undefined, undefined, true);
     }
-
     function fetchOnePost(settings, postId) {
         nextId = 0;
         return getPosts(settings, postId, undefined, false);
     }
-
     function fetchBlogTag(settings, tag) {
         nextId = 0;
         return getPosts(settings, undefined, tag, false);
     }
-
     function fetchBlogTagMore(settings, tag) {
         return getPosts(settings, undefined, tag, true);
     }
-
     window.wordpressBlog = {
         fetch: fetchPosts,
         fetchMore: fetchMorePosts,
@@ -86,4 +82,4 @@
         fetchTag: fetchBlogTag,
         fetchTagMore: fetchBlogTagMore
     };
-})(window);
+}(window));

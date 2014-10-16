@@ -1,14 +1,9 @@
-(function(window) {
+(function (window) {
     "use strict";
-
     var API_URL = "https://www.googleapis.com/blogger/v3/";
     var nextId = 0;
-
     function getPosts(settings, postId, tag, offset) {
-
-        var params = "?maxResults=20&key=" + settings.api_key +
-            "&fields=items(content%2Cid%2Clabels%2Cpublished%2Ctitle%2Curl)" +
-            "%2CnextPageToken";
+        var params = "?maxResults=20&key=" + settings.api_key + "&fields=items(content%2Cid%2Clabels%2Cpublished%2Ctitle%2Curl)" + "%2CnextPageToken";
         if (offset && nextId)
             params += "&pageToken=" + nextId;
         if (tag)
@@ -16,52 +11,41 @@
         else if (settings.tag_slug)
             params += "&labels=" + tag;
         if (postId)
-            params = "/" + postId + "?key=" + settings.api_key +
-            "&content%2Cid%2Clabels%2Cpublished%2Ctitle%2Curl";
-        return asyncGet(API_URL + "blogs/" + settings.blog_id + "/posts" +
-            params
-        ).then(function(res) {
+            params = "/" + postId + "?key=" + settings.api_key + "&content%2Cid%2Clabels%2Cpublished%2Ctitle%2Curl";
+        return asyncGet(API_URL + "blogs/" + settings.blog_id + "/posts" + params).then(function (res) {
             nextId = res.nextPageToken;
             if (!nextId)
                 window.reachedEnd = true;
             if (postId)
-                res = {
-                    items: [res]
-                };
-            res["items"].forEach(function(post) {
+                res = { items: [res] };
+            res["items"].forEach(function (post) {
                 post.date = post.published;
                 post.body = post.content;
                 post.tags = post.labels;
                 post.tags = post.labels;
-                post.type = "text"; //????
+                post.type = "text";    //????
             });
             return Promise.resolve(res["items"]);
         });
     }
-
     function fetchPosts(settings) {
         nextId = "";
         return getPosts(settings, undefined, undefined, false);
     }
-
     function fetchMorePosts(settings) {
         return getPosts(settings, undefined, undefined, true);
     }
-
     function fetchOnePost(settings, postId) {
         nextId = "";
         return getPosts(settings, postId, undefined, false);
     }
-
     function fetchBlogTag(settings, tag) {
         nextId = "";
         return getPosts(settings, undefined, tag, false);
     }
-
     function fetchBlogTagMore(settings, tag) {
         return getPosts(settings, undefined, tag, true);
     }
-
     window.bloggerBlog = {
         fetch: fetchPosts,
         fetchMore: fetchMorePosts,
@@ -69,4 +53,4 @@
         fetchTag: fetchBlogTag,
         fetchTagMore: fetchBlogTagMore
     };
-})(window);
+}(window));

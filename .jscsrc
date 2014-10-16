@@ -10,7 +10,7 @@
   ],
   "validateIndentation": null,
   "validateQuoteMarks": "\"",
-  "maximumLineLength": 160,
+  "maximumLineLength": 500,
   "requireCamelCaseOrUpperCaseIdentifiers": null,
   "requireMultipleVarDecl": null,
   "disallowMultipleVarDecl": null,

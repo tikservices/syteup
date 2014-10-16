@@ -1,19 +1,15 @@
-(function(window) {
+(function (window) {
     "use strict";
     var DISPLAY_NAME = "Facebook";
     var API_URL = "https://graph.facebook.com/v2.1/";
-
     function setupFacebook(facebookData, settings) {
         facebookData.url = "https://facebook.com/" + settings.username;
         facebookData.image = "imgs/pic.png";
-
         facebookData.posts = facebookData.statuses.data.concat(facebookData.links.data);
-
-        facebookData.posts.sort(function(p1, p2) {
+        facebookData.posts.sort(function (p1, p2) {
             return (p1.updated_time || p1.created_time) < (p2.updated_time || p2.created_time);
         });
-
-        facebookData.posts.forEach(function(p) {
+        facebookData.posts.forEach(function (p) {
             p.url = facebookData.url + "/posts/" + p.id;
             p.updated_time = moment.utc(p.updated_time || p.created_time, "YYYY-MM-DD HH:mm:ss").fromNow();
             if (p.likes)
@@ -30,20 +26,13 @@
                 p.sharedposts = 0;
             if (p.message && p.message.length > 200)
                 p.message = p.message.substr(0, 197) + "...";
-
         });
         return facebookData;
     }
-
     function fetchData(settings) {
-        return asyncGet(API_URL + "me?fields=statuses.limit(10){message," +
-                "updated_time,comments{id},likes{id},sharedposts}," +
-                "links.limit(10){comments{id},likes{id},sharedposts{id}," +
-                "picture,link,name,created_time},id,about,link,name,website," +
-                "work&method=get&access_token=" + settings.access_token)
-            .then(function(res) {
-                return Promise.resolve(res);
-            });
+        return asyncGet(API_URL + "me?fields=statuses.limit(10){message," + "updated_time,comments{id},likes{id},sharedposts}," + "links.limit(10){comments{id},likes{id},sharedposts{id}," + "picture,link,name,created_time},id,about,link,name,website," + "work&method=get&access_token=" + settings.access_token).then(function (res) {
+            return Promise.resolve(res);
+        });
     }
     window.facebookService = {
         displayName: DISPLAY_NAME,
@@ -51,4 +40,4 @@
         setup: setupFacebook,
         fetch: fetchData
     };
-})(window);
+}(window));

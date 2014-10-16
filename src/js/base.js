@@ -1,14 +1,11 @@
 "use strict";
 //Global configs and functions shared between js
-
 window.UNKNOWN_ERROR = -1;
 window.NO_MORE_DATA = -2;
 window.MODULE_NOT_FOUND = -3;
-
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
-
 require.config({
     baseUrl: "templates/",
     paths: {
@@ -17,7 +14,6 @@ require.config({
     },
     waitSeconds: 15
 });
-
 window.spin_opts = {
     lines: 9,
     length: 5,
@@ -30,27 +26,27 @@ window.spin_opts = {
     shadow: false,
     hwaccel: true,
     className: "spinner",
-    zIndex: 2e9
+    zIndex: 2000000000
 };
-
 function formatModuleName(module) {
-    return module.replace(/_(.)/g, function(match, p1) {
+    return module.replace(/_(.)/g, function (match, p1) {
         return p1.toUpperCase();
     });
 }
-
 function syncGet(url, success, headers, failure) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, false);
-    xhr.onload = function() {
+    xhr.onload = function () {
         if (this.status !== 200) {
-            if (failure) failure();
+            if (failure)
+                failure();
             return;
         }
         success(JSON.parse(this.responseText));
     };
-    xhr.onerror = function() {
-        if (failure) failure();
+    xhr.onerror = function () {
+        if (failure)
+            failure();
     };
     if (headers) {
         for (var header in headers) {
@@ -60,9 +56,8 @@ function syncGet(url, success, headers, failure) {
     }
     xhr.send();
 }
-
 function asyncGet(url, headers, jsonp) {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         $.ajax({
             url: url,
             headers: headers,
@@ -71,19 +66,17 @@ function asyncGet(url, headers, jsonp) {
             type: "GET",
             dataType: "jsonp",
             async: false,
-            success: function(res) {
+            success: function (res) {
                 if ("meta" in res && Object.keys(res).length === 2)
                     if ("data" in res)
                         res = res.data;
                     else if ("response" in res)
-                    res = res.response;
+                        res = res.response;
                 resolve(res);
             },
-            error: function(xhr, status) {
+            error: function (xhr, status) {
                 reject(status);
             }
-        });
-
-        //		syncGet(url, resolve, headers, reject);
+        });    //		syncGet(url, resolve, headers, reject);
     });
 }
