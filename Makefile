@@ -9,7 +9,7 @@ lint-json:
 	find src/ -name "*.json" | xargs -n 1 jsonlint -ip
 lint-js:
 	jshint src/
-beautify: beautify-js beautify-html
+beautify: beautify-html # beautify-js
 beautify-js:
 	find src/ \( -path src/js/libs -o -path src/less \) -prune -a -type f -o -name "*.js" -or -name "*.json" | xargs -n 1 js-beautify --type=js -r
 beautify-css:
