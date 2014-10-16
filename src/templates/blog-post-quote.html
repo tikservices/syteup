@@ -2,13 +2,15 @@
   <hgroup>
     <h2><a class="post-link" data-id="{{ id }}" href="#!post/{{ id }}">Quote</a></h2>
     <h3><a href="#{{ id }}">{{ formated_date }}</a></h3>
-  </hgroup>
-  <blockquote>
-    {{{text}}}
-  </blockquote>
-  {{#if source}}
-  <p>{{{ source }}}</p>
-  {{/if}}
+ </hgroup>
+ <div class="post-body">
+	 <blockquote>
+	     	 {{{text}}}
+       	 </blockquote>
+       	 {{#if source}}
+       	 <p>{{{ source }}}</p>
+       	 {{/if}}
+ </div>
   <footer>
     {{#if tags }}
     <h4>Tags</h4>

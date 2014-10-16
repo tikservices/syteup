@@ -3,17 +3,19 @@
     <h2><a class="post-link" data-id="{{ id }}" href="#!post/{{ id }}">Photo</a></h2>
     <h3><a href="#{{ id }}">{{ formated_date }}</a></h3>
   </hgroup>
-  {{#each photos}}
-    {{#with original_size}}
-      <p><img src="{{url}}" /></p>
-    {{/with}}
-    {{#if caption}}
-       {{{ caption }}}
-    {{/if}}
-  {{/each}}
-  {{#if caption}}
-    {{{ caption }}}
-  {{/if}}
+      <div class="post-body">
+	      {{#each photos}}
+    	        {{#with original_size}}
+	        <p><img src="{{url}}" /></p>
+	        {{/with}}
+	        {{#if caption}}
+       	          {{{ caption }}}
+	        {{/if}}
+	      {{/each}}
+	      {{#if caption}}
+	        {{{ caption }}}
+	      {{/if}}
+      </div>
   <footer>
     {{#if tags }}
     <h4>Tags</h4>

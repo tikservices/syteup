@@ -2,11 +2,13 @@
   <hgroup>
   <h2><a class="post-link" data-id="{{ id }}" href="#!post/{{ id }}">{{ artist }} - {{ track_name }}</a></h2>
     <h3><a href="#{{ id }}">{{ formated_date }}</a></h3>
-  </hgroup>
+ </hgroup>
+   <div class="post-body">
   {{{ player }}}
   {{#if caption}}
   {{{ caption }}}
   {{/if}}
+   </div>
   <footer>
     {{#if tags }}
     <h4>Tags</h4>

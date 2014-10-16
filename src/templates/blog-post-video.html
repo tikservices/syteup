@@ -3,9 +3,11 @@
     <h2><a class="post-link" data-id="{{ id }}" href="#!post/{{ id }}">Video</a></h2>
     <h3><a href="#{{ id }}">{{ formated_date }}</a></h3>
   </hgroup>
-  <p>
+  <div class="post-body">
+ <p>
     <a href="{{ permalink_url }}" class="no-border"><img src="{{ thumbnail_url }}" /></a>
   </p>
+  </div>
   <footer>
     {{#if tags }}
     <h4>Tags</h4>
