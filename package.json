@@ -4,7 +4,7 @@
   "description": "simple packaged website with social integration",
   "homepage": "https://github.com/lejenome/syteup",
   "licence": "MIT",
-  "author": "Moez Bouhlel (https//github.com/lejenome/) <bmoez.j@gmail.com>",
+  "author": "Moez Bouhlel <bmoez.j@gmail.com> (http://lejenome.github.io/)",
   "contributors": [
     "https://github.com/lejenome/syteup/graphs/contributors"
   ],
@@ -24,7 +24,7 @@
   ],
   "devDependencies": {
     "jshint": "*",
-    "fixmyjs": "*",
+    "fixmyjs": ">=0.13.3",
     "js-beautify": "*",
     "jscs": "*",
     "jsonlint": "*"

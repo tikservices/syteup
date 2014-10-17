@@ -3,9 +3,9 @@
     function setupGoogleAnalytics(settings) {
         // load google analytics.js
         var ga = window.ga = window.ga || function () {
-                ga.q = ga.q || [];
-                ga.q.push(arguments);
-            };
+            ga.q = ga.q || [];
+            ga.q.push(arguments);
+        };
         var link = document.createElement("script");
         var firstScript = document.getElementsByTagName("script")[0];
         link.async = true;

@@ -14,13 +14,13 @@
         if (offset && nextId)
             params += (params ? "&" : "?") + "offset=" + nextId;
         var wpApiUrl = [
-                API_URL,
-                "/sites/",
-                settings.blog_url,
-                "/posts/",
-                post_id,
-                params
-            ].join("");
+            API_URL,
+            "/sites/",
+            settings.blog_url,
+            "/posts/",
+            post_id,
+            params
+        ].join("");
         return asyncGet(wpApiUrl).then(function (data) {
             if (data.error)
                 data = {
