@@ -45,8 +45,8 @@ minify-js:
 	cat src/config.json| json "blog_platform" | sed 's,_,-,g;s,\(.*\),src/blogs/\1.js,' | xargs cat >> dist/syteup.js
 	uglifyjs -c --screw-ie8 dist/syteup.js -o dist/syteup.min.js
 minify-js-libs:
-	grep -o "js/libs/.*.js" src/index.html | sed 's,^,src/,' | xargs cat >> dist/syteup.libs.js
-#	grep -o "js/libs/.*.js" src/index.html | sed 's,^,src/,' | xargs cat | uglifyjs -c --screw-ie3 -o dist/syteup.libs.js
+	grep -o "js/libs/.*.js" src/index.html | sed 's,^,src/,' | xargs cat | uglifyjs -c --screw-ie3 -o dist/syteup.libs.js
+#	grep -o "js/libs/.*.js" src/index.html | sed 's,^,src/,' | xargs cat >> dist/syteup.libs.js
 minify-css:
 	lessc $(LESSCFLAGS)  src/less/styles.less dist/syteup.min.css
 minify-html:
