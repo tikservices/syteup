@@ -72,7 +72,7 @@ function renderBlogPosts(posts, clearPosts) {
         prettyPrint();
         setTimeout(setupBlogHeaderScroll, 1000);
         adjustSelection("home");
-        $("body").trigger("blog-post-loaded");
+        document.body.dispatchEvent(new CustomEvent("blog-post-loaded"));
     });
 }
 /**
