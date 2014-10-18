@@ -27,7 +27,11 @@
     "fixmyjs": ">=0.13.3",
     "js-beautify": "*",
     "jscs": "*",
-    "jsonlint": "*"
+    "jsonlint": "*",
+    "json": "*",
+    "uglifyjs": "*",
+    "less": "*",
+    "html-minifier": "*"
   },
   "scripts": {
     "test": "make test -j1",

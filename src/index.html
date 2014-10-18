@@ -22,10 +22,19 @@
     </script>
     <script src="less/less.min.js" type="text/javascript"></script>
     <!--else-->
-    <link rel="stylesheet" href="css/style.min.css" type="text/css" media="screen, projection">
+    <!--syteup.min.css-->
     <!--endif-->
-    <!--include "favicon.html" DONE-->
-    <link rel="import" href="templates/extra/favicon.html">
+    <!-- based on http://iconogen.com/ -->
+    <link rel="shortcut icon" href="imgs/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="imgs/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="57x57" href="imgs/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="imgs/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="imgs/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="imgs/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon" sizes="57x57" href="imgs/apple-touch-icon-60x60.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="imgs/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="imgs/apple-touch-icon-76x76.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="imgs/apple-touch-icon-152x152.png" />
 </head>
 
 <body>
@@ -62,10 +71,10 @@
         </span>
         <h3><a id="field-url" href="/">rigoneri.com</a></h3>
     </div>
-    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script defer src="js/main.js"></script>
 
     <!--if DEV_DEPLOYMENT_MODE-->
+    <!-- LIBS-->
+    <script defer src="js/libs/jquery.min.js"></script>
     <script defer src="js/libs/jquery.url.js"></script>
     <script defer src="js/libs/require.js"></script>
     <script defer src="js/libs/handlebars.js"></script>
@@ -74,6 +83,8 @@
     <script defer src="js/libs/spin.js"></script>
     <script defer src="js/libs/prettify.js"></script>
 
+    <!-- CORE -->
+    <script defer src="js/main.js"></script>
     <script defer src="js/base.js"></script>
     <script defer src="js/mobile.js"></script>
     <script defer src="js/blog-posts.js"></script>
@@ -111,9 +122,9 @@
     <script defer src="plugins/google-analytics.js"></script>
     <script defer src="plugins/woopra.js"></script>
     <script defer src="js/plugin.js"></script>
-
     <!--else-->
-    <script defer src="js/scripts.min.js"></script>
+    <!--syteup.libs.js-->
+    <!--syteup.min.js-->
     <!--endif-->
 </body>
 
