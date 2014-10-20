@@ -151,11 +151,11 @@
     filter: e(%("progid:DXImageTransform.Microsoft.gradient(enabled = false)"));
 }
 // Opacity
-.opacity(@opacity: 100) {
-    filter: e(%("alpha(opacity=%d)", @opacity));
-    -khtml-opacity: @opacity / 100;
-    -moz-opacity: @opacity / 100;
-    opacity: @opacity / 100;
+.opacity(@opacity: 1) {
+    filter: e(%("alpha(opacity=%d)", @opacity * 100));
+    -khtml-opacity: @opacity;
+    -moz-opacity: @opacity;
+    opacity: @opacity;
 }
 // Word spacing wrap
 .break-word() {
