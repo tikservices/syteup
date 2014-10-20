@@ -39,14 +39,13 @@ function addLinkItem(main_nav, href, id, text) {
     main_nav.appendChild(li);
 }
 function linkClickHandler(settings) {
-    $("a").click(function (e) {
+    $(".main-nav a").click(function (e) {
         if (e.which === 2)
             return;
         e.preventDefault();
         e.stopPropagation();
         if (this.href === $url)
             return;
-        var url = $.url(this.href.replace("/#!", ""));
         $url = this.href;
         if (this.id === "home-link") {
             adjustSelection("home");
@@ -56,7 +55,7 @@ function linkClickHandler(settings) {
             for (i = 0; i < enabledServices.length; i++) {
                 var service = enabledServices[i];
                 if (this.id === service + "-link") {
-                    adjustSelection(service, setupService.bind(this, service, url, this, settings["services_settings"][service]));
+                    adjustSelection(service, setupService.bind(this, service, $url, this, settings["services_settings"][service]));
                     return;
                 }
             }
