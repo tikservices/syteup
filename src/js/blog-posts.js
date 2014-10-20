@@ -33,16 +33,15 @@ function renderBlogPosts(posts, clearPosts) {
     }
     //Update this every time there are changes to the required
     //templates since it's cached every time
-    require.config({ urlArgs: "bust=v2" });
-    require([
-        "text!blog-post-text.html",
-        "text!blog-post-photo.html",
-        "text!blog-post-link.html",
-        "text!blog-post-video.html",
-        "text!blog-post-audio.html",
-        "text!blog-post-quote.html"
-    ], function (text_post_template, photo_post_template, link_post_template, video_post_template, audio_post_template, quote_post_template) {
-        var text_template = Handlebars.compile(text_post_template), photo_template = Handlebars.compile(photo_post_template), link_template = Handlebars.compile(link_post_template), video_template = Handlebars.compile(video_post_template), audio_template = Handlebars.compile(audio_post_template), quote_template = Handlebars.compile(quote_post_template);
+    Promise.all([
+        asyncText("templates/blog-post-text.html"),
+        asyncText("templates/blog-post-photo.html"),
+        asyncText("templates/blog-post-link.html"),
+        asyncText("templates/blog-post-video.html"),
+        asyncText("templates/blog-post-audio.html"),
+        asyncText("templates/blog-post-quote.html")
+    ]).then(function (res) {
+        var text_template = Handlebars.compile(res[0]), photo_template = Handlebars.compile(res[1]), link_template = Handlebars.compile(res[2]), video_template = Handlebars.compile(res[3]), audio_template = Handlebars.compile(res[4]), quote_template = Handlebars.compile(res[5]);
         $(".loading").remove();
         if (clearPosts)
             $("#blog-posts").empty();

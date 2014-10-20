@@ -64,6 +64,7 @@
     "adjustSelection",
     "define",
     "asyncGet",
+    "asyncText",
     "moment",
     "setupLinks",
     "fetchBlogPosts",

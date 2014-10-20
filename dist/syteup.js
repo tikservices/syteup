@@ -6,14 +6,6 @@ window.MODULE_NOT_FOUND = -3;
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
-require.config({
-    baseUrl: "templates/",
-    paths: {
-        "text": "../js/libs/text",
-        "json": "../js/libs/json"
-    },
-    waitSeconds: 15
-});
 window.spin_opts = {
     lines: 9,
     length: 5,
@@ -78,6 +70,29 @@ function asyncGet(url, headers, jsonp) {
                 reject(status);
             }
         });    //		syncGet(url, resolve, headers, reject);
+    });
+}
+function asyncText(url, headers) {
+    return new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, false);
+        xhr.onload = function () {
+            if (this.status !== 200) {
+                reject(this.status);
+                return;
+            }
+            resolve(this.responseText);
+        };
+        xhr.onerror = function () {
+            reject();
+        };
+        if (headers) {
+            for (var header in headers) {
+                if (headers.hasOwnProperty(header))
+                    xhr.setRequestHeader(header, headers[header]);
+            }
+        }
+        xhr.send();
     });
 }function setupBlog(settings) {
     "use strict";
@@ -184,16 +199,15 @@ function renderBlogPosts(posts, clearPosts) {
     }
     //Update this every time there are changes to the required
     //templates since it's cached every time
-    require.config({ urlArgs: "bust=v2" });
-    require([
-        "text!blog-post-text.html",
-        "text!blog-post-photo.html",
-        "text!blog-post-link.html",
-        "text!blog-post-video.html",
-        "text!blog-post-audio.html",
-        "text!blog-post-quote.html"
-    ], function (text_post_template, photo_post_template, link_post_template, video_post_template, audio_post_template, quote_post_template) {
-        var text_template = Handlebars.compile(text_post_template), photo_template = Handlebars.compile(photo_post_template), link_template = Handlebars.compile(link_post_template), video_template = Handlebars.compile(video_post_template), audio_template = Handlebars.compile(audio_post_template), quote_template = Handlebars.compile(quote_post_template);
+    Promise.all([
+        asyncText("templates/blog-post-text.html"),
+        asyncText("templates/blog-post-photo.html"),
+        asyncText("templates/blog-post-link.html"),
+        asyncText("templates/blog-post-video.html"),
+        asyncText("templates/blog-post-audio.html"),
+        asyncText("templates/blog-post-quote.html")
+    ]).then(function (res) {
+        var text_template = Handlebars.compile(res[0]), photo_template = Handlebars.compile(res[1]), link_template = Handlebars.compile(res[2]), video_template = Handlebars.compile(res[3]), audio_template = Handlebars.compile(res[4]), quote_template = Handlebars.compile(res[5]);
         $(".loading").remove();
         if (clearPosts)
             $("#blog-posts").empty();
@@ -421,22 +435,15 @@ function setupService(service, url, el, settings) {
     // show spinner
     var spinner = new Spinner(spin_opts).spin();
     $("#" + service + "-link").append(spinner.el);
-    var requireArgs = ["text!" + $service.template];
-    if ($service.supportMore)
-        requireArgs.push("text!" + $service.templateMore);
-    // request templates && fetch service data
-    Promise.all([
+    var promises = [
         $service.fetch(settings),
-        new Promise(function (resolve, reject) {
-            require(requireArgs, function serviceRequireCallback(view, viewMore) {
-                resolve([
-                    view,
-                    viewMore
-                ]);
-            });
-        })
-    ]).then(function (results) {
-        var serviceData = results[0], view = results[1][0], viewMore = results[1][1];
+        asyncText("templates/" + $service.template)
+    ];
+    if ($service.supportMore)
+        promises.push(asyncText("templates/" + $service.templateMore));
+    // request templates && fetch service data
+    Promise.all(promises).then(function (results) {
+        var serviceData = results[0], view = results[1], viewMore = results[2];
         var $modal;
         if (!serviceData || serviceData.error) {
             window.location = href;

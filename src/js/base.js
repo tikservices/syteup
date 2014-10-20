@@ -6,14 +6,6 @@ window.MODULE_NOT_FOUND = -3;
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
-require.config({
-    baseUrl: "templates/",
-    paths: {
-        "text": "../js/libs/text",
-        "json": "../js/libs/json"
-    },
-    waitSeconds: 15
-});
 window.spin_opts = {
     lines: 9,
     length: 5,
@@ -78,5 +70,28 @@ function asyncGet(url, headers, jsonp) {
                 reject(status);
             }
         });    //		syncGet(url, resolve, headers, reject);
+    });
+}
+function asyncText(url, headers) {
+    return new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, false);
+        xhr.onload = function () {
+            if (this.status !== 200) {
+                reject(this.status);
+                return;
+            }
+            resolve(this.responseText);
+        };
+        xhr.onerror = function () {
+            reject();
+        };
+        if (headers) {
+            for (var header in headers) {
+                if (headers.hasOwnProperty(header))
+                    xhr.setRequestHeader(header, headers[header]);
+            }
+        }
+        xhr.send();
     });
 }

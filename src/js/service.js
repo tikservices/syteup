@@ -16,22 +16,15 @@ function setupService(service, url, el, settings) {
     // show spinner
     var spinner = new Spinner(spin_opts).spin();
     $("#" + service + "-link").append(spinner.el);
-    var requireArgs = ["text!" + $service.template];
-    if ($service.supportMore)
-        requireArgs.push("text!" + $service.templateMore);
-    // request templates && fetch service data
-    Promise.all([
+    var promises = [
         $service.fetch(settings),
-        new Promise(function (resolve, reject) {
-            require(requireArgs, function serviceRequireCallback(view, viewMore) {
-                resolve([
-                    view,
-                    viewMore
-                ]);
-            });
-        })
-    ]).then(function (results) {
-        var serviceData = results[0], view = results[1][0], viewMore = results[1][1];
+        asyncText("templates/" + $service.template)
+    ];
+    if ($service.supportMore)
+        promises.push(asyncText("templates/" + $service.templateMore));
+    // request templates && fetch service data
+    Promise.all(promises).then(function (results) {
+        var serviceData = results[0], view = results[1], viewMore = results[2];
         var $modal;
         if (!serviceData || serviceData.error) {
             window.location = href;

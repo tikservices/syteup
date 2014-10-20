@@ -1,7 +1,7 @@
 LESSCFLAGS=-O2 --no-ie-compat --no-js --strict-imports --strict-math=on -rp=src/ -x --clean-css
 HTMLMINIFIERFLAGS=--remove-comments --collapse-whitespace --minify-js
 
-pre-commit: beautify fix test minify
+pre-commit: beautify fix test dist
 test: lint # style-check
 fix: fix-js
 fix-js:
@@ -22,6 +22,9 @@ beautify-html:
 style-check: style-check-js
 style-check-js:
 	jscs src/
+dist: minify appcache
+appcache:
+	sed -i "s|\(# last updated: \).*|\1$(shell date --rfc-3339=seconds --utc)|" dist/syteup.appcache
 minify: minify-pre minify-js minify-js-libs minify-css minify-html
 minify-pre:
 	rm -rf dist/
@@ -30,8 +33,7 @@ minify-pre:
 	cp src/index.html dist/
 	cp -r src/templates dist/
 	cp src/config.json dist
-	mkdir -p dist/js/libs
-	cp src/js/libs/text.js dist/js/libs/
+	cp src/syteup.appcache dist
 	sed -i 's|.*<script .*||' dist/index.html
 	sed -i 's|.*stylesheet/less.*||' dist/index.html
 	sed -i 's|<!--syteup.min.css-->|<link rel="stylesheet" href="syteup.min.css" type="text/css" media="screen, projection">|' dist/index.html
