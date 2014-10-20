@@ -18,7 +18,8 @@ window.spin_opts = {
     shadow: false,
     hwaccel: true,
     className: "spinner",
-    zIndex: 2000000000
+    zIndex: 2000000000,
+    left: "90%"
 };
 function formatModuleName(module) {
     return module.replace(/_(.)/g, function (match, p1) {
