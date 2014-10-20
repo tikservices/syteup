@@ -17,14 +17,13 @@ DONE (new service code design):
     - plugin / ControlPanel    [DONE]
     - plugin / Woopra          [DONE]
     - plugin / Disqus          [DONE]
-
-ALMOST (js + async:promise + JSONP):
-
     - blog / Wordpress       [DONE]
     - blog / Tumblr          [DONE]
     - blog / blogger         [DONE]
     - plugin / ShareThis       [DONE]
     - plugin / GoogleAnalytics [DONE]
+
+ALMOST (js + async:promise + JSONP):
 
 INPROGRESS (python || CORS || sync:XMLHttpRequest with GET):
 
