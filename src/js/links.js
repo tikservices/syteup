@@ -12,7 +12,7 @@ function setupLinks(settings) {
     var main_nav = document.getElementsByClassName("main-nav")[0];
     main_nav.innerHTML = "";
     if (settings["blog_platform"].length)
-        addLinkItem(main_nav, "/", "home-link", "Home");
+        addLinkItem(main_nav, "/", "home-item-link", "Home");
     var i;
     for (i = 0; i < enabledServices.length; i++) {
         var service = enabledServices[i];
@@ -21,10 +21,10 @@ function setupLinks(settings) {
             text = window[service + "Service"].displayName;
         else
             text = service[0].upperCase + service.slice(1);
-        addLinkItem(main_nav, settings["services_settings"][service]["url"], service + "-link", text);
+        addLinkItem(main_nav, settings["services_settings"][service]["url"], service + "-item-link", text);
     }
     if (settings["fields"]["email"].length) {
-        addLinkItem(main_nav, "mailto:" + settings["fields"]["email"] + "?subject=Hello", "contact-link", "Contact");
+        addLinkItem(main_nav, "mailto:" + settings["fields"]["email"] + "?subject=Hello", "contact-item-link", "Contact");
     }
     linkClickHandler(settings);
 }
@@ -47,14 +47,14 @@ function linkClickHandler(settings) {
         if (this.href === $url)
             return;
         $url = this.href;
-        if (this.id === "home-link") {
+        if (this.id === "home-item-link") {
             adjustSelection("home");
             return;
         } else {
             var i;
             for (i = 0; i < enabledServices.length; i++) {
                 var service = enabledServices[i];
-                if (this.id === service + "-link") {
+                if (this.id === service + "-item-link") {
                     adjustSelection(service, setupService.bind(this, service, $url, this, settings["services_settings"][service]));
                     return;
                 }
@@ -80,7 +80,7 @@ function adjustSelection(component, callback) {
         callback();
     }
     $(".main-nav").children("li").removeClass("sel");
-    $("#" + component + "-link").parent().addClass("sel");
+    $("#" + component + "-item-link").parent().addClass("sel");
     if (component === "home")
         $url = null;
     window.currSelection = component;

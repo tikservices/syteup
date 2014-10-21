@@ -22,7 +22,7 @@ beautify-html:
 style-check: style-check-js
 style-check-js:
 	jscs src/
-dist: minify appcache
+dist: minify # appcache
 appcache:
 	sed -i "s|\(# last updated: \).*|\1$(shell date --rfc-3339=seconds --utc)|" dist/syteup.appcache
 minify: minify-pre minify-js minify-js-libs minify-css minify-html
@@ -33,7 +33,7 @@ minify-pre:
 	cp src/index.html dist/
 	cp -r src/templates dist/
 	cp src/config.json dist
-	cp src/syteup.appcache dist
+	#cp src/syteup.appcache dist
 	sed -i 's|.*<script .*||' dist/index.html
 	sed -i 's|.*stylesheet/less.*||' dist/index.html
 	sed -i 's|<!--syteup.min.css-->|<link rel="stylesheet" href="syteup.min.css" type="text/css" media="screen, projection">|' dist/index.html

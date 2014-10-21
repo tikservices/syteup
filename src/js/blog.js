@@ -17,7 +17,7 @@ function setupBlog(settings) {
             });
         }
     });
-    $("#home-link").on("click", function () {
+    $("#home-item-link").on("click", function () {
         if (location.hash.substr(0, 2) !== "#!")
             return;
         location.hash = "";

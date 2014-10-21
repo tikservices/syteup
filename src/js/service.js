@@ -15,7 +15,7 @@ function setupService(service, url, el, settings) {
     var $service = window[formatModuleName(service) + "Service"];
     // show spinner
     var spinner = new Spinner(spin_opts).spin();
-    $("#" + service + "-link").append(spinner.el);
+    $("#" + service + "-item-link").append(spinner.el);
     var promises = [
         $service.fetch(settings),
         asyncText("templates/" + $service.template)
