@@ -67,12 +67,12 @@
     "bitbucket": true,
     "dribbble": true,
     "instagram": true,
-    "twitter": false,
-    "linkedin": false,
-    "tent": false,
     "youtube": true,
     "gplus": true,
     "facebook": true,
+    "linkedin": true,
+    "twitter": false,
+    "tent": false,
     "netfix": false,
     "picasa": false,
     "rdio": false,
@@ -148,10 +148,7 @@
     },
     "linkedin": {
       "url": "https://www.linkedin.com/in/lejenome",
-      "username": "lejenome",
-      "api_key": "771y9k3kzkytxl",
-      "api_secret": "[ENTER YOUR LINKEDIN CONSUMER SECRET KEY HERE]",
-      "token": "ed557527-b515-4e93-ad18-5306de6dfa13"
+      "access_token": "AQVbZxqNeGmH9M6Huf_PvzUc6bK202rpzMyw79rojTWdLMb3O58kaoLbjeMaJwilLUP00ifwkDPKeVAtrifBk0XdMZbZnIJWMddYrlZ2MCzAJgJ30hwSxJmAmS9ZIlLkwo9LQ4M6neVJmrM_wc4CCm1s_49n3vHML8S5eRt6eufl7xEJr_U"
     }
   }
 }

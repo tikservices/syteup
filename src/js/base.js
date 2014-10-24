@@ -54,6 +54,13 @@ function asyncGet(url, headers, jsonp) {
         $.ajax({
             url: url,
             headers: headers,
+            beforeSend: function (xhr) {
+                if (!headers)
+                    return;
+                for (var H in headers)
+                    if (headers.hasOwnProperty(H))
+                        xhr.setRequestHeader(H, headers[H]);
+            },
             jsonp: jsonp,
             contentType: "application/json; charset=utf-8",
             type: "GET",
