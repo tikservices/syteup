@@ -59,7 +59,7 @@ TODO
 [lejenome](https://github.com/lejenome) ([Moez Bouhlel](http://lejenome.github.io/))
 based on [Syte](https://github.com/rigoneri/syte) by [Rigo](https://github.com/rigoneri)
 (rodrigo neri).
-Thanks for [The Contributors](https://github.com/lejenome/syteup/graphs/contributors) for booth the old Syte code and Syteup code.
+Thanks to [The Contributors](https://github.com/lejenome/syteup/graphs/contributors) for booth the old Syte code and Syteup code.
 
 ## Licence
 
