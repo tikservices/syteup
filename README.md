@@ -38,14 +38,20 @@ moder HTML5 webapp.
 You needs to setup the
 [src/config.json](https://github.com/lejenome/syteup/tree/master/src/config.json)
 file for your needs as explained on the
-flowing section then run ```npm run pre-commit``` which will update the
+flowing section then run
+```shell
+npm run pre-commit
+```
+which will update the
 [dist/](https://github.com/lejenome/syteup/blob/master/dist/)
 folder with your new settings. Then copy the contents of [dist/](https://github.com/lejenome/syteup/blob/master/dist/)
 folder to you server and then everything is ready.
 
 ## Setup
 
-```TODO```
+```
+TODO
+```
 
 ## Credit
 
