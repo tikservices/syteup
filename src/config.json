@@ -14,7 +14,8 @@
     "woopra": false,
     "rss": true,
     "sitemap": false,
-    "control_panel": true
+    "control_panel": true,
+    "gratipay_widget": true
   },
   "plugins_settings": {
     "google_analytics": {
@@ -35,6 +36,9 @@
     },
     "sharethis": {
       "publisher_key": ""
+    },
+    "gratipay_widget": {
+      "username": "lejenome"
     }
   },
   "blogs_settings": {
