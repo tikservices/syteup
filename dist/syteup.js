@@ -1062,6 +1062,7 @@ function setupService(service, url, el, settings) {
     var API_URL = "https://api.linkedin.com/v1";
     function setupLinkedin(linkedinData, settings) {
         linkedinData.profile["profile_url"] = "http://linkedin.com/profile/view?id=" + linkedinData.profile["id"];
+        linkedinData.profile["summary"] = linkedinData.profile["summary"].replace("\n", "<br />", "g");
         //        linkedinData.profile["numGroups"] = linkedinData.groups["_count"];
         //        linkedinData.profile["numNetworkUpdates"] = linkedinData.network_updates["_total"];
         linkedinData.profile["location_name"] = linkedinData.profile["location"]["name"];
