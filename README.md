@@ -16,9 +16,13 @@ primary page of the site.
 
 ### Social Services
 
-Suteup currently support many different social services: Github, Flickr,
-SoundCloud, Last.fm, StackOverflow, Bitbucket, Dribbble, Instagram, Youtube,
-LinkedIn, Facebook, Google+,...
+Suteup currently support many different social services:
+[Github](https://github.com/), [Flickr](https://www.flickr.com/),
+[SoundCloud](https://soundcloud.com/), [Last.fm](http://www.last.fm/),
+[StackOverflow](http://stackoverflow.com/), [Bitbucket](https://bitbucket.org/),
+[Dribbble](https://dribbble.com/), [Instagram](http://instagram.com/),
+[Youtube](https://www.youtube.com/), [LinkedIn](https://www.linkedin.com/),
+[Facebook](https://www.facebook.com/), [Google+](https://plus.google.com/),...
 
 Some other services integration is planed. For more up to date list of currently
 supported services and planed services isavailable on
@@ -59,7 +63,8 @@ TODO
 [lejenome](https://github.com/lejenome) ([Moez Bouhlel](http://lejenome.github.io/))
 based on [Syte](https://github.com/rigoneri/syte) by [Rigo](https://github.com/rigoneri)
 (rodrigo neri).
-Thanks to [The Contributors](https://github.com/lejenome/syteup/graphs/contributors) for booth the old Syte code and Syteup code.
+Thanks to [The Contributors](https://github.com/lejenome/syteup/graphs/contributors)
+for booth the old Syte code and Syteup code.
 
 ## Licence
 
