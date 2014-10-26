@@ -1,7 +1,7 @@
 SRC=src
 DIST=dist
 CONF=$(SRC)/config.json
-LESSCFLAGS=-O2 --no-ie-compat --no-js --strict-imports --strict-math=on -rp=$(SRC)/ -x --clean-css
+LESSCFLAGS=--no-ie-compat --no-js --strict-imports --strict-math=on -rp=$(SRC)/ -x --clean-css
 HTMLMINIFIERFLAGS=--remove-comments --collapse-whitespace --minify-js
 
 pre-commit: beautify fix test dist
