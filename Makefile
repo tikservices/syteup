@@ -30,11 +30,11 @@ appcache:
 	sed -i "s|\(# last updated: \).*|\1$(shell date --rfc-3339=seconds --utc)|" $(DIST)/syteup.appcache
 minify: minify-pre minify-js minify-js-libs minify-css minify-html
 minify-pre:
-	rm -rf $(DIST)
-	mkdir $(DIST)
-	cp -r $(SRC)/imgs $(DIST)
+	#rm -rf $(DIST)/templates $(DIST)/imgs
+	mkdir -p $(DIST) $(DIST)/templates $(DIST)/imgs
+	cp -r $(SRC)/imgs/* $(DIST)/imgs
 	cp $(SRC)/index.html $(DIST)
-	cp -r $(SRC)/templates $(DIST)
+	cp -r $(SRC)/templates/* $(DIST)/templates
 	cp $(CONF) $(DIST)
 	#cp $(SRC)/syteup.appcache $(DIST)
 	sed -i 's|.*<script .*||' $(DIST)/index.html
@@ -43,6 +43,7 @@ minify-pre:
 	sed -i 's|<!--syteup.libs.js-->|<script defer src="syteup.libs.js" type="text/javascript"></script>|' $(DIST)/index.html
 	sed -i 's|<!--syteup.min.js-->|<script defer src="syteup.min.js" type="text/javascript"></script>|' $(DIST)/index.html
 minify-js:
+	rm $(DIST)/syteup.js
 	cat $(SRC)/js/*.js >> $(DIST)/syteup.js
 	cat $(CONF) | json "plugins" | json -Mac "this.value===true" key | sed 's,_,-,g;s,\(.*\),$(SRC)/plugins/\1.js,' | xargs cat >> $(DIST)/syteup.js
 	cat $(CONF) | json "blogs_settings.plugins" | json -Mac "this.value===true" key | sed 's,_,-,g;s,\(.*\),$(SRC)/plugins/\1.js,' | xargs cat >> $(DIST)/syteup.js
@@ -52,7 +53,7 @@ minify-js:
 	uglifyjs -c --screw-ie8 $(DIST)/syteup.js -o $(DIST)/syteup.min.js
 minify-js-libs:
 	grep -o "js/libs/.*.js" $(SRC)/index.html | sed 's,^,$(SRC)/,' | xargs cat | uglifyjs -c --screw-ie3 -o $(DIST)/syteup.libs.js
-#	grep -o "js/libs/.*.js" $(SRC)/index.html | sed 's,^,$(SRC)/,' | xargs cat >> $(DIST)/syteup.libs.js
+	#grep -o "js/libs/.*.js" $(SRC)/index.html | sed 's,^,$(SRC)/,' | xargs cat >> $(DIST)/syteup.libs.js
 minify-css:
 	lessc $(LESSCFLAGS)  $(SRC)/less/styles.less $(DIST)/syteup.min.css
 minify-html:
