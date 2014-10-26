@@ -26,7 +26,7 @@
                 reload: true,
                 config: function () {
                     this.page.identifier = data.id;
-                    this.page.url = document.location.href + "#" + data.id;
+                    this.page.url = window.location.origin + window.location.pathname + "#!post/" + data.id;
                     this.language = "en";
                 }
             });
