@@ -35,7 +35,7 @@ minify-pre:
 	cp -r $(SRC)/imgs/* $(DIST)/imgs
 	cp $(SRC)/index.html $(DIST)
 	cp -r $(SRC)/templates/* $(DIST)/templates
-	cp $(CONF) $(DIST)
+	cp $(CONF) $(DIST)/config.json 2>/dev/null || true
 	#cp $(SRC)/syteup.appcache $(DIST)
 	sed -i 's|.*<script .*||' $(DIST)/index.html
 	sed -i 's|.*stylesheet/less.*||' $(DIST)/index.html

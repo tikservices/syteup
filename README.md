@@ -51,6 +51,12 @@ which will update the
 folder with your new settings. Then copy the contents of [dist/](https://github.com/lejenome/syteup/blob/master/dist/)
 folder to you server and then everything is ready.
 
+You can also use make command for custom src and dist folder and config file
+too.
+```shell
+make -j1 SRC=~/syteup/src DIST=/srv/website/www CONF=~/my_config.json
+```
+
 ## Setup
 
 ```
