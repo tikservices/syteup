@@ -45,6 +45,7 @@ minify-js:
 	cat src/config.json| json "blogs_settings.plugins" | json -Mac "this.value===true" key | sed 's,_,-,g;s,\(.*\),src/plugins/\1.js,' | xargs cat >> dist/syteup.js
 	cat src/config.json| json "services" | json -Mac "this.value===true" key | sed 's,_,-,g;s,\(.*\),src/services/\1.js,' | xargs cat >> dist/syteup.js
 	cat src/config.json| json "blog_platform" | sed 's,_,-,g;s,\(.*\),src/blogs/\1.js,' | xargs cat >> dist/syteup.js
+	json -f src/config.json -c 'typeof(this.fields.contact)==="object"' >/dev/null && cat src/services/syteup-contact.js >> dist/syteup.js
 	uglifyjs -c --screw-ie8 dist/syteup.js -o dist/syteup.min.js
 minify-js-libs:
 	grep -o "js/libs/.*.js" src/index.html | sed 's,^,src/,' | xargs cat | uglifyjs -c --screw-ie3 -o dist/syteup.libs.js
