@@ -293,6 +293,11 @@ function setupLinks(settings) {
         if (settings["services"][service])
             enabledServices.push(service);
     });
+    if (typeof settings["fields"]["contact"] === "object") {
+        enabledServices.push("syteup_contact");
+        settings["services_settings"]["syteup_contact"] = settings["fields"]["contact"];
+        settings["services_settings"]["syteup_contact"]["url"] = "mailto:" + settings["fields"]["contact"]["email"];
+    }
     //CREATE LINKS ITEMS FOR ENABLED SERVICES
     var main_nav = document.getElementsByClassName("main-nav")[0];
     main_nav.innerHTML = "";
@@ -301,16 +306,16 @@ function setupLinks(settings) {
     var i;
     for (i = 0; i < enabledServices.length; i++) {
         var service = enabledServices[i];
+        var $service = window[formatModuleName(service) + "Service"];
         var text;
-        if (window[service + "Service"])
-            text = window[service + "Service"].displayName;
+        if ($service)
+            text = $service.displayName;
         else
-            text = service[0].upperCase + service.slice(1);
+            text = service[0].toUpperCase() + service.slice(1);
         addLinkItem(main_nav, settings["services_settings"][service]["url"], service + "-item-link", text);
     }
-    if (settings["fields"]["email"].length) {
-        addLinkItem(main_nav, "mailto:" + settings["fields"]["email"] + "?subject=Hello", "contact-item-link", "Contact");
-    }
+    if (typeof settings["fields"]["contact"] === "string")
+        addLinkItem(main_nav, "mailto:" + settings["fields"]["contact"] + "?subject=Hello", "contact-item-link", "Contact");
     linkClickHandler(settings);
 }
 function addLinkItem(main_nav, href, id, text) {
@@ -427,18 +432,18 @@ $(function () {
 }"use strict";
 function setupService(service, url, el, settings) {
     var href = el.href;
+    // set $service to the current service object
+    var $service = window[formatModuleName(service) + "Service"];
     // just open url in case of errors
     if ($("#" + service + "-profile").length > 0) {
         window.location = href;
         return;
     }
-    if (!window[service + "Service"]) {
+    if (!$service) {
         console.error("Service Not Found:", service);
         window.location = href;
         return;
     }
-    // set $service to the current service object
-    var $service = window[formatModuleName(service) + "Service"];
     // show spinner
     var spinner = new Spinner(spin_opts).spin();
     $("#" + service + "-item-link").append(spinner.el);

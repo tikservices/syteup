@@ -7,7 +7,16 @@
     "realname": "Moez Bouhlel",
     "description": "FOSS and  IT fan",
     "url": "lejenome.github.io",
-    "email": "bmoez.j@gmail.com"
+    "contact": {
+      "email": "bmoez.j@gmail.com",
+      "mobile": "(216) 00000000",
+      "tel": "(216) 00000000",
+      "fax": "(216) 1111111",
+      "address": "Sfax, Tunisia",
+      "pgp_url": "/pubkey.asc",
+      "fingerprint": "3A1D ADDD 332D 2EFB F816  21C3 84D8 5721 7365 9C9D",
+      "ssh_url": "/id_rsa.pub"
+    }
   },
   "plugins": {
     "google_analytics": true,

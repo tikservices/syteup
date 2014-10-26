@@ -1,0 +1,21 @@
+<div class="profile syteup_contact modal fade" id="syteup_contact-profile">
+  <div class="profile-info">
+    <button class="close" data-dismiss="modal">×</button>
+    <div class="profile-contact">
+	{{#if address}}<h3>Address: {{ address }}</h3>{{/if}}
+	{{#if mobile}}<h3>Mobile: <a href="{{ mobile_uri }}">{{ mobile }}</a></h3>{{/if}}
+	{{#if tel}}<h3>Telephone: <a href="{{ tel_uri }}">{{ tel }}</a></h3>{{/if}}
+	{{#if fax}}<h3>Fax: <a href="{{ fax_uri }}">{{ fax }}</a></h3>{{/if}}
+        <h3>Email: <a href="mailto:{{ email }}">{{ email }}</a></h3>
+	{{#if fingerprint}}<h3>Fingerprint: {{ fingerprint }}</h3>{{/if}}
+	{{#if sshkey}}
+        <h3><a href="{{ ssh_url }}">Public SSH Key:</a></h3>
+	<div class="show-text">{{ sshkey }}</div>
+	{{/if}}
+	{{#if pubkey}}
+        <h3><a href="{{ pgp_url }}">Public PGP Key:</a></h3>
+	<div class="show-text">{{ pubkey }}</div>
+	{{/if}}
+    </div>
+  </div>
+</div>

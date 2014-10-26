@@ -1,18 +1,18 @@
 "use strict";
 function setupService(service, url, el, settings) {
     var href = el.href;
+    // set $service to the current service object
+    var $service = window[formatModuleName(service) + "Service"];
     // just open url in case of errors
     if ($("#" + service + "-profile").length > 0) {
         window.location = href;
         return;
     }
-    if (!window[service + "Service"]) {
+    if (!$service) {
         console.error("Service Not Found:", service);
         window.location = href;
         return;
     }
-    // set $service to the current service object
-    var $service = window[formatModuleName(service) + "Service"];
     // show spinner
     var spinner = new Spinner(spin_opts).spin();
     $("#" + service + "-item-link").append(spinner.el);
