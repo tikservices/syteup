@@ -219,7 +219,7 @@ function renderBlogPosts(posts, clearPosts) {
         $(".loading").remove();
         if (clearPosts)
             $("#blog-posts").empty();
-        $.each(posts, function (i, p) {
+        posts = posts.forEach(function (p) {
             p.formated_date = moment.utc(p.date, "YYYY-MM-DD HH:mm:ss").local().format("MMMM DD, YYYY");
             if (window.disqus_enabled)
                 p.disqus_enabled = true;
@@ -416,19 +416,27 @@ $(function () {
     $("#mobile-nav-btn").click(function () {
         $(".main-section").toggleClass("nav-opened");
     });
-});function setupPlugins(settings) {
-    "use strict";
-    for (var plugin in settings["plugins"])
-        if (settings["plugins"].hasOwnProperty(plugin) && settings["plugins"][plugin]) {
-            var $plugin = window[formatModuleName(plugin) + "Plugin"];
-            if (!$plugin) {
-                console.error("Plugin Not Found:", plugin);
-                continue;
-            }
-            $plugin.setup(settings["plugins_settings"][plugin]);
-            console.log("Plugin Setuped:", plugin);
+});"use strict";
+function setupPlugins(settings) {
+    return Promise.all(pluginsPromises(settings));
+}
+function pluginsPromises(settings) {
+    return Object.keys(settings["plugins"]).filter(function (plugin) {
+        return settings["plugins"][plugin];
+    }).map(function (plugin) {
+        return setupPlugin(plugin, settings["plugins_settings"][plugin]).then(console.log.bind(console, "Plugin Setuped:", plugin)).catch(console.error.bind(console, "Plugin Not Found", plugin));
+    });
+}
+function setupPlugin(plugin, settings) {
+    return new Promise(function (resolve, reject) {
+        var $plugin = window[formatModuleName(plugin) + "Plugin"];
+        if ($plugin) {
+            $plugin.setup(settings);
+            resolve();
+        } else {
+            reject(MODULE_NOT_FOUND);
         }
-    return Promise.resolve();
+    });
 }"use strict";
 function setupService(service, url, el, settings) {
     var href = el.href;
@@ -454,7 +462,7 @@ function setupService(service, url, el, settings) {
     if ($service.supportMore)
         promises.push(asyncText("templates/" + $service.templateMore));
     // request templates && fetch service data
-    Promise.all(promises).then(function (results) {
+    return Promise.all(promises).then(function (results) {
         var serviceData = results[0], view = results[1], viewMore = results[2];
         var $modal;
         if (!serviceData || serviceData.error) {

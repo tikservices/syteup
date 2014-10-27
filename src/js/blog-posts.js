@@ -45,7 +45,7 @@ function renderBlogPosts(posts, clearPosts) {
         $(".loading").remove();
         if (clearPosts)
             $("#blog-posts").empty();
-        $.each(posts, function (i, p) {
+        posts = posts.forEach(function (p) {
             p.formated_date = moment.utc(p.date, "YYYY-MM-DD HH:mm:ss").local().format("MMMM DD, YYYY");
             if (window.disqus_enabled)
                 p.disqus_enabled = true;

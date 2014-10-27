@@ -23,7 +23,7 @@ function setupService(service, url, el, settings) {
     if ($service.supportMore)
         promises.push(asyncText("templates/" + $service.templateMore));
     // request templates && fetch service data
-    Promise.all(promises).then(function (results) {
+    return Promise.all(promises).then(function (results) {
         var serviceData = results[0], view = results[1], viewMore = results[2];
         var $modal;
         if (!serviceData || serviceData.error) {

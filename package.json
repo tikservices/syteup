@@ -23,7 +23,7 @@
     "news"
   ],
   "devDependencies": {
-    "jshint": "*",
+    "jshint": ">=0.13.6",
     "fixmyjs": ">=0.13.3",
     "js-beautify": "*",
     "jscs": "*",
