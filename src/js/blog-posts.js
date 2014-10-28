@@ -45,6 +45,8 @@ function renderBlogPosts(posts, clearPosts) {
         $(".loading").remove();
         if (clearPosts)
             $("#blog-posts").empty();
+        if (posts.length === 1 && window.disqus_enabled)
+            posts[0].disqus_open = true;
         posts = posts.forEach(function (p) {
             p.formated_date = moment.utc(p.date, "YYYY-MM-DD HH:mm:ss").local().format("MMMM DD, YYYY");
             if (window.disqus_enabled)

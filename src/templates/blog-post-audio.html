@@ -24,9 +24,13 @@
       <a data-id="{{ id }}" href="#!post/{{ id }}#disqus_thread" class="comments post-link"></a>
     </div>
     {{else}}
+     {{#if disqus_open}}
+    <div id="disqus_thread"></div>
+    {{else}}
     <div class="disqus_show_comments" data-id="{{id}}">
 	    <a>Show Comments</a>
     </div>
+    {{/if}}
     {{/if}}
     {{/if}}
   </footer>
