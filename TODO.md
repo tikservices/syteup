@@ -46,6 +46,7 @@ WICHLIST:
     - service / speakerdeck
     - service / deviantart
     - service / Quora
+    - service / vimeo
     - service / trakt
     - service / Posterous Spaces
     - service / viewbook.com
