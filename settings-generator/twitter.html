@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Facebook Settings Setup</title>
+</head>
+<body>
+	<script>
+     function submit() {
+	var results = document.getElementById("results");
+	var id = document.getElementById("consumer_key").value;
+	var secret = document.getElementById("consumer_secret").value;
+	var code = btoa(encodeURIComponent( escape(id)) + ":" + encodeURIComponent( escape(secret)));
+	var xhr = new XMLHttpRequest();
+	results.textContent = "$ curl --request 'POST' 'https://api.twitter.com/oauth2/token' -H 'Authorization: Basic " + code + "'" +
+		" -H 'Content-Type: application/x-www-form-urlencoded;charset=UTF-8' --data 'grant_type=client_credentials'";
+     }
+	</script>
+
+	<div id="results"></div>
+	<p>
+		<label for="consumer_key">Consumer Key</label>
+		<input id="consumer_key" name="consumer_key" />
+	</p><p>
+		<label for="consumer_secret">Consumer Secret</label>
+		<input id="consumer_secret" name="consumer_secret" />
+	</p><p>
+		<button onclick="submit()">Submit</button>
+	</p>
+</body>
+</html>
+

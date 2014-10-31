@@ -73,18 +73,18 @@
   },
   "services": {
     "github": true,
-    "flickr": true,
+    "gplus": true,
+    "facebook": true,
+    "linkedin": true,
+    "twitter": true,
+    "youtube": true,
     "soundcloud": true,
     "lastfm": true,
     "stackoverflow": true,
     "bitbucket": true,
     "dribbble": true,
+    "flickr": true,
     "instagram": true,
-    "youtube": true,
-    "gplus": true,
-    "facebook": true,
-    "linkedin": true,
-    "twitter": false,
     "tent": false,
     "netfix": false,
     "picasa": false,
@@ -149,10 +149,7 @@
     "twitter": {
       "url": "https://twitter.com/lejenome",
       "username": "lejenome",
-      "consumer_key": "ow0dbuyF6xR6m7Dl3b6nZO0xW",
-      "consumer_secret": "[ENTER TWITTER CONSUMER SECRET HERE, SEE TWITTER SETUP INSTRUCTIONS]",
-      "access_token_key": "550024181-e0ooxzUESKTI1S1QlNJ6Q7rlCEMhICuXeFNq28DH",
-      "access_token_secret": "[ENTER TWITTER USER SECRET HERE, SEE TWITTER SETUP INSTRUCTIONS]"
+      "access_token": "AAAAAAAAAAAAAAAAAAAAAApbaQAAAAAAz5KjCEDpkb3t0cPW35s8%2BRq8CPE%3DNmV2v5myoSRvG5Hxootd4itQQ2HW4z4hZRe7s2QOmf7xrvjCaP"
     },
     "instagram": {
       "url": "http://instagram.com/seanparkerphotography",

@@ -51,33 +51,32 @@ function syncGet(url, success, headers, failure) {
 }
 function asyncGet(url, headers, jsonp) {
     return new Promise(function (resolve, reject) {
-        $.ajax({
-            url: url,
-            headers: headers,
-            beforeSend: function (xhr) {
-                if (!headers)
-                    return;
-                for (var H in headers)
-                    if (headers.hasOwnProperty(H))
-                        xhr.setRequestHeader(H, headers[H]);
-            },
-            jsonp: jsonp,
-            contentType: "application/json; charset=utf-8",
-            type: "GET",
-            dataType: "jsonp",
-            async: false,
-            success: function (res) {
-                if ("meta" in res && Object.keys(res).length === 2)
-                    if ("data" in res)
-                        res = res.data;
-                    else if ("response" in res)
-                        res = res.response;
-                resolve(res);
-            },
-            error: function (xhr, status) {
-                reject(status);
-            }
-        });    //		syncGet(url, resolve, headers, reject);
+        if (headers && Object.keys(headers).length)
+            syncGet(url, function (data) {
+                resolve(data);
+            }, headers, function (error) {
+                reject(error);
+            });
+        else
+            $.ajax({
+                url: url,
+                jsonp: jsonp,
+                contentType: "application/json; charset=utf-8",
+                type: "GET",
+                dataType: "jsonp",
+                async: false,
+                success: function (res) {
+                    if ("meta" in res && Object.keys(res).length === 2)
+                        if ("data" in res)
+                            res = res.data;
+                        else if ("response" in res)
+                            res = res.response;
+                    resolve(res);
+                },
+                error: function (xhr, status) {
+                    reject(status);
+                }
+            });
     });
 }
 function asyncText(url, headers) {
@@ -670,24 +669,247 @@ function setupService(service, url, el, settings) {
     };
 }(window));(function (window) {
     "use strict";
-    var DISPLAY_NAME = "Flickr";
-    function setupFlickr(flickrData, settings) {
-        if (flickrData.items === 0) {
-            return;
-        }
-        flickrData.title = flickrData.title.substring(13);
-        $.each(flickrData.items, function (i, p) {
-            p.formated_date = moment.unix(Date.parse(p.date_taken) / 1000).fromNow();
+    var DISPLAY_NAME = "Google+";
+    var API_URL = "https://www.googleapis.com/plus/v1/";
+    function setupGplus(gplusData, settings) {
+        $.each(gplusData.activities, function (i, t) {
+            if (t.verb === "post")
+                t.verb = "posted";
+            else if (t.verb === "share")
+                t.verb = "shared";
+            if (t.title.length > 60)
+                t.title = t.title.substr(0, 57) + "...";
+            t.replies = t.object.replies.totalItems;
+            t.plusoners = t.object.plusoners.totalItems;
+            t.resharers = t.object.resharers.totalItems;
+            t.published = moment.utc(t.published, "YYYY-MM-DD HH:mm:ss").fromNow();
+            if (t.object.attachments && t.object.attachments[0].image) {
+                t.object.image = t.object.attachments[0].image.url;
+            } else if (t.object.content) {
+                t.object.content = new DOMParser().parseFromString("<div>" + t.object.content + "</div>", "text/xml").documentElement.textContent;
+                if (t.object.content.length > 200)
+                    t.object.content = t.object.content.substr(0, 197) + "...";
+            }
         });
-        return flickrData;
+        return gplusData;
     }
     function fetchData(settings) {
-        return asyncGet("http://api.flickr.com/services/feeds/photos_public.gne?id=" + settings.client_id + "&format=json&lang=en-us", {}, "jsoncallback");
+        var context = {};
+        return Promise.all([
+            asyncGet(API_URL + "people/" + settings.user_id + "?fields=circledByCount%2CcurrentLocation%2CdisplayName%2C" + "image%2Furl%2Cnickname%2Coccupation%2CplacesLived%2CplusOneCount%2Ctagline%2Curl" + "&key=" + settings.api_key),
+            asyncGet(API_URL + "people/" + settings.user_id + "/activities/public" + "?maxResults=20&fields=items(annotation%2Cobject(actor(displayName%2Curl)" + "%2Cattachments(content%2CdisplayName%2Cimage%2CobjectType%2Cthumbnails)" + "%2Ccontent%2CobjectType%2Cplusoners%2FtotalItems%2Creplies%2F" + "totalItems%2Cresharers%2FtotalItems%2Curl)%2Cpublished%2Ctitle%2Curl%2Cverb)%2C" + "nextPageToken&key=" + settings.api_key)
+        ]).then(function (res) {
+            context.newt_page = res[1]["nextPageToken"];
+            if (!res[0]["currentLocation"] && res[0]["placesLived"])
+                res[0]["currentLocation"] = res[0]["placesLived"][0]["value"];
+            context.user_info = res[0];
+            context.activities = res[1]["items"];
+            return Promise.resolve(context);
+        });
     }
-    window.flickrService = {
+    window.gplusService = {
         displayName: DISPLAY_NAME,
-        template: "flickr.html",
-        setup: setupFlickr,
+        template: "gplus.html",
+        setup: setupGplus,
+        fetch: fetchData
+    };
+}(window));(function (window) {
+    "use strict";
+    var DISPLAY_NAME = "Facebook";
+    var API_URL = "https://graph.facebook.com/v2.1/";
+    function setupFacebook(facebookData, settings) {
+        facebookData.url = "https://facebook.com/" + settings.username;
+        facebookData.image = "imgs/pic.png";
+        facebookData.posts = facebookData.statuses.data.concat(facebookData.links.data);
+        facebookData.posts.sort(function (p1, p2) {
+            return (p1.updated_time || p1.created_time) < (p2.updated_time || p2.created_time);
+        });
+        facebookData.posts.forEach(function (p) {
+            p.url = facebookData.url + "/posts/" + p.id;
+            p.updated_time = moment.utc(p.updated_time || p.created_time, "YYYY-MM-DD HH:mm:ss").fromNow();
+            if (p.likes)
+                p.likes = p.likes.data.length;
+            else
+                p.likes = 0;
+            if (p.comments)
+                p.comments = p.comments.data.length;
+            else
+                p.comments = 0;
+            if (p.sharedposts)
+                p.sharedposts = p.sharedposts.data.length;
+            else
+                p.sharedposts = 0;
+            if (p.message && p.message.length > 200)
+                p.message = p.message.substr(0, 197) + "...";
+        });
+        return facebookData;
+    }
+    function fetchData(settings) {
+        return asyncGet(API_URL + "me?fields=statuses.limit(10){message," + "updated_time,comments{id},likes{id},sharedposts}," + "links.limit(10){comments{id},likes{id},sharedposts{id}," + "picture,link,name,created_time},id,about,link,name,website," + "work&method=get&access_token=" + settings.access_token).then(function (res) {
+            return Promise.resolve(res);
+        });
+    }
+    window.facebookService = {
+        displayName: DISPLAY_NAME,
+        template: "facebook.html",
+        setup: setupFacebook,
+        fetch: fetchData
+    };
+}(window));(function (window) {
+    "use strict";
+    var DISPLAY_NAME = "LinkedIn";
+    var API_URL = "https://api.linkedin.com/v1";
+    function setupLinkedin(linkedinData, settings) {
+        linkedinData.profile["profile_url"] = "http://linkedin.com/profile/view?id=" + linkedinData.profile["id"];
+        linkedinData.profile["summary"] = linkedinData.profile["summary"].replace("\n", "<br />", "g");
+        //        linkedinData.profile["numGroups"] = linkedinData.groups["_count"];
+        //        linkedinData.profile["numNetworkUpdates"] = linkedinData.network_updates["_total"];
+        linkedinData.profile["location_name"] = linkedinData.profile["location"]["name"];
+        return linkedinData;
+    }
+    function fetchData(settings) {
+        //request auth_code:
+        //https://www.linkedin.com/uas/oauth2/authorization?response_type=code&client_id=XXX&scope=r_fullprofile&state=XXX&redirect_uri=http://lejenome.github.io
+        var profile_selectors = [
+            "id",
+            "first-name",
+            "last-name",
+            "headline",
+            "location",
+            "num-connections",
+            "skills",
+            "educations",
+            "picture-url",
+            "summary",
+            "positions",
+            "industry",
+            "site-standard-profile-request"
+        ].join();
+        var network_upd_types = [
+            "APPS",
+            "CMPY",
+            "CONN",
+            "JOBS",
+            "JGRP",
+            "PICT",
+            "PFOL",
+            "PRFX",
+            "RECU",
+            "PRFU",
+            "SHAR",
+            "VIRL"
+        ].join("&type=");
+        return Promise.all([asyncGet(API_URL + "/people/~:(" + profile_selectors + ")?oauth2_access_token=" + settings.access_token)    //            asyncGet(API_URL + "/people/~/group-memberships:(group:(id,name),membership-state)?oauth2_access_token=" + settings.access_token),
+                                                                                                                        //            asyncGet(API_URL + "/people/~/network/updates?type=" + network_upd_types + "&oauth2_access_token=" + settings.access_token)
+]).then(function (res) {
+            return Promise.resolve({ profile: res[0] });
+        });
+    }
+    window.linkedinService = {
+        displayName: DISPLAY_NAME,
+        template: "linkedin.html",
+        setup: setupLinkedin,
+        fetch: fetchData
+    };
+}(window));(function (window) {
+    "use strict";
+    var DISPLAY_NAME = "Twitter";
+    var API_URL = "https://api.twitter.com/1.1/";
+    function twitterLinkify(text) {
+        text = text.replace(/(https?:\/\/\S+)/gi, function (s) {
+            return "<a href='" + s + "'>" + s + "</a>";
+        });
+        text = text.replace(/(^|) @(\w+)/gi, function (s) {
+            return "<a href='http://twitter.com/" + s + "'>" + s + "</a>";
+        });
+        text = text.replace(/(^|) #(\w+)/gi, function (s) {
+            return "<a href='http://search.twitter.com/search?q=" + s.replace(/#/, "%23") + "'>" + s + "</a>";
+        });
+        return text;
+    }
+    function setupTwitter(twitterData) {
+        var tweets = [];
+        $.each(twitterData, function (i, t) {
+            t.formated_date = moment(t.created_at).fromNow();
+            t.f_text = twitterLinkify(t.text);
+            tweets.push(t);
+        });
+        var user = twitterData[0].user;
+        user.statuses_count = numberWithCommas(user.statuses_count);
+        user.friends_count = numberWithCommas(user.friends_count);
+        user.followers_count = numberWithCommas(user.followers_count);
+        user.f_description = twitterLinkify(user.description);
+        return {
+            "user": user,
+            "tweets": tweets
+        };
+    }
+    function fetchData(settings) {
+        return asyncGet(API_URL + "statuses/home_timeline.json?count=50&include_rts=true&exclude_replies=true&screen_name=" + settings.username, { "Authorization": "Bearer " + settings.access_token }).then(function (result) {
+            return Promise.resolve(result);    /*    statuses_in_dict = []
+                    for s in statuses:
+                        statuses_in_dict.append(json.loads(s.AsJsonString()))
+
+                    return HttpResponse(content=json.dumps(statuses_in_dict),
+                                        status=200,
+                                        content_type="application/json")
+            */
+                                               //            return Promise.resolve(result);
+        });
+    }
+    window.twitterService = {
+        displayName: DISPLAY_NAME,
+        template: "twitter.html",
+        setup: setupTwitter,
+        fetch: fetchData
+    };
+}(window));(function (window) {
+    "use strict";
+    var DISPLAY_NAME = "Youtube";
+    var API_URL = "https://www.googleapis.com/youtube/v3/";
+    function setupYoutube(youtubeData, settings) {
+        if (youtubeData.message || youtubeData.activities.length === 0) {
+            return;
+        }
+        youtubeData.statistics.url = settings.url;
+        youtubeData.channel.url = settings.url;
+        $.each(youtubeData.activities, function (i, t) {
+            t.publishedAt = moment.utc(t.publishedAt, "YYYY-MM-DD HH:mm:ss").fromNow();
+            t.img = t.thumbnails["default"].url;
+            if (t.type === "playlistItem")
+                t.type = "add to playlist";
+            else if (t.type === "bulletin")
+                t.type = "post";
+        });
+        return youtubeData;
+    }
+    function fetchData(settings) {
+        var context = {};
+        return asyncGet(API_URL + "channels?part=statistics%2Csnippet&forUsername=" + settings.username + "&key=" + settings.api_key).then(function (channels) {
+            context.channel = channels["items"][0]["snippet"];
+            context.statistics = channels["items"][0]["statistics"];
+            context.id = channels["items"][0]["id"];
+            context.username = settings.username;
+            return asyncGet(API_URL + "activities?part=snippet%2CcontentDetails&channelId=" + context.id + "&maxResults=20&fields=items(contentDetails%2Csnippet)%2CnextPageToken&key=" + settings.api_key).then(function (activities) {
+                context.next_page = activities["nextPageToken"];
+                context.activities = activities["items"].map(function (item) {
+                    var resource = item["contentDetails"][item["snippet"]["type"]];
+                    if ("videoId" in resource)
+                        item["snippet"]["url"] = "https://www.youtube.com/watch?v=" + resource["videoId"];
+                    else if (resource["resourceId"]["channelId"])
+                        item["snippet"]["url"] = "https://www.youtube.com/channel/" + resource["resourceId"]["channelId"];
+                    else if (resource["resourceId"]["videoId"])
+                        item["snippet"]["url"] = "https://www.youtube.com/watch?v=" + resource["resourceId"]["videoId"];
+                    return item["snippet"];
+                });
+                return Promise.resolve(context);
+            });
+        });
+    }
+    window.youtubeService = {
+        displayName: DISPLAY_NAME,
+        template: "youtube.html",
+        setup: setupYoutube,
         fetch: fetchData
     };
 }(window));(function (window) {
@@ -888,6 +1110,28 @@ function setupService(service, url, el, settings) {
     };
 }(window));(function (window) {
     "use strict";
+    var DISPLAY_NAME = "Flickr";
+    function setupFlickr(flickrData, settings) {
+        if (flickrData.items === 0) {
+            return;
+        }
+        flickrData.title = flickrData.title.substring(13);
+        $.each(flickrData.items, function (i, p) {
+            p.formated_date = moment.unix(Date.parse(p.date_taken) / 1000).fromNow();
+        });
+        return flickrData;
+    }
+    function fetchData(settings) {
+        return asyncGet("http://api.flickr.com/services/feeds/photos_public.gne?id=" + settings.client_id + "&format=json&lang=en-us", {}, "jsoncallback");
+    }
+    window.flickrService = {
+        displayName: DISPLAY_NAME,
+        template: "flickr.html",
+        setup: setupFlickr,
+        fetch: fetchData
+    };
+}(window));(function (window) {
+    "use strict";
     var DISPLAY_NAME = "Instagram";
     var API_URL = "https://api.instagram.com/v1/";
     var nextId;
@@ -944,199 +1188,6 @@ function setupService(service, url, el, settings) {
         supportMore: true,
         fetchMore: fetchMore,
         setupMore: setupInstagramMore
-    };
-}(window));(function (window) {
-    "use strict";
-    var DISPLAY_NAME = "Youtube";
-    var API_URL = "https://www.googleapis.com/youtube/v3/";
-    function setupYoutube(youtubeData, settings) {
-        if (youtubeData.message || youtubeData.activities.length === 0) {
-            return;
-        }
-        youtubeData.statistics.url = settings.url;
-        youtubeData.channel.url = settings.url;
-        $.each(youtubeData.activities, function (i, t) {
-            t.publishedAt = moment.utc(t.publishedAt, "YYYY-MM-DD HH:mm:ss").fromNow();
-            t.img = t.thumbnails["default"].url;
-            if (t.type === "playlistItem")
-                t.type = "add to playlist";
-            else if (t.type === "bulletin")
-                t.type = "post";
-        });
-        return youtubeData;
-    }
-    function fetchData(settings) {
-        var context = {};
-        return asyncGet(API_URL + "channels?part=statistics%2Csnippet&forUsername=" + settings.username + "&key=" + settings.api_key).then(function (channels) {
-            context.channel = channels["items"][0]["snippet"];
-            context.statistics = channels["items"][0]["statistics"];
-            context.id = channels["items"][0]["id"];
-            context.username = settings.username;
-            return asyncGet(API_URL + "activities?part=snippet%2CcontentDetails&channelId=" + context.id + "&maxResults=20&fields=items(contentDetails%2Csnippet)%2CnextPageToken&key=" + settings.api_key).then(function (activities) {
-                context.next_page = activities["nextPageToken"];
-                context.activities = activities["items"].map(function (item) {
-                    var resource = item["contentDetails"][item["snippet"]["type"]];
-                    if ("videoId" in resource)
-                        item["snippet"]["url"] = "https://www.youtube.com/watch?v=" + resource["videoId"];
-                    else if (resource["resourceId"]["channelId"])
-                        item["snippet"]["url"] = "https://www.youtube.com/channel/" + resource["resourceId"]["channelId"];
-                    else if (resource["resourceId"]["videoId"])
-                        item["snippet"]["url"] = "https://www.youtube.com/watch?v=" + resource["resourceId"]["videoId"];
-                    return item["snippet"];
-                });
-                return Promise.resolve(context);
-            });
-        });
-    }
-    window.youtubeService = {
-        displayName: DISPLAY_NAME,
-        template: "youtube.html",
-        setup: setupYoutube,
-        fetch: fetchData
-    };
-}(window));(function (window) {
-    "use strict";
-    var DISPLAY_NAME = "Google+";
-    var API_URL = "https://www.googleapis.com/plus/v1/";
-    function setupGplus(gplusData, settings) {
-        $.each(gplusData.activities, function (i, t) {
-            if (t.verb === "post")
-                t.verb = "posted";
-            else if (t.verb === "share")
-                t.verb = "shared";
-            if (t.title.length > 60)
-                t.title = t.title.substr(0, 57) + "...";
-            t.replies = t.object.replies.totalItems;
-            t.plusoners = t.object.plusoners.totalItems;
-            t.resharers = t.object.resharers.totalItems;
-            t.published = moment.utc(t.published, "YYYY-MM-DD HH:mm:ss").fromNow();
-            if (t.object.attachments && t.object.attachments[0].image) {
-                t.object.image = t.object.attachments[0].image.url;
-            } else if (t.object.content) {
-                t.object.content = new DOMParser().parseFromString("<div>" + t.object.content + "</div>", "text/xml").documentElement.textContent;
-                if (t.object.content.length > 200)
-                    t.object.content = t.object.content.substr(0, 197) + "...";
-            }
-        });
-        return gplusData;
-    }
-    function fetchData(settings) {
-        var context = {};
-        return Promise.all([
-            asyncGet(API_URL + "people/" + settings.user_id + "?fields=circledByCount%2CcurrentLocation%2CdisplayName%2C" + "image%2Furl%2Cnickname%2Coccupation%2CplacesLived%2CplusOneCount%2Ctagline%2Curl" + "&key=" + settings.api_key),
-            asyncGet(API_URL + "people/" + settings.user_id + "/activities/public" + "?maxResults=20&fields=items(annotation%2Cobject(actor(displayName%2Curl)" + "%2Cattachments(content%2CdisplayName%2Cimage%2CobjectType%2Cthumbnails)" + "%2Ccontent%2CobjectType%2Cplusoners%2FtotalItems%2Creplies%2F" + "totalItems%2Cresharers%2FtotalItems%2Curl)%2Cpublished%2Ctitle%2Curl%2Cverb)%2C" + "nextPageToken&key=" + settings.api_key)
-        ]).then(function (res) {
-            context.newt_page = res[1]["nextPageToken"];
-            if (!res[0]["currentLocation"] && res[0]["placesLived"])
-                res[0]["currentLocation"] = res[0]["placesLived"][0]["value"];
-            context.user_info = res[0];
-            context.activities = res[1]["items"];
-            return Promise.resolve(context);
-        });
-    }
-    window.gplusService = {
-        displayName: DISPLAY_NAME,
-        template: "gplus.html",
-        setup: setupGplus,
-        fetch: fetchData
-    };
-}(window));(function (window) {
-    "use strict";
-    var DISPLAY_NAME = "Facebook";
-    var API_URL = "https://graph.facebook.com/v2.1/";
-    function setupFacebook(facebookData, settings) {
-        facebookData.url = "https://facebook.com/" + settings.username;
-        facebookData.image = "imgs/pic.png";
-        facebookData.posts = facebookData.statuses.data.concat(facebookData.links.data);
-        facebookData.posts.sort(function (p1, p2) {
-            return (p1.updated_time || p1.created_time) < (p2.updated_time || p2.created_time);
-        });
-        facebookData.posts.forEach(function (p) {
-            p.url = facebookData.url + "/posts/" + p.id;
-            p.updated_time = moment.utc(p.updated_time || p.created_time, "YYYY-MM-DD HH:mm:ss").fromNow();
-            if (p.likes)
-                p.likes = p.likes.data.length;
-            else
-                p.likes = 0;
-            if (p.comments)
-                p.comments = p.comments.data.length;
-            else
-                p.comments = 0;
-            if (p.sharedposts)
-                p.sharedposts = p.sharedposts.data.length;
-            else
-                p.sharedposts = 0;
-            if (p.message && p.message.length > 200)
-                p.message = p.message.substr(0, 197) + "...";
-        });
-        return facebookData;
-    }
-    function fetchData(settings) {
-        return asyncGet(API_URL + "me?fields=statuses.limit(10){message," + "updated_time,comments{id},likes{id},sharedposts}," + "links.limit(10){comments{id},likes{id},sharedposts{id}," + "picture,link,name,created_time},id,about,link,name,website," + "work&method=get&access_token=" + settings.access_token).then(function (res) {
-            return Promise.resolve(res);
-        });
-    }
-    window.facebookService = {
-        displayName: DISPLAY_NAME,
-        template: "facebook.html",
-        setup: setupFacebook,
-        fetch: fetchData
-    };
-}(window));(function (window) {
-    "use strict";
-    var DISPLAY_NAME = "LinkedIn";
-    var API_URL = "https://api.linkedin.com/v1";
-    function setupLinkedin(linkedinData, settings) {
-        linkedinData.profile["profile_url"] = "http://linkedin.com/profile/view?id=" + linkedinData.profile["id"];
-        linkedinData.profile["summary"] = linkedinData.profile["summary"].replace("\n", "<br />", "g");
-        //        linkedinData.profile["numGroups"] = linkedinData.groups["_count"];
-        //        linkedinData.profile["numNetworkUpdates"] = linkedinData.network_updates["_total"];
-        linkedinData.profile["location_name"] = linkedinData.profile["location"]["name"];
-        return linkedinData;
-    }
-    function fetchData(settings) {
-        //request auth_code:
-        //https://www.linkedin.com/uas/oauth2/authorization?response_type=code&client_id=XXX&scope=r_fullprofile&state=XXX&redirect_uri=http://lejenome.github.io
-        var profile_selectors = [
-            "id",
-            "first-name",
-            "last-name",
-            "headline",
-            "location",
-            "num-connections",
-            "skills",
-            "educations",
-            "picture-url",
-            "summary",
-            "positions",
-            "industry",
-            "site-standard-profile-request"
-        ].join();
-        var network_upd_types = [
-            "APPS",
-            "CMPY",
-            "CONN",
-            "JOBS",
-            "JGRP",
-            "PICT",
-            "PFOL",
-            "PRFX",
-            "RECU",
-            "PRFU",
-            "SHAR",
-            "VIRL"
-        ].join("&type=");
-        return Promise.all([asyncGet(API_URL + "/people/~:(" + profile_selectors + ")?oauth2_access_token=" + settings.access_token)    //            asyncGet(API_URL + "/people/~/group-memberships:(group:(id,name),membership-state)?oauth2_access_token=" + settings.access_token),
-                                                                                                                        //            asyncGet(API_URL + "/people/~/network/updates?type=" + network_upd_types + "&oauth2_access_token=" + settings.access_token)
-]).then(function (res) {
-            return Promise.resolve({ profile: res[0] });
-        });
-    }
-    window.linkedinService = {
-        displayName: DISPLAY_NAME,
-        template: "linkedin.html",
-        setup: setupLinkedin,
-        fetch: fetchData
     };
 }(window));(function (window) {
     "use strict";

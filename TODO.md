@@ -22,12 +22,12 @@ DONE (new service code design):
     - blog / blogger         [DONE]
     - plugin / ShareThis       [DONE]
     - plugin / GoogleAnalytics [DONE]
+    - service / LinkedIn        [DONE]
 
 ALMOST (js + async:promise + JSONP):
 
 INPROGRESS (python || CORS || sync:XMLHttpRequest with GET):
 
-    - service / LinkedIn        [JS] [AUTHENTIFICATION FAILURE]
     - service / Tent.io         [JS] [API NOT WELL DOCUMENTED]
     - service / Twitter         [PY]
 
@@ -50,6 +50,10 @@ WICHLIST:
     - service / trakt
     - service / Posterous Spaces
     - service / viewbook.com
+    - service / codeplex
+    - service / sourceforge
+    - service / googlecode
+    - service / launchpad
     - plugin / Sitemap
 
 EXTRA:
