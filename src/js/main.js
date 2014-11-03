@@ -1,13 +1,5 @@
 "use strict";
-var settings = {};
-var xhr = new XMLHttpRequest();
-xhr.open("GET", "config.json", true);
-if (xhr.overrideMimeType)
-    xhr.overrideMimeType("text/plain");
-xhr.onload = function () {
-    if (this.status !== 200 && this.status !== 0)
-        alert("FATAL! CAN'T LOAD CONFIG FILE");
-    settings = JSON.parse(this.responseText);
+asyncGet("config.json", {}).then(function (settings) {
     //FIELDS SETTINGS
     document.getElementById("field-realname").textContent = settings["fields"]["realname"];
     document.getElementById("field-description").textContent = settings["fields"]["description"];
@@ -27,5 +19,6 @@ xhr.onload = function () {
             resolve();
         }).then(setupBlog(settings)).then(setupPlugins(settings));
     });
-};
-xhr.send();
+}).catch(function (error) {
+    alert("ERROR! " + error);
+});

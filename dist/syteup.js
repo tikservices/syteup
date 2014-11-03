@@ -55,6 +55,8 @@ function asyncText(url, headers) {
     return new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", url, false);
+        if (xhr.overrideMimeType)
+            xhr.overrideMimeType("text/plain");
         xhr.onload = function () {
             if (this.status !== 200) {
                 reject(this.status);
@@ -75,9 +77,9 @@ function asyncText(url, headers) {
     });
 }
 function asyncGet(url, headers, jsonp) {
-    if (headers && Object.keys(headers).length)
+    if (headers)
         return asyncText(url, headers).then(function (res) {
-            return Promise.resolve(res);
+            return Promise.resolve(JSON.parse(res));
         });
     else
         return new Promise(function (resolve, reject) {
@@ -376,15 +378,7 @@ function adjustSelection(component, callback) {
         $url = null;
     window.currSelection = component;
 }"use strict";
-var settings = {};
-var xhr = new XMLHttpRequest();
-xhr.open("GET", "config.json", true);
-if (xhr.overrideMimeType)
-    xhr.overrideMimeType("text/plain");
-xhr.onload = function () {
-    if (this.status !== 200 && this.status !== 0)
-        alert("FATAL! CAN'T LOAD CONFIG FILE");
-    settings = JSON.parse(this.responseText);
+asyncGet("config.json", {}).then(function (settings) {
     //FIELDS SETTINGS
     document.getElementById("field-realname").textContent = settings["fields"]["realname"];
     document.getElementById("field-description").textContent = settings["fields"]["description"];
@@ -404,8 +398,9 @@ xhr.onload = function () {
             resolve();
         }).then(setupBlog(settings)).then(setupPlugins(settings));
     });
-};
-xhr.send();"use strict";
+}).catch(function (error) {
+    alert("ERROR! " + error);
+});"use strict";
 var isMobileView = false;
 if (typeof window.matchMedia !== "undefined") {
     var mediaQuery = window.matchMedia("(max-width:799px)");
@@ -1122,7 +1117,7 @@ function setupService(service, url, el, settings) {
         return flickrData;
     }
     function fetchData(settings) {
-        return asyncGet("http://api.flickr.com/services/feeds/photos_public.gne?id=" + settings.client_id + "&format=json&lang=en-us", {}, "jsoncallback");
+        return asyncGet("http://api.flickr.com/services/feeds/photos_public.gne?id=" + settings.client_id + "&format=json&lang=en-us", undefined, "jsoncallback");
     }
     window.flickrService = {
         displayName: DISPLAY_NAME,

@@ -55,6 +55,8 @@ function asyncText(url, headers) {
     return new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", url, false);
+        if (xhr.overrideMimeType)
+            xhr.overrideMimeType("text/plain");
         xhr.onload = function () {
             if (this.status !== 200) {
                 reject(this.status);
@@ -75,9 +77,9 @@ function asyncText(url, headers) {
     });
 }
 function asyncGet(url, headers, jsonp) {
-    if (headers && Object.keys(headers).length)
+    if (headers)
         return asyncText(url, headers).then(function (res) {
-            return Promise.resolve(res);
+            return Promise.resolve(JSON.parse(res));
         });
     else
         return new Promise(function (resolve, reject) {
