@@ -1,27 +1,4 @@
 "use strict";
-function setupBlogHeaderScroll() {
-    if (window.isMobileView)
-        return;
-    $(".blog-section article hgroup h3 a").click(function (e) {
-        if (!this.hash)
-            return;
-        $("html, body").stop().animate({ scrollTop: $(this.hash).offset().top }, 500, "linear");
-        e.preventDefault();
-    });
-    var dateHeight = $("#blog-posts article hgroup h3 a")[0].scrollHeight;
-    $(window).scroll(function () {
-        var scrollTop = window.scrollY;
-        var first = false;
-        $("#blog-posts article").each(function () {
-            if (window.scrollY < this.offsetTop)
-                this.className = "";    //return; }
-            else if (window.scrollY > this.offsetTop + this.scrollHeight - dateHeight)
-                this.className = "passed";
-            else
-                this.className = "current";
-        });
-    });
-}
 /** renderBlogPosts
      *
      * Takes the response from the blog platform and renders it using
@@ -31,8 +8,6 @@ function renderBlogPosts(posts, clearPosts) {
     if (posts.length === 0) {
         window.reachedEnd = true;
     }
-    //Update this every time there are changes to the required
-    //templates since it's cached every time
     Promise.all([
         asyncText("templates/blog-post-text.html"),
         asyncText("templates/blog-post-photo.html"),
@@ -85,9 +60,9 @@ function renderBlogPosts(posts, clearPosts) {
      * @param {Object} posts_options Optional set searched post options
      */
 function fetchBlogPosts(offset, settings, platform, posts_options) {
+    //Not sure how my old self wrote this code and how it stills runs
     if (posts_options && posts_options.id)
         window.reachedEnd = true;
-    //return window["fetch" + platform[0].toUpperCase() + platform.slice(1) + "BlogPosts"](offset, settings, posts_options);
     var $blog = window[formatModuleName(platform) + "Blog"];
     if (!$blog)
         return Promise.reject(MODULE_NOT_FOUND);
@@ -110,5 +85,28 @@ function fetchBlogPosts(offset, settings, platform, posts_options) {
         return Promise.resolve(true);
     }).catch(function (error) {
         return Promise.resolve(false);
+    });
+}
+function setupBlogHeaderScroll() {
+    if (window.isMobileView)
+        return;
+    $(".blog-section article hgroup h3 a").click(function (e) {
+        if (!this.hash)
+            return;
+        $("html, body").stop().animate({ scrollTop: $(this.hash).offset().top }, 500, "linear");
+        e.preventDefault();
+    });
+    var dateHeight = $("#blog-posts article hgroup h3 a")[0].scrollHeight;
+    $(window).scroll(function () {
+        var scrollTop = window.scrollY;
+        var first = false;
+        $("#blog-posts article").each(function () {
+            if (window.scrollY < this.offsetTop)
+                this.className = "";    //return; }
+            else if (window.scrollY > this.offsetTop + this.scrollHeight - dateHeight)
+                this.className = "passed";
+            else
+                this.className = "current";
+        });
     });
 }
