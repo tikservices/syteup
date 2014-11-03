@@ -29,7 +29,7 @@ ALMOST (js + async:promise + JSONP):
 INPROGRESS (python || CORS || sync:XMLHttpRequest with GET):
 
     - service / Tent.io         [JS] [API NOT WELL DOCUMENTED]
-    - service / Twitter         [PY]
+    - service / Twitter         [JS] [400]
 
 WICHLIST:
 

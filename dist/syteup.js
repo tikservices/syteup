@@ -26,6 +26,7 @@ function formatModuleName(module) {
         return p1.toUpperCase();
     });
 }
+/*
 function syncGet(url, success, headers, failure) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, false);
@@ -49,36 +50,7 @@ function syncGet(url, success, headers, failure) {
     }
     xhr.send();
 }
-function asyncGet(url, headers, jsonp) {
-    return new Promise(function (resolve, reject) {
-        if (headers && Object.keys(headers).length)
-            syncGet(url, function (data) {
-                resolve(data);
-            }, headers, function (error) {
-                reject(error);
-            });
-        else
-            $.ajax({
-                url: url,
-                jsonp: jsonp,
-                contentType: "application/json; charset=utf-8",
-                type: "GET",
-                dataType: "jsonp",
-                async: false,
-                success: function (res) {
-                    if ("meta" in res && Object.keys(res).length === 2)
-                        if ("data" in res)
-                            res = res.data;
-                        else if ("response" in res)
-                            res = res.response;
-                    resolve(res);
-                },
-                error: function (xhr, status) {
-                    reject(status);
-                }
-            });
-    });
-}
+*/
 function asyncText(url, headers) {
     return new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest();
@@ -101,6 +73,34 @@ function asyncText(url, headers) {
         }
         xhr.send();
     });
+}
+function asyncGet(url, headers, jsonp) {
+    if (headers && Object.keys(headers).length)
+        return asyncText(url, headers).then(function (res) {
+            return Promise.resolve(res);
+        });
+    else
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                url: url,
+                jsonp: jsonp,
+                contentType: "application/json; charset=utf-8",
+                type: "GET",
+                dataType: "jsonp",
+                async: false,
+                success: function (res) {
+                    if ("meta" in res && Object.keys(res).length === 2)
+                        if ("data" in res)
+                            res = res.data;
+                        else if ("response" in res)
+                            res = res.response;
+                    resolve(res);
+                },
+                error: function (xhr, status) {
+                    reject(status);
+                }
+            });
+        });
 }function setupBlog(settings) {
     "use strict";
     var postOffset, postsOpts;
