@@ -84,6 +84,7 @@ function fetchBlogPosts(offset, settings, platform, posts_options) {
         renderBlogPosts(data, posts_options && posts_options.id || !offset);
         return Promise.resolve(true);
     }).catch(function (error) {
+        alertError(error);
         return Promise.resolve(false);
     });
 }

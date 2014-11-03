@@ -26,6 +26,18 @@ function formatModuleName(module) {
         return p1.toUpperCase();
     });
 }
+function alertError(error, errorMessage) {
+    return asyncText("templates/alert.html").then(function (view) {
+        var template = Handlebars.compile(view);
+        $(template({
+            error: error,
+            error_message: errorMessage
+        })).modal().on("hidden.bs.modal", function () {
+            $(this).remove();
+        });
+        return Promise.resolve();
+    });
+}
 /*
 function syncGet(url, success, headers, failure) {
     var xhr = new XMLHttpRequest();

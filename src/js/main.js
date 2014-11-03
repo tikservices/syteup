@@ -20,5 +20,7 @@ asyncGet("config.json", {}).then(function (settings) {
         }).then(setupBlog(settings)).then(setupPlugins(settings));
     });
 }).catch(function (error) {
-    alert("ERROR! " + error);
+    alertError(error).catch(function () {
+        alert("ERROR! " + error);
+    });
 });

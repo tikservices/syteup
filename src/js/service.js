@@ -67,6 +67,7 @@ function setupService(service, url, el, settings) {
         console.info("Service Setuped:", service);
     }).catch(function (error) {
         //TODO
+        alertError(error);
         console.error("Service Not Setuped:", service);
     });
 }

@@ -26,6 +26,18 @@ function formatModuleName(module) {
         return p1.toUpperCase();
     });
 }
+function alertError(error, errorMessage) {
+    return asyncText("templates/alert.html").then(function (view) {
+        var template = Handlebars.compile(view);
+        $(template({
+            error: error,
+            error_message: errorMessage
+        })).modal().on("hidden.bs.modal", function () {
+            $(this).remove();
+        });
+        return Promise.resolve();
+    });
+}
 /*
 function syncGet(url, success, headers, failure) {
     var xhr = new XMLHttpRequest();
@@ -261,6 +273,7 @@ function fetchBlogPosts(offset, settings, platform, posts_options) {
         renderBlogPosts(data, posts_options && posts_options.id || !offset);
         return Promise.resolve(true);
     }).catch(function (error) {
+        alertError(error);
         return Promise.resolve(false);
     });
 }
@@ -399,7 +412,9 @@ asyncGet("config.json", {}).then(function (settings) {
         }).then(setupBlog(settings)).then(setupPlugins(settings));
     });
 }).catch(function (error) {
-    alert("ERROR! " + error);
+    alertError(error).catch(function () {
+        alert("ERROR! " + error);
+    });
 });"use strict";
 var isMobileView = false;
 if (typeof window.matchMedia !== "undefined") {
@@ -502,6 +517,7 @@ function setupService(service, url, el, settings) {
         console.info("Service Setuped:", service);
     }).catch(function (error) {
         //TODO
+        alertError(error);
         console.error("Service Not Setuped:", service);
     });
 }(function (window) {
