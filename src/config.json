@@ -19,7 +19,7 @@
     }
   },
   "plugins": {
-    "google_analytics": false,
+    "google_analytics": true,
     "woopra": false,
     "segment": true,
     "rss": true,
