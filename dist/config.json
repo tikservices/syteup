@@ -19,8 +19,9 @@
     }
   },
   "plugins": {
-    "google_analytics": true,
+    "google_analytics": false,
     "woopra": false,
+    "segment": true,
     "rss": true,
     "sitemap": false,
     "control_panel": true,
@@ -48,6 +49,9 @@
     },
     "gratipay_widget": {
       "username": "lejenome"
+    },
+    "segment": {
+      "write_key": "H1Kj0zlJBZ"
     }
   },
   "blogs_settings": {
