@@ -81,4 +81,5 @@ Contributors](https://github.com/lejenome/syteup/graphs/contributors)
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/lejenome/syteup/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+[![Coverage Status](https://img.shields.io/coveralls/lejenome/syteup.svg)](https://coveralls.io/r/lejenome/syteup)
 
