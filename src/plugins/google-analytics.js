@@ -6,11 +6,7 @@
             ga.q = ga.q || [];
             ga.q.push(arguments);
         };
-        var link = document.createElement("script");
-        var firstScript = document.getElementsByTagName("script")[0];
-        link.async = true;
-        link.src = "https://www.google-analytics.com/analytics.js";
-        firstScript.parentNode.insertBefore(link, firstScript);
+        loadJS("www.google-analytics.com/analytics.js");
         // push actions
         if (window.location.host === "localhost" || window.location.host === "172.0.0.1" || window.location.host === "")
             ga("create", settings["tracking_id"], { "cookieDomain": "none" });

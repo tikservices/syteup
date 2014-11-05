@@ -5,11 +5,7 @@
         var type = "embed";
         if (settings.just_count)
             type = "count";
-        var dsq = document.createElement("script");
-        dsq.type = "text/javascript";
-        dsq.async = true;
-        dsq.src = "http://" + settings.shortname + ".disqus.com/" + type + ".js";
-        (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(dsq);
+        loadJS(settings.shortname + ".disqus.com/" + type + ".js");
         $(document).on("click", ".disqus_show_comments", function () {
             var old = $("#disqus_thread");
             if (old.length) {

@@ -115,6 +115,29 @@ function asyncGet(url, headers, jsonp) {
                 }
             });
         });
+}
+function loadJS(src, obj, data, parentEl) {
+    return new Promise(function (resolve, reject) {
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        script.async = true;
+        script.src = ("https:" === document.location.protocol ? "https://" : "http://") + src;
+        if (obj)
+            for (var opt in obj)
+                if (obj.hasOwnProperty(opt))
+                    script[opt] = obj[opt];
+        if (data)
+            for (var el in data)
+                if (data.hasOwnProperty(el))
+                    script.dataset[el] = data[el];
+        function onload() {
+            /* jshint validthis:true */
+            this.removeEventListener("load", onload);
+            resolve();
+        }
+        script.addEventListener("load", onload);
+        (parentEl || document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(script);
+    });
 }"use strict";
 var postOffset, postsOpts;
 function setupBlog(settings) {
@@ -555,13 +578,7 @@ function setupService(service, url, el, settings) {
         window.analytics.load = function (key) {
             if (document.getElementById("analytics-js"))
                 return;
-            var script = document.createElement("script");
-            script.type = "text/javascript";
-            script.id = "analytics-js";
-            script.async = true;
-            script.src = ("https:" === document.location.protocol ? "https://" : "http://") + "cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js";
-            var first = document.getElementsByTagName("script")[0];
-            first.parentNode.insertBefore(script, first);
+            loadJS("cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js", { id: "analytics-js" });
         };
         // Add a version to keep track of what's in the wild.
         window.analytics.SNIPPET_VERSION = "2.0.9";
@@ -619,11 +636,7 @@ function setupService(service, url, el, settings) {
     "use strict";
     function setup(settings) {
         window.grtpAPI = "https://grtp.co/v1/";
-        var script = document.createElement("script");
-        script.src = "https://grtp.co/v1.js";
-        script.dataset.gratipayUsername = settings.username;
-        var par = document.getElementById("header-widgets");
-        par.appendChild(script);
+        loadJS("grtp.co/v1.js", {}, { gratipayUsername: settings.username }, document.getElementById("header-widgets"));
     }
     window.gratipayWidgetPlugin = { setup: setup };
 }(window));(function (window) {
@@ -633,11 +646,7 @@ function setupService(service, url, el, settings) {
         var type = "embed";
         if (settings.just_count)
             type = "count";
-        var dsq = document.createElement("script");
-        dsq.type = "text/javascript";
-        dsq.async = true;
-        dsq.src = "http://" + settings.shortname + ".disqus.com/" + type + ".js";
-        (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(dsq);
+        loadJS(settings.shortname + ".disqus.com/" + type + ".js");
         $(document).on("click", ".disqus_show_comments", function () {
             var old = $("#disqus_thread");
             if (old.length) {

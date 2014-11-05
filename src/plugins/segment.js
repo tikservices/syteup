@@ -33,13 +33,7 @@
         window.analytics.load = function (key) {
             if (document.getElementById("analytics-js"))
                 return;
-            var script = document.createElement("script");
-            script.type = "text/javascript";
-            script.id = "analytics-js";
-            script.async = true;
-            script.src = ("https:" === document.location.protocol ? "https://" : "http://") + "cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js";
-            var first = document.getElementsByTagName("script")[0];
-            first.parentNode.insertBefore(script, first);
+            loadJS("cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js", { id: "analytics-js" });
         };
         // Add a version to keep track of what's in the wild.
         window.analytics.SNIPPET_VERSION = "2.0.9";

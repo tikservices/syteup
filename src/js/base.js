@@ -116,3 +116,26 @@ function asyncGet(url, headers, jsonp) {
             });
         });
 }
+function loadJS(src, obj, data, parentEl) {
+    return new Promise(function (resolve, reject) {
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        script.async = true;
+        script.src = ("https:" === document.location.protocol ? "https://" : "http://") + src;
+        if (obj)
+            for (var opt in obj)
+                if (obj.hasOwnProperty(opt))
+                    script[opt] = obj[opt];
+        if (data)
+            for (var el in data)
+                if (data.hasOwnProperty(el))
+                    script.dataset[el] = data[el];
+        function onload() {
+            /* jshint validthis:true */
+            this.removeEventListener("load", onload);
+            resolve();
+        }
+        script.addEventListener("load", onload);
+        (parentEl || document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(script);
+    });
+}
