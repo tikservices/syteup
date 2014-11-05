@@ -78,3 +78,7 @@ This program is free software; it is distributed under the MIT Licence.
 
 Copyright (c) 2014, Moez Bouhlel (bmoez.j@gmail.com) & [The
 Contributors](https://github.com/lejenome/syteup/graphs/contributors)
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/lejenome/syteup/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
