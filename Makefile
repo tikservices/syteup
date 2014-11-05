@@ -52,7 +52,7 @@ minify-js:
 	json -f $(CONF) -c 'typeof(this.fields.contact)==="object"' >/dev/null && cat $(SRC)/services/syteup-contact.js >> $(DIST)/syteup.js
 	uglifyjs -c --screw-ie8 $(DIST)/syteup.js -o $(DIST)/syteup.min.js
 minify-js-libs:
-	grep -o "js/libs/.*.js" $(SRC)/index.html | sed 's,^,$(SRC)/,' | xargs cat | uglifyjs -c --screw-ie3 -o $(DIST)/syteup.libs.js
+	grep -o "../bower_components/.*.js" $(SRC)/index.html | sed 's,^,$(SRC)/,' | xargs cat | uglifyjs -c --screw-ie3 -o $(DIST)/syteup.libs.js
 	#grep -o "js/libs/.*.js" $(SRC)/index.html | sed 's,^,$(SRC)/,' | xargs cat >> $(DIST)/syteup.libs.js
 minify-css:
 	lessc $(LESSCFLAGS)  $(SRC)/less/styles.less $(DIST)/syteup.min.css
