@@ -1,0 +1,33 @@
+{
+  "name": "syteup",
+  "version": "0.1.0",
+  "homepage": "https://github.com/lejenome/syteup",
+  "authors": [
+    "Moez Bouhlel <bmoez.j@gmail.com>"
+  ],
+  "description": "simple packaged website with social integration",
+  "keywords": [
+    "website",
+    "social",
+    "webapp",
+    "blog",
+    "news"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "3.2.0",
+    "handlebars": "2.0.0",
+    "jquery": "2.1.1",
+    "moment": "2.8.3",
+    "spin": "2.0.1",
+    "google-code-prettify": "1.0.1"
+  }
+}
