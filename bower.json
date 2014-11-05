@@ -27,7 +27,7 @@
     "handlebars": "2.0.0",
     "jquery": "2.1.1",
     "moment": "2.8.3",
-    "spin": "2.0.1",
+    "spin.js": "2.0.1",
     "google-code-prettify": "1.0.1"
   }
 }
