@@ -39,7 +39,12 @@ permission access tokens or other needed requirements.
 Syteup dose not require  any specific server side future as it is server-less
 moder HTML5 webapp.
 
-You needs to setup the
+First, you need to setup Syteup requirements by runnig the following commands:
+```shell
+npm install
+bower update
+```
+then, you needs to setup the
 [src/config.json](https://github.com/lejenome/syteup/tree/master/src/config.json)
 file for your needs as explained on the
 flowing section then run
