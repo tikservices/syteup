@@ -35,11 +35,11 @@
     function fetchBlogTagMore(settings, tag) {
         return getPosts(settings, undefined, tag, true);
     }
-    window.tumblrBlog = {
+    exportBlog({
         fetch: fetchPosts,
         fetchMore: fetchMorePosts,
         fetchPost: fetchOnePost,
         fetchTag: fetchBlogTag,
         fetchTagMore: fetchBlogTagMore
-    };
+    }, "tumblr");
 }(window));

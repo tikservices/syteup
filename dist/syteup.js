@@ -26,6 +26,11 @@ function formatModuleName(module) {
         return p1.toUpperCase();
     });
 }
+function formatModulePath(module) {
+    return module.replace(/_(.)/g, function (match, p1) {
+        return "-" + p1;
+    });
+}
 function alertError(error, errorMessage) {
     return asyncText("templates/alert.html").then(function (view) {
         var template = Handlebars.compile(view);
@@ -121,7 +126,7 @@ function loadJS(src, obj, data, parentEl) {
         var script = document.createElement("script");
         script.type = "text/javascript";
         script.async = true;
-        script.src = ("https:" === document.location.protocol ? "https://" : "http://") + src;
+        script.src = src.replace(/^\/\//, "https:" === document.location.protocol ? "https:" : "http:");
         if (obj)
             for (var opt in obj)
                 if (obj.hasOwnProperty(opt))
@@ -137,6 +142,52 @@ function loadJS(src, obj, data, parentEl) {
         }
         script.addEventListener("load", onload);
         (parentEl || document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(script);
+    });
+}
+function exportM(obj, name) {
+    //	if(window.System) {
+    //	        /*jshint esnext:true*/
+    //		export default obj;
+    //	} else
+    if (typeof module !== "undefined" && module.export) {
+        module.export[name] = obj;
+    } else if (typeof define === "function" && define.amd) {
+        define(name, function () {
+            return obj;
+        });
+    } else {
+        window[name] = obj;
+    }
+}
+function exportBlog(blog, name) {
+    exportM(blog, formatModuleName(name) + "Blog");
+}
+function exportService(service, name) {
+    exportM(service, formatModuleName(name) + "Service");
+}
+function exportPlugin(plugin, name) {
+    exportM(plugin, formatModuleName(name) + "Plugin");
+}
+function importM(name, path) {
+    return new Promise(function (resolve, reject) {
+        if (window[name]) {
+            resolve(window[name]);    //		} else if (window.System) {
+                                      //			/*global System*/
+                                      //			System.import(path).then(function(_) {
+                                      //				resolve(_[name] || _);
+                                      //			});
+        } else if (typeof define === "function" && define.amd) {
+            require([path], function (_) {
+                resolve(_[name], _);
+            });
+        } else if (typeof module !== "undefined" && module.exports) {
+            var _module = require(path);
+            resolve(_module[name] || _module);
+        } else {
+            loadJS(path + ".js").then(function () {
+                resolve(window[name]);
+            });
+        }
     });
 }"use strict";
 var postOffset, postsOpts;
@@ -275,29 +326,31 @@ function fetchBlogPosts(offset, settings, platform, posts_options) {
     //Not sure how my old self wrote this code and how it stills runs
     if (posts_options && posts_options.id)
         window.reachedEnd = true;
-    var $blog = window[formatModuleName(platform) + "Blog"];
-    if (!$blog)
-        return Promise.reject(MODULE_NOT_FOUND);
-    var posts;
-    if (posts_options && posts_options.id)
-        posts = $blog.fetchPost(settings, posts_options.id);
-    else if (posts_options && posts_options.tag)
-        if (offset)
-            posts = $blog.fetchTagMore(settings, posts_options.tag);
+    importM(formatModuleName(platform) + "Blog", "blogs/" + formatModulePath(platform)).then(function ($blog) {
+        //    var $blog = window[formatModuleName(platform) + "Blog"];
+        if (!$blog)
+            return Promise.reject(MODULE_NOT_FOUND);
+        var posts;
+        if (posts_options && posts_options.id)
+            posts = $blog.fetchPost(settings, posts_options.id);
+        else if (posts_options && posts_options.tag)
+            if (offset)
+                posts = $blog.fetchTagMore(settings, posts_options.tag);
+            else
+                posts = $blog.fetchTag(settings, posts_options.tag);
+        else if (offset)
+            posts = $blog.fetchMore(settings);
         else
-            posts = $blog.fetchTag(settings, posts_options.tag);
-    else if (offset)
-        posts = $blog.fetchMore(settings);
-    else
-        posts = $blog.fetch(settings);
-    return posts.then(function (data) {
-        if (!data || data.length === 0)
+            posts = $blog.fetch(settings);
+        return posts.then(function (data) {
+            if (!data || data.length === 0)
+                return Promise.resolve(false);
+            renderBlogPosts(data, posts_options && posts_options.id || !offset);
+            return Promise.resolve(true);
+        }).catch(function (error) {
+            alertError(error);
             return Promise.resolve(false);
-        renderBlogPosts(data, posts_options && posts_options.id || !offset);
-        return Promise.resolve(true);
-    }).catch(function (error) {
-        alertError(error);
-        return Promise.resolve(false);
+        });
     });
 }
 function setupBlogHeaderScroll() {
@@ -578,7 +631,7 @@ function setupService(service, url, el, settings) {
         window.analytics.load = function (key) {
             if (document.getElementById("analytics-js"))
                 return;
-            loadJS("cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js", { id: "analytics-js" });
+            loadJS("//cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js", { id: "analytics-js" });
         };
         // Add a version to keep track of what's in the wild.
         window.analytics.SNIPPET_VERSION = "2.0.9";
@@ -636,7 +689,7 @@ function setupService(service, url, el, settings) {
     "use strict";
     function setup(settings) {
         window.grtpAPI = "https://grtp.co/v1/";
-        loadJS("grtp.co/v1.js", {}, { gratipayUsername: settings.username }, document.getElementById("header-widgets"));
+        loadJS("//grtp.co/v1.js", {}, { gratipayUsername: settings.username }, document.getElementById("header-widgets"));
     }
     window.gratipayWidgetPlugin = { setup: setup };
 }(window));(function (window) {
@@ -646,7 +699,7 @@ function setupService(service, url, el, settings) {
         var type = "embed";
         if (settings.just_count)
             type = "count";
-        loadJS(settings.shortname + ".disqus.com/" + type + ".js");
+        loadJS("//" + settings.shortname + ".disqus.com/" + type + ".js");
         $(document).on("click", ".disqus_show_comments", function () {
             var old = $("#disqus_thread");
             if (old.length) {
@@ -1306,13 +1359,13 @@ function setupService(service, url, el, settings) {
     function fetchBlogTagMore(settings, tag) {
         return getPosts(settings, undefined, tag, true);
     }
-    window.wordpressBlog = {
+    exportBlog({
         fetch: fetchPosts,
         fetchMore: fetchMorePosts,
         fetchPost: fetchOnePost,
         fetchTag: fetchBlogTag,
         fetchTagMore: fetchBlogTagMore
-    };
+    }, "wordpress");
 }(window));(function (window) {
     "use strict";
     var DISPLAY_NAME = "Contact";

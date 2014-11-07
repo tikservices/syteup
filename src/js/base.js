@@ -26,6 +26,11 @@ function formatModuleName(module) {
         return p1.toUpperCase();
     });
 }
+function formatModulePath(module) {
+    return module.replace(/_(.)/g, function (match, p1) {
+        return "-" + p1;
+    });
+}
 function alertError(error, errorMessage) {
     return asyncText("templates/alert.html").then(function (view) {
         var template = Handlebars.compile(view);
@@ -121,7 +126,7 @@ function loadJS(src, obj, data, parentEl) {
         var script = document.createElement("script");
         script.type = "text/javascript";
         script.async = true;
-        script.src = ("https:" === document.location.protocol ? "https://" : "http://") + src;
+        script.src = src.replace(/^\/\//, "https:" === document.location.protocol ? "https:" : "http:");
         if (obj)
             for (var opt in obj)
                 if (obj.hasOwnProperty(opt))
@@ -137,5 +142,51 @@ function loadJS(src, obj, data, parentEl) {
         }
         script.addEventListener("load", onload);
         (parentEl || document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(script);
+    });
+}
+function exportM(obj, name) {
+    //	if(window.System) {
+    //	        /*jshint esnext:true*/
+    //		export default obj;
+    //	} else
+    if (typeof module !== "undefined" && module.export) {
+        module.export[name] = obj;
+    } else if (typeof define === "function" && define.amd) {
+        define(name, function () {
+            return obj;
+        });
+    } else {
+        window[name] = obj;
+    }
+}
+function exportBlog(blog, name) {
+    exportM(blog, formatModuleName(name) + "Blog");
+}
+function exportService(service, name) {
+    exportM(service, formatModuleName(name) + "Service");
+}
+function exportPlugin(plugin, name) {
+    exportM(plugin, formatModuleName(name) + "Plugin");
+}
+function importM(name, path) {
+    return new Promise(function (resolve, reject) {
+        if (window[name]) {
+            resolve(window[name]);    //		} else if (window.System) {
+                                      //			/*global System*/
+                                      //			System.import(path).then(function(_) {
+                                      //				resolve(_[name] || _);
+                                      //			});
+        } else if (typeof define === "function" && define.amd) {
+            require([path], function (_) {
+                resolve(_[name], _);
+            });
+        } else if (typeof module !== "undefined" && module.exports) {
+            var _module = require(path);
+            resolve(_module[name] || _module);
+        } else {
+            loadJS(path + ".js").then(function () {
+                resolve(window[name]);
+            });
+        }
     });
 }

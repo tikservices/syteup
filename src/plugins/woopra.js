@@ -1,7 +1,7 @@
 (function (window) {
     "use strict";
     function setupWoopra(settings) {
-        loadJS("static.woopra.com/js/woopra.js");
+        loadJS("//static.woopra.com/js/woopra.js");
         window.woopraReady = function (tracker) {
             tracker.setDomain(settings["tracking_url"]);
             tracker.setIdleTimeout(settings["idle_timeout"]);

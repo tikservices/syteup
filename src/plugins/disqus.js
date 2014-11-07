@@ -5,7 +5,7 @@
         var type = "embed";
         if (settings.just_count)
             type = "count";
-        loadJS(settings.shortname + ".disqus.com/" + type + ".js");
+        loadJS("//" + settings.shortname + ".disqus.com/" + type + ".js");
         $(document).on("click", ".disqus_show_comments", function () {
             var old = $("#disqus_thread");
             if (old.length) {

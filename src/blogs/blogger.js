@@ -46,11 +46,11 @@
     function fetchBlogTagMore(settings, tag) {
         return getPosts(settings, undefined, tag, true);
     }
-    window.bloggerBlog = {
+    exportBlog({
         fetch: fetchPosts,
         fetchMore: fetchMorePosts,
         fetchPost: fetchOnePost,
         fetchTag: fetchBlogTag,
         fetchTagMore: fetchBlogTagMore
-    };
+    }, "blogger");
 }(window));

@@ -63,29 +63,31 @@ function fetchBlogPosts(offset, settings, platform, posts_options) {
     //Not sure how my old self wrote this code and how it stills runs
     if (posts_options && posts_options.id)
         window.reachedEnd = true;
-    var $blog = window[formatModuleName(platform) + "Blog"];
-    if (!$blog)
-        return Promise.reject(MODULE_NOT_FOUND);
-    var posts;
-    if (posts_options && posts_options.id)
-        posts = $blog.fetchPost(settings, posts_options.id);
-    else if (posts_options && posts_options.tag)
-        if (offset)
-            posts = $blog.fetchTagMore(settings, posts_options.tag);
+    importM(formatModuleName(platform) + "Blog", "blogs/" + formatModulePath(platform)).then(function ($blog) {
+        //    var $blog = window[formatModuleName(platform) + "Blog"];
+        if (!$blog)
+            return Promise.reject(MODULE_NOT_FOUND);
+        var posts;
+        if (posts_options && posts_options.id)
+            posts = $blog.fetchPost(settings, posts_options.id);
+        else if (posts_options && posts_options.tag)
+            if (offset)
+                posts = $blog.fetchTagMore(settings, posts_options.tag);
+            else
+                posts = $blog.fetchTag(settings, posts_options.tag);
+        else if (offset)
+            posts = $blog.fetchMore(settings);
         else
-            posts = $blog.fetchTag(settings, posts_options.tag);
-    else if (offset)
-        posts = $blog.fetchMore(settings);
-    else
-        posts = $blog.fetch(settings);
-    return posts.then(function (data) {
-        if (!data || data.length === 0)
+            posts = $blog.fetch(settings);
+        return posts.then(function (data) {
+            if (!data || data.length === 0)
+                return Promise.resolve(false);
+            renderBlogPosts(data, posts_options && posts_options.id || !offset);
+            return Promise.resolve(true);
+        }).catch(function (error) {
+            alertError(error);
             return Promise.resolve(false);
-        renderBlogPosts(data, posts_options && posts_options.id || !offset);
-        return Promise.resolve(true);
-    }).catch(function (error) {
-        alertError(error);
-        return Promise.resolve(false);
+        });
     });
 }
 function setupBlogHeaderScroll() {

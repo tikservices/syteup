@@ -75,11 +75,11 @@
     function fetchBlogTagMore(settings, tag) {
         return getPosts(settings, undefined, tag, true);
     }
-    window.wordpressBlog = {
+    exportBlog({
         fetch: fetchPosts,
         fetchMore: fetchMorePosts,
         fetchPost: fetchOnePost,
         fetchTag: fetchBlogTag,
         fetchTagMore: fetchBlogTagMore
-    };
+    }, "wordpress");
 }(window));

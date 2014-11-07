@@ -29,7 +29,7 @@
   "debug": false,
   "eqnull": false,
   "es5": false,
-  "esnext": false,
+  "esnext": true,
   "moz": false,
   "evil": false,
   "expr": false,
@@ -75,10 +75,16 @@
     "setupPlugins",
     "setupBlog",
     "formatModuleName",
+    "formatModulePath",
     "NO_MORE_DATA",
     "MODULE_NOT_FOUND",
     "UNKNOWN_ERROR",
     "alertError",
-    "loadJS"
+    "loadJS",
+    "exportM",
+    "exportBlog",
+    "exportService",
+    "exportPlugin",
+    "importM"
   ]
 }

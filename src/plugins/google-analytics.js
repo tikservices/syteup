@@ -6,7 +6,7 @@
             ga.q = ga.q || [];
             ga.q.push(arguments);
         };
-        loadJS("www.google-analytics.com/analytics.js");
+        loadJS("//www.google-analytics.com/analytics.js");
         // push actions
         if (window.location.host === "localhost" || window.location.host === "172.0.0.1" || window.location.host === "")
             ga("create", settings["tracking_id"], { "cookieDomain": "none" });

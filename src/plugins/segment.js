@@ -33,7 +33,7 @@
         window.analytics.load = function (key) {
             if (document.getElementById("analytics-js"))
                 return;
-            loadJS("cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js", { id: "analytics-js" });
+            loadJS("//cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js", { id: "analytics-js" });
         };
         // Add a version to keep track of what's in the wild.
         window.analytics.SNIPPET_VERSION = "2.0.9";
