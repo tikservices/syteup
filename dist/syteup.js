@@ -126,7 +126,7 @@ function loadJS(src, obj, data, parentEl) {
         var script = document.createElement("script");
         script.type = "text/javascript";
         script.async = true;
-        script.src = src.replace(/^\/\//, "https:" === document.location.protocol ? "https:" : "http:");
+        script.src = src.replace(/^\/\//, "https:" === document.location.protocol ? "https://" : "http://");
         if (obj)
             for (var opt in obj)
                 if (obj.hasOwnProperty(opt))
@@ -488,6 +488,7 @@ asyncGet("config.json", {}).then(function (settings) {
         }).then(setupBlog(settings)).then(setupPlugins(settings));
     });
 }).catch(function (error) {
+    console.error("ERROR: Main Promise Rejected! To bad to break a vow");
     alertError(error).catch(function () {
         alert("ERROR! " + error);
     });
@@ -733,227 +734,210 @@ function setupService(service, url, el, settings) {
     window.disqusPlugin = { setup: setupDisqus };
 }(window));(function (window) {
     "use strict";
-    var DISPLAY_NAME = "Github";
-    var API_URL = "https://api.github.com/";
-    function setupGithub(githubData, settings) {
-        githubData.user.following = numberWithCommas(githubData.user.following);
-        githubData.user.followers = numberWithCommas(githubData.user.followers);
-        return githubData;
+    var DISPLAY_NAME = "Instagram";
+    var API_URL = "https://api.instagram.com/v1/";
+    var nextId;
+    function setupInstagram(instagramData, settings) {
+        if (instagramData.media === 0) {
+            return;
+        }
+        var user_counts = instagramData.user["counts"];
+        user_counts.media = numberWithCommas(user_counts.media);
+        user_counts.followed_by = numberWithCommas(user_counts.followed_by);
+        user_counts.follows = numberWithCommas(user_counts.follows);
+        $.each(instagramData.media, function (i, p) {
+            p.formated_date = moment.unix(parseInt(p.created_time)).fromNow();
+        });
+        return instagramData;
+    }
+    function setupInstagramMore(instagramData, settings) {
+        $.each(instagramData.media, function (i, p) {
+            p.formated_date = moment.unix(parseInt(p.created_time)).fromNow();
+        });
+        return instagramData;
     }
     function fetchData(settings) {
-        var context = {};
         return Promise.all([
-            asyncGet(API_URL + "users/" + settings.client_id),
-            asyncGet(API_URL + "users/" + settings.client_id + "/repos")
+            asyncGet(API_URL + "users/" + settings.user_id + "/?access_token=" + settings.access_token),
+            asyncGet(API_URL + "users/" + settings.user_id + "/media/recent/?access_token=" + settings.access_token)
         ]).then(function (res) {
-            context.user = res[0];
-            context.repos = res[1];
-            context["repos"].sort(function (r1, r2) {
-                return r1.updated_at < r2.updated_at;
+            nextId = res[1]["pagination"]["next_max_id"];
+            return Promise.resolve({
+                "user": res[0],
+                "media": res[1]["data"],
+                "pagination": nextId
             });
-            return Promise.resolve(context);
         });
     }
-    window.githubService = {
+    function fetchMore(settings) {
+        if (nextId)
+            return asyncGet(API_URL + "users/" + settings.user_id + "/media/recent/?access_token=" + settings.access_token + "&max_id=" + nextId).then(function (res) {
+                nextId = res["pagination"]["next_max_id"];
+                return Promise.resolve({
+                    "media": res["data"],
+                    "pagination": nextId
+                });
+            });
+        else
+            return Promise.reject(NO_MORE_DATA);
+    }
+    window.instagramService = {
         displayName: DISPLAY_NAME,
-        template: "github.html",
-        setup: setupGithub,
-        fetch: fetchData
+        template: "instagram.html",
+        templateMore: "instagram-more.html",
+        setup: setupInstagram,
+        fetch: fetchData,
+        supportMore: true,
+        fetchMore: fetchMore,
+        setupMore: setupInstagramMore
     };
 }(window));(function (window) {
     "use strict";
-    var DISPLAY_NAME = "Google+";
-    var API_URL = "https://www.googleapis.com/plus/v1/";
-    function setupGplus(gplusData, settings) {
-        $.each(gplusData.activities, function (i, t) {
-            if (t.verb === "post")
-                t.verb = "posted";
-            else if (t.verb === "share")
-                t.verb = "shared";
-            if (t.title.length > 60)
-                t.title = t.title.substr(0, 57) + "...";
-            t.replies = t.object.replies.totalItems;
-            t.plusoners = t.object.plusoners.totalItems;
-            t.resharers = t.object.resharers.totalItems;
-            t.published = moment.utc(t.published, "YYYY-MM-DD HH:mm:ss").fromNow();
-            if (t.object.attachments && t.object.attachments[0].image) {
-                t.object.image = t.object.attachments[0].image.url;
-            } else if (t.object.content) {
-                t.object.content = new DOMParser().parseFromString("<div>" + t.object.content + "</div>", "text/xml").documentElement.textContent;
-                if (t.object.content.length > 200)
-                    t.object.content = t.object.content.substr(0, 197) + "...";
-            }
-        });
-        return gplusData;
-    }
-    function fetchData(settings) {
-        var context = {};
-        return Promise.all([
-            asyncGet(API_URL + "people/" + settings.user_id + "?fields=circledByCount%2CcurrentLocation%2CdisplayName%2C" + "image%2Furl%2Cnickname%2Coccupation%2CplacesLived%2CplusOneCount%2Ctagline%2Curl" + "&key=" + settings.api_key),
-            asyncGet(API_URL + "people/" + settings.user_id + "/activities/public" + "?maxResults=20&fields=items(annotation%2Cobject(actor(displayName%2Curl)" + "%2Cattachments(content%2CdisplayName%2Cimage%2CobjectType%2Cthumbnails)" + "%2Ccontent%2CobjectType%2Cplusoners%2FtotalItems%2Creplies%2F" + "totalItems%2Cresharers%2FtotalItems%2Curl)%2Cpublished%2Ctitle%2Curl%2Cverb)%2C" + "nextPageToken&key=" + settings.api_key)
-        ]).then(function (res) {
-            context.newt_page = res[1]["nextPageToken"];
-            if (!res[0]["currentLocation"] && res[0]["placesLived"])
-                res[0]["currentLocation"] = res[0]["placesLived"][0]["value"];
-            context.user_info = res[0];
-            context.activities = res[1]["items"];
-            return Promise.resolve(context);
-        });
-    }
-    window.gplusService = {
-        displayName: DISPLAY_NAME,
-        template: "gplus.html",
-        setup: setupGplus,
-        fetch: fetchData
-    };
-}(window));(function (window) {
-    "use strict";
-    var DISPLAY_NAME = "Facebook";
-    var API_URL = "https://graph.facebook.com/v2.1/";
-    function setupFacebook(facebookData, settings) {
-        facebookData.url = "https://facebook.com/" + settings.username;
-        facebookData.image = "imgs/pic.png";
-        facebookData.posts = facebookData.statuses.data.concat(facebookData.links.data);
-        facebookData.posts.sort(function (p1, p2) {
-            return (p1.updated_time || p1.created_time) < (p2.updated_time || p2.created_time);
-        });
-        facebookData.posts.forEach(function (p) {
-            p.url = facebookData.url + "/posts/" + p.id;
-            p.updated_time = moment.utc(p.updated_time || p.created_time, "YYYY-MM-DD HH:mm:ss").fromNow();
-            if (p.likes)
-                p.likes = p.likes.data.length;
-            else
-                p.likes = 0;
-            if (p.comments)
-                p.comments = p.comments.data.length;
-            else
-                p.comments = 0;
-            if (p.sharedposts)
-                p.sharedposts = p.sharedposts.data.length;
-            else
-                p.sharedposts = 0;
-            if (p.message && p.message.length > 200)
-                p.message = p.message.substr(0, 197) + "...";
-        });
-        return facebookData;
-    }
-    function fetchData(settings) {
-        return asyncGet(API_URL + "me?fields=statuses.limit(10){message," + "updated_time,comments{id},likes{id},sharedposts}," + "links.limit(10){comments{id},likes{id},sharedposts{id}," + "picture,link,name,created_time},id,about,link,name,website," + "work&method=get&access_token=" + settings.access_token).then(function (res) {
-            return Promise.resolve(res);
-        });
-    }
-    window.facebookService = {
-        displayName: DISPLAY_NAME,
-        template: "facebook.html",
-        setup: setupFacebook,
-        fetch: fetchData
-    };
-}(window));(function (window) {
-    "use strict";
-    var DISPLAY_NAME = "LinkedIn";
-    var API_URL = "https://api.linkedin.com/v1";
-    function setupLinkedin(linkedinData, settings) {
-        linkedinData.profile["profile_url"] = "http://linkedin.com/profile/view?id=" + linkedinData.profile["id"];
-        linkedinData.profile["summary"] = linkedinData.profile["summary"].replace("\n", "<br />", "g");
-        //        linkedinData.profile["numGroups"] = linkedinData.groups["_count"];
-        //        linkedinData.profile["numNetworkUpdates"] = linkedinData.network_updates["_total"];
-        linkedinData.profile["location_name"] = linkedinData.profile["location"]["name"];
-        return linkedinData;
-    }
-    function fetchData(settings) {
-        //request auth_code:
-        //https://www.linkedin.com/uas/oauth2/authorization?response_type=code&client_id=XXX&scope=r_fullprofile&state=XXX&redirect_uri=http://lejenome.github.io
-        var profile_selectors = [
-            "id",
-            "first-name",
-            "last-name",
-            "headline",
-            "location",
-            "num-connections",
-            "skills",
-            "educations",
-            "picture-url",
-            "summary",
-            "positions",
-            "industry",
-            "site-standard-profile-request"
-        ].join();
-        var network_upd_types = [
-            "APPS",
-            "CMPY",
-            "CONN",
-            "JOBS",
-            "JGRP",
-            "PICT",
-            "PFOL",
-            "PRFX",
-            "RECU",
-            "PRFU",
-            "SHAR",
-            "VIRL"
-        ].join("&type=");
-        return Promise.all([asyncGet(API_URL + "/people/~:(" + profile_selectors + ")?oauth2_access_token=" + settings.access_token)    //            asyncGet(API_URL + "/people/~/group-memberships:(group:(id,name),membership-state)?oauth2_access_token=" + settings.access_token),
-                                                                                                                        //            asyncGet(API_URL + "/people/~/network/updates?type=" + network_upd_types + "&oauth2_access_token=" + settings.access_token)
-]).then(function (res) {
-            return Promise.resolve({ profile: res[0] });
-        });
-    }
-    window.linkedinService = {
-        displayName: DISPLAY_NAME,
-        template: "linkedin.html",
-        setup: setupLinkedin,
-        fetch: fetchData
-    };
-}(window));(function (window) {
-    "use strict";
-    var DISPLAY_NAME = "Twitter";
-    var API_URL = "https://api.twitter.com/1.1/";
-    function twitterLinkify(text) {
-        text = text.replace(/(https?:\/\/\S+)/gi, function (s) {
-            return "<a href='" + s + "'>" + s + "</a>";
-        });
-        text = text.replace(/(^|) @(\w+)/gi, function (s) {
-            return "<a href='http://twitter.com/" + s + "'>" + s + "</a>";
-        });
-        text = text.replace(/(^|) #(\w+)/gi, function (s) {
-            return "<a href='http://search.twitter.com/search?q=" + s.replace(/#/, "%23") + "'>" + s + "</a>";
-        });
-        return text;
-    }
-    function setupTwitter(twitterData) {
-        var tweets = [];
-        $.each(twitterData, function (i, t) {
-            t.formated_date = moment(t.created_at).fromNow();
-            t.f_text = twitterLinkify(t.text);
-            tweets.push(t);
-        });
-        var user = twitterData[0].user;
-        user.statuses_count = numberWithCommas(user.statuses_count);
-        user.friends_count = numberWithCommas(user.friends_count);
+    var DISPLAY_NAME = "Dribbble";
+    var API_URL = "https://api.dribbble.com/players/";
+    function setupDribbble(dribbbleData, settings) {
+        var user = dribbbleData.shots[0].player;
+        user.following_count = numberWithCommas(user.following_count);
         user.followers_count = numberWithCommas(user.followers_count);
-        user.f_description = twitterLinkify(user.description);
+        user.likes_count = numberWithCommas(user.likes_count);
         return {
             "user": user,
-            "tweets": tweets
+            "shots": dribbbleData.shots
         };
     }
     function fetchData(settings) {
-        return asyncGet(API_URL + "statuses/home_timeline.json?count=50&include_rts=true&exclude_replies=true&screen_name=" + settings.username, { "Authorization": "Bearer " + settings.access_token }).then(function (result) {
-            return Promise.resolve(result);    /*    statuses_in_dict = []
-                    for s in statuses:
-                        statuses_in_dict.append(json.loads(s.AsJsonString()))
-
-                    return HttpResponse(content=json.dumps(statuses_in_dict),
-                                        status=200,
-                                        content_type="application/json")
-            */
-                                               //            return Promise.resolve(result);
+        return asyncGet(API_URL + settings.username + "/shots");
+    }
+    window.dribbbleService = {
+        displayName: DISPLAY_NAME,
+        template: "dribbble.html",
+        setup: setupDribbble,
+        fetch: fetchData
+    };
+}(window));(function (window) {
+    "use strict";
+    var DISPLAY_NAME = "Flickr";
+    function setupFlickr(flickrData, settings) {
+        if (flickrData.items === 0) {
+            return;
+        }
+        flickrData.title = flickrData.title.substring(13);
+        $.each(flickrData.items, function (i, p) {
+            p.formated_date = moment.unix(Date.parse(p.date_taken) / 1000).fromNow();
+        });
+        return flickrData;
+    }
+    function fetchData(settings) {
+        return asyncGet("http://api.flickr.com/services/feeds/photos_public.gne?id=" + settings.client_id + "&format=json&lang=en-us", undefined, "jsoncallback");
+    }
+    window.flickrService = {
+        displayName: DISPLAY_NAME,
+        template: "flickr.html",
+        setup: setupFlickr,
+        fetch: fetchData
+    };
+}(window));(function (window) {
+    "use strict";
+    var DISPLAY_NAME = "Bitbucket";
+    var API_URL = "https://api.bitbucket.org/1.0/";
+    function setupBitbucket(bitbucketData, settings) {
+        bitbucketData.user.followers = numberWithCommas(bitbucketData.user.followers);
+        return bitbucketData;
+    }
+    function fetchData(settings) {
+        var context = {};
+        return Promise.all([
+            asyncGet(API_URL + "users/" + settings.username + "?jsoncallback=mainRequest"),
+            asyncGet(API_URL + "users/" + settings.username + "/followers?jsoncallback=followersRequest")
+        ]).then(function (res) {
+            context = res[0];
+            context["user"]["followers"] = res[1]["count"];
+            context["user"]["public_repos"] = context["repositories"].length;
+            context["repositories"].sort(function (r1, r2) {
+                return r1.utc_last_updated < r2.utc_last_updated;
+            });
+            if (settings.show_forks) {
+                return Promise.all(context["repositories"].map(function (repo) {
+                    return asyncGet(API_URL + "repositories/" + settings.username + "/" + repo["slug"] + "?jsoncallback=forksRequest");
+                })).then(function (forks) {
+                    var i = 0;
+                    forks.forEach(function (fork) {
+                        context["repositories"][i++]["forks_count"] = fork["forks_count"];
+                    });
+                    return Promise.resolve(context);
+                });
+            } else {
+                return Promise.resolve(context);
+            }
         });
     }
-    window.twitterService = {
+    window.bitbucketService = {
         displayName: DISPLAY_NAME,
-        template: "twitter.html",
-        setup: setupTwitter,
+        template: "bitbucket.html",
+        setup: setupBitbucket,
+        fetch: fetchData
+    };
+}(window));(function (window) {
+    "use strict";
+    var DISPLAY_NAME = "Last.fm";
+    var API_URL = "https://ws.audioscrobbler.com/2.0/";
+    function setupLastfm(lastfmData, settings) {
+        /* Add extra helper to parse out the #text fields in context passed to
+         * handlebars.  The '#' character is reserved by the handlebars templating
+         * language itself so cannot reference '#text' easily in the template. */
+        Handlebars.registerHelper("text", function (obj) {
+            try {
+                return obj["#text"];
+            } catch (err) {
+                return "";
+            }
+        });
+        Handlebars.registerHelper("image_url", function (obj) {
+            try {
+                return obj[0]["#text"];
+            } catch (err) {
+                return "";
+            }
+        });
+        Handlebars.registerHelper("avatar_url", function (obj) {
+            try {
+                return obj[1]["#text"];
+            } catch (err) {
+                return "";
+            }
+        });
+        lastfmData.user_info.user.formatted_plays = numberWithCommas(lastfmData.user_info.user.playcount);
+        lastfmData.user_info.user.formatted_playlists = numberWithCommas(lastfmData.user_info.user.playlists);
+        lastfmData.user_info.user.formatted_register_date = moment.utc(lastfmData.user_info.user.registered["#text"], "YYYY-MM-DD HH:mm").format("MM/DD/YYYY");
+        $.each(lastfmData.recenttracks.recenttracks.track, function (i, t) {
+            // Lastfm can be really finicky with data and return garbage if
+            // the track is currently playing
+            var date;
+            try {
+                date = t.date["#text"];
+            } catch (err) {
+                t.formatted_date = "Now Playing";
+                return true;    // equivalent to "continue" with a normal for loop
+            }
+            t.formatted_date = moment.utc(date, "DD MMM YYYY, HH:mm").fromNow();
+        });
+        return lastfmData;
+    }
+    function fetchData(settings) {
+        return Promise.all([
+            asyncGet(API_URL + "?method=user.getinfo&user=" + settings.username + "&format=json&api_key=" + settings.api_key),
+            asyncGet(API_URL + "?method=user.getrecenttracks&user=" + settings.username + "&format=json&api_key=" + settings.api_key)
+        ]).then(function (res) {
+            return Promise.resolve({
+                user_info: res[0],
+                recenttracks: res[1]
+            });
+        });
+    }
+    window.lastfmService = {
+        displayName: DISPLAY_NAME,
+        template: "lastfm.html",
+        setup: setupLastfm,
         fetch: fetchData
     };
 }(window));(function (window) {
@@ -1035,325 +1019,47 @@ function setupService(service, url, el, settings) {
     };
 }(window));(function (window) {
     "use strict";
-    var DISPLAY_NAME = "Last.fm";
-    var API_URL = "https://ws.audioscrobbler.com/2.0/";
-    function setupLastfm(lastfmData, settings) {
-        /* Add extra helper to parse out the #text fields in context passed to
-         * handlebars.  The '#' character is reserved by the handlebars templating
-         * language itself so cannot reference '#text' easily in the template. */
-        Handlebars.registerHelper("text", function (obj) {
-            try {
-                return obj["#text"];
-            } catch (err) {
-                return "";
-            }
-        });
-        Handlebars.registerHelper("image_url", function (obj) {
-            try {
-                return obj[0]["#text"];
-            } catch (err) {
-                return "";
-            }
-        });
-        Handlebars.registerHelper("avatar_url", function (obj) {
-            try {
-                return obj[1]["#text"];
-            } catch (err) {
-                return "";
-            }
-        });
-        lastfmData.user_info.user.formatted_plays = numberWithCommas(lastfmData.user_info.user.playcount);
-        lastfmData.user_info.user.formatted_playlists = numberWithCommas(lastfmData.user_info.user.playlists);
-        lastfmData.user_info.user.formatted_register_date = moment.utc(lastfmData.user_info.user.registered["#text"], "YYYY-MM-DD HH:mm").format("MM/DD/YYYY");
-        $.each(lastfmData.recenttracks.recenttracks.track, function (i, t) {
-            // Lastfm can be really finicky with data and return garbage if
-            // the track is currently playing
-            var date;
-            try {
-                date = t.date["#text"];
-            } catch (err) {
-                t.formatted_date = "Now Playing";
-                return true;    // equivalent to "continue" with a normal for loop
-            }
-            t.formatted_date = moment.utc(date, "DD MMM YYYY, HH:mm").fromNow();
-        });
-        return lastfmData;
-    }
-    function fetchData(settings) {
-        return Promise.all([
-            asyncGet(API_URL + "?method=user.getinfo&user=" + settings.username + "&format=json&api_key=" + settings.api_key),
-            asyncGet(API_URL + "?method=user.getrecenttracks&user=" + settings.username + "&format=json&api_key=" + settings.api_key)
-        ]).then(function (res) {
-            return Promise.resolve({
-                user_info: res[0],
-                recenttracks: res[1]
-            });
-        });
-    }
-    window.lastfmService = {
-        displayName: DISPLAY_NAME,
-        template: "lastfm.html",
-        setup: setupLastfm,
-        fetch: fetchData
-    };
-}(window));(function (window) {
-    "use strict";
-    var DISPLAY_NAME = "StackOverflow";
-    var API_URL = "https://api.stackexchange.com/2.2/";
-    function setupStackoverflow(stackoverflowData, settings) {
-        var user = stackoverflowData.user;
-        var badge_count = user.badge_counts.bronze + user.badge_counts.silver + user.badge_counts.gold;
-        user.badge_count = badge_count;
-        user.about_me = (user.about_me || "").replace(/(<([^>]+)>)/gi, "");
-        var timeline = stackoverflowData.timeline;
-        $.each(timeline, function (i, t) {
-            t.creation_date = moment.unix(t.creation_date).fromNow();
-            if (t.action === "comment") {
-                t.action = "commented";
-            }
-            if (t.detail && t.detail.length > 140) {
-                t.detail = $.trim(t.detail).substring(0, 140).split(" ").slice(0, -1).join(" ") + "...";
-            }
-        });
-        return {
-            "user": user,
-            "timeline": timeline
-        };
-    }
-    function fetchData(settings) {
-        return Promise.all([
-            asyncGet(API_URL + "users/" + settings.userid + "?site=stackoverflow&filter=!-*f(6q3e0kZX"),
-            asyncGet(API_URL + "users/" + settings.userid + "/timeline?site=stackoverflow")
-        ]).then(function (res) {
-            return Promise.resolve({
-                user: res[0]["items"][0],
-                timeline: res[1]["items"]
-            });
-        });
-    }
-    window.stackoverflowService = {
-        displayName: DISPLAY_NAME,
-        template: "stackoverflow.html",
-        setup: setupStackoverflow,
-        fetch: fetchData
-    };
-}(window));(function (window) {
-    "use strict";
-    var DISPLAY_NAME = "Bitbucket";
-    var API_URL = "https://api.bitbucket.org/1.0/";
-    function setupBitbucket(bitbucketData, settings) {
-        bitbucketData.user.followers = numberWithCommas(bitbucketData.user.followers);
-        return bitbucketData;
-    }
-    function fetchData(settings) {
-        var context = {};
-        return Promise.all([
-            asyncGet(API_URL + "users/" + settings.username + "?jsoncallback=mainRequest"),
-            asyncGet(API_URL + "users/" + settings.username + "/followers?jsoncallback=followersRequest")
-        ]).then(function (res) {
-            context = res[0];
-            context["user"]["followers"] = res[1]["count"];
-            context["user"]["public_repos"] = context["repositories"].length;
-            context["repositories"].sort(function (r1, r2) {
-                return r1.utc_last_updated < r2.utc_last_updated;
-            });
-            if (settings.show_forks) {
-                return Promise.all(context["repositories"].map(function (repo) {
-                    return asyncGet(API_URL + "repositories/" + settings.username + "/" + repo["slug"] + "?jsoncallback=forksRequest");
-                })).then(function (forks) {
-                    var i = 0;
-                    forks.forEach(function (fork) {
-                        context["repositories"][i++]["forks_count"] = fork["forks_count"];
-                    });
-                    return Promise.resolve(context);
-                });
-            } else {
-                return Promise.resolve(context);
-            }
-        });
-    }
-    window.bitbucketService = {
-        displayName: DISPLAY_NAME,
-        template: "bitbucket.html",
-        setup: setupBitbucket,
-        fetch: fetchData
-    };
-}(window));(function (window) {
-    "use strict";
-    var DISPLAY_NAME = "Dribbble";
-    var API_URL = "https://api.dribbble.com/players/";
-    function setupDribbble(dribbbleData, settings) {
-        var user = dribbbleData.shots[0].player;
-        user.following_count = numberWithCommas(user.following_count);
-        user.followers_count = numberWithCommas(user.followers_count);
-        user.likes_count = numberWithCommas(user.likes_count);
-        return {
-            "user": user,
-            "shots": dribbbleData.shots
-        };
-    }
-    function fetchData(settings) {
-        return asyncGet(API_URL + settings.username + "/shots");
-    }
-    window.dribbbleService = {
-        displayName: DISPLAY_NAME,
-        template: "dribbble.html",
-        setup: setupDribbble,
-        fetch: fetchData
-    };
-}(window));(function (window) {
-    "use strict";
-    var DISPLAY_NAME = "Flickr";
-    function setupFlickr(flickrData, settings) {
-        if (flickrData.items === 0) {
-            return;
-        }
-        flickrData.title = flickrData.title.substring(13);
-        $.each(flickrData.items, function (i, p) {
-            p.formated_date = moment.unix(Date.parse(p.date_taken) / 1000).fromNow();
-        });
-        return flickrData;
-    }
-    function fetchData(settings) {
-        return asyncGet("http://api.flickr.com/services/feeds/photos_public.gne?id=" + settings.client_id + "&format=json&lang=en-us", undefined, "jsoncallback");
-    }
-    window.flickrService = {
-        displayName: DISPLAY_NAME,
-        template: "flickr.html",
-        setup: setupFlickr,
-        fetch: fetchData
-    };
-}(window));(function (window) {
-    "use strict";
-    var DISPLAY_NAME = "Instagram";
-    var API_URL = "https://api.instagram.com/v1/";
-    var nextId;
-    function setupInstagram(instagramData, settings) {
-        if (instagramData.media === 0) {
-            return;
-        }
-        var user_counts = instagramData.user["counts"];
-        user_counts.media = numberWithCommas(user_counts.media);
-        user_counts.followed_by = numberWithCommas(user_counts.followed_by);
-        user_counts.follows = numberWithCommas(user_counts.follows);
-        $.each(instagramData.media, function (i, p) {
-            p.formated_date = moment.unix(parseInt(p.created_time)).fromNow();
-        });
-        return instagramData;
-    }
-    function setupInstagramMore(instagramData, settings) {
-        $.each(instagramData.media, function (i, p) {
-            p.formated_date = moment.unix(parseInt(p.created_time)).fromNow();
-        });
-        return instagramData;
-    }
-    function fetchData(settings) {
-        return Promise.all([
-            asyncGet(API_URL + "users/" + settings.user_id + "/?access_token=" + settings.access_token),
-            asyncGet(API_URL + "users/" + settings.user_id + "/media/recent/?access_token=" + settings.access_token)
-        ]).then(function (res) {
-            nextId = res[1]["pagination"]["next_max_id"];
-            return Promise.resolve({
-                "user": res[0],
-                "media": res[1]["data"],
-                "pagination": nextId
-            });
-        });
-    }
-    function fetchMore(settings) {
-        if (nextId)
-            return asyncGet(API_URL + "users/" + settings.user_id + "/media/recent/?access_token=" + settings.access_token + "&max_id=" + nextId).then(function (res) {
-                nextId = res["pagination"]["next_max_id"];
-                return Promise.resolve({
-                    "media": res["data"],
-                    "pagination": nextId
-                });
-            });
-        else
-            return Promise.reject(NO_MORE_DATA);
-    }
-    window.instagramService = {
-        displayName: DISPLAY_NAME,
-        template: "instagram.html",
-        templateMore: "instagram-more.html",
-        setup: setupInstagram,
-        fetch: fetchData,
-        supportMore: true,
-        fetchMore: fetchMore,
-        setupMore: setupInstagramMore
-    };
-}(window));(function (window) {
-    "use strict";
-    var API_URL = "https://public-api.wordpress.com/rest/v1";
+    var API_URL = "https://www.googleapis.com/blogger/v3/";
     var nextId = 0;
     function getPosts(settings, postId, tag, offset) {
-        var post_id = "";
-        var params = "";
-        if (postId)
-            post_id += postId;
-        else if (tag)
-            params += "?tag=" + tag.replace(/\s/g, "-");
-        else if (settings.tag_slug)
-            params += "?tag=" + settings.tag_slug.replace(/\s/g, "-");
+        var params = "?maxResults=20&key=" + settings.api_key + "&fields=items(content%2Cid%2Clabels%2Cpublished%2Ctitle%2Curl)" + "%2CnextPageToken";
         if (offset && nextId)
-            params += (params ? "&" : "?") + "offset=" + nextId;
-        var wpApiUrl = [
-            API_URL,
-            "/sites/",
-            settings.blog_url,
-            "/posts/",
-            post_id,
-            params
-        ].join("");
-        return asyncGet(wpApiUrl).then(function (data) {
-            if (data.error)
-                data = {
-                    found: 0,
-                    posts: []
-                };
-            else if (postId)
-                data = {
-                    found: 1,
-                    posts: [data]
-                };
-            $.each(data.posts, function (i, p) {
-                var newTags = [];
-                p.id = p.ID;
-                p.body = p.content;
-                p.content = null;
-                if (p.type === "post") {
-                    p.type = "text";
-                }
-                for (var tag in p.tags) {
-                    if (p.tags.hasOwnProperty(tag))
-                        newTags.push(tag);
-                }
-                p.tags = newTags;
-                // TODO: figure out how to preserve timezone info and make it
-                // consistent with python's datetime.strptime
-                if (p.date.lastIndexOf("+") > 0) {
-                    p.date = p.date.substring(0, p.date.lastIndexOf("+"));
-                } else {
-                    p.date = p.date.substring(0, p.date.lastIndexOf("-"));
-                }
+            params += "&pageToken=" + nextId;
+        if (tag)
+            params += "&labels=" + tag;
+        else if (settings.tag_slug)
+            params += "&labels=" + tag;
+        if (postId)
+            params = "/" + postId + "?key=" + settings.api_key + "&content%2Cid%2Clabels%2Cpublished%2Ctitle%2Curl";
+        return asyncGet(API_URL + "blogs/" + settings.blog_id + "/posts" + params).then(function (res) {
+            nextId = res.nextPageToken;
+            if (!nextId)
+                window.reachedEnd = true;
+            if (postId)
+                res = { items: [res] };
+            res["items"].forEach(function (post) {
+                post.date = post.published;
+                post.body = post.content;
+                post.tags = post.labels;
+                post.tags = post.labels;
+                post.type = "text";    //????
             });
-            nextId += 20;
-            return Promise.resolve(data.posts);
+            return Promise.resolve(res["items"]);
         });
     }
     function fetchPosts(settings) {
-        nextId = 0;
+        nextId = "";
         return getPosts(settings, undefined, undefined, false);
     }
     function fetchMorePosts(settings) {
         return getPosts(settings, undefined, undefined, true);
     }
     function fetchOnePost(settings, postId) {
-        nextId = 0;
+        nextId = "";
         return getPosts(settings, postId, undefined, false);
     }
     function fetchBlogTag(settings, tag) {
-        nextId = 0;
+        nextId = "";
         return getPosts(settings, undefined, tag, false);
     }
     function fetchBlogTagMore(settings, tag) {
@@ -1365,7 +1071,7 @@ function setupService(service, url, el, settings) {
         fetchPost: fetchOnePost,
         fetchTag: fetchBlogTag,
         fetchTagMore: fetchBlogTagMore
-    }, "wordpress");
+    }, "blogger");
 }(window));(function (window) {
     "use strict";
     var DISPLAY_NAME = "Contact";

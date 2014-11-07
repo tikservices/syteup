@@ -20,6 +20,7 @@ asyncGet("config.json", {}).then(function (settings) {
         }).then(setupBlog(settings)).then(setupPlugins(settings));
     });
 }).catch(function (error) {
+    console.error("ERROR: Main Promise Rejected! To bad to break a vow");
     alertError(error).catch(function () {
         alert("ERROR! " + error);
     });

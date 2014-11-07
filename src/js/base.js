@@ -126,7 +126,7 @@ function loadJS(src, obj, data, parentEl) {
         var script = document.createElement("script");
         script.type = "text/javascript";
         script.async = true;
-        script.src = src.replace(/^\/\//, "https:" === document.location.protocol ? "https:" : "http:");
+        script.src = src.replace(/^\/\//, "https:" === document.location.protocol ? "https://" : "http://");
         if (obj)
             for (var opt in obj)
                 if (obj.hasOwnProperty(opt))
