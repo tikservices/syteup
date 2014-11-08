@@ -11,12 +11,13 @@ function pluginsPromises(settings) {
 }
 function setupPlugin(plugin, settings) {
     return new Promise(function (resolve, reject) {
-        var $plugin = window[formatModuleName(plugin) + "Plugin"];
-        if ($plugin) {
-            $plugin.setup(settings);
-            resolve();
-        } else {
-            reject(MODULE_NOT_FOUND);
-        }
+        importM(formatModuleName(plugin) + "Plugin", "plugins/" + formatModulePath(plugin)).then(function ($plugin) {
+            if ($plugin) {
+                $plugin.setup(settings);
+                resolve();
+            } else {
+                reject(MODULE_NOT_FOUND);
+            }
+        });
     });
 }

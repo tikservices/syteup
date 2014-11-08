@@ -6,5 +6,5 @@
             stLight.options({ publisher: settings["publisher_key"] });
         });
     }
-    window.sharethisPlugin = { setup: setupSharethis };
+    exportPlugin({ setup: setupSharethis }, "sharethis");
 }(window));

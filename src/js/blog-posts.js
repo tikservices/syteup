@@ -63,7 +63,7 @@ function fetchBlogPosts(offset, settings, platform, posts_options) {
     //Not sure how my old self wrote this code and how it stills runs
     if (posts_options && posts_options.id)
         window.reachedEnd = true;
-    importM(formatModuleName(platform) + "Blog", "blogs/" + formatModulePath(platform)).then(function ($blog) {
+    return importM(formatModuleName(platform) + "Blog", "blogs/" + formatModulePath(platform)).then(function ($blog) {
         //    var $blog = window[formatModuleName(platform) + "Blog"];
         if (!$blog)
             return Promise.reject(MODULE_NOT_FOUND);

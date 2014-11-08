@@ -45,5 +45,5 @@
         // move this call however you'd like.
         window.analytics.page({ title: "Syteup" });
     }
-    window.segmentPlugin = { setup: setupSegment };
+    exportPlugin({ setup: setupSegment }, "segment");
 }(window));

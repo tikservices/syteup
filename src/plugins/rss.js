@@ -8,5 +8,5 @@
         rss.href = settings["url"];
         document.head.appendChild(rss);
     }
-    window.rssPlugin = { setup: setupRss };
+    exportPlugin({ setup: setupRss }, "rss");
 }(window));

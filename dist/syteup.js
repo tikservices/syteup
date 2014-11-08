@@ -135,12 +135,16 @@ function loadJS(src, obj, data, parentEl) {
             for (var el in data)
                 if (data.hasOwnProperty(el))
                     script.dataset[el] = data[el];
-        function onload() {
+        function onload(e) {
             /* jshint validthis:true */
             this.removeEventListener("load", onload);
+            this.removeEventListener("loadend", onload);
+            this.removeEventListener("afterscriptexecute", onload);
             resolve();
         }
         script.addEventListener("load", onload);
+        script.addEventListener("loadend", onload);
+        script.addEventListener("afterscriptexecute", onload);
         (parentEl || document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(script);
     });
 }
@@ -326,7 +330,7 @@ function fetchBlogPosts(offset, settings, platform, posts_options) {
     //Not sure how my old self wrote this code and how it stills runs
     if (posts_options && posts_options.id)
         window.reachedEnd = true;
-    importM(formatModuleName(platform) + "Blog", "blogs/" + formatModulePath(platform)).then(function ($blog) {
+    return importM(formatModuleName(platform) + "Blog", "blogs/" + formatModulePath(platform)).then(function ($blog) {
         //    var $blog = window[formatModuleName(platform) + "Blog"];
         if (!$blog)
             return Promise.reject(MODULE_NOT_FOUND);
@@ -517,13 +521,14 @@ function pluginsPromises(settings) {
 }
 function setupPlugin(plugin, settings) {
     return new Promise(function (resolve, reject) {
-        var $plugin = window[formatModuleName(plugin) + "Plugin"];
-        if ($plugin) {
-            $plugin.setup(settings);
-            resolve();
-        } else {
-            reject(MODULE_NOT_FOUND);
-        }
+        importM(formatModuleName(plugin) + "Plugin", "plugins/" + formatModulePath(plugin)).then(function ($plugin) {
+            if ($plugin) {
+                $plugin.setup(settings);
+                resolve();
+            } else {
+                reject(MODULE_NOT_FOUND);
+            }
+        });
     });
 }"use strict";
 function setupService(service, url, el, settings) {
@@ -644,7 +649,7 @@ function setupService(service, url, el, settings) {
         // move this call however you'd like.
         window.analytics.page({ title: "Syteup" });
     }
-    window.segmentPlugin = { setup: setupSegment };
+    exportPlugin({ setup: setupSegment }, "segment");
 }(window));(function (window) {
     "use strict";
     function setupRss(settings) {
@@ -655,7 +660,7 @@ function setupService(service, url, el, settings) {
         rss.href = settings["url"];
         document.head.appendChild(rss);
     }
-    window.rssPlugin = { setup: setupRss };
+    exportPlugin({ setup: setupRss }, "rss");
 }(window));(function (window) {
     "use strict";
     function setupControlPanel(settings) {
@@ -685,14 +690,14 @@ function setupService(service, url, el, settings) {
             $("#control-panel").removeAttr("id");
         });
     }
-    window.controlPanelPlugin = { setup: setupControlPanel };
+    exportPlugin({ setup: setupControlPanel }, "control_panel");
 }(window));(function (window) {
     "use strict";
     function setup(settings) {
         window.grtpAPI = "https://grtp.co/v1/";
         loadJS("//grtp.co/v1.js", {}, { gratipayUsername: settings.username }, document.getElementById("header-widgets"));
     }
-    window.gratipayWidgetPlugin = { setup: setup };
+    exportPlugin({ setup: setup }, "gratipay_widget");
 }(window));(function (window) {
     /* global DISQUS */
     "use strict";
@@ -731,7 +736,7 @@ function setupService(service, url, el, settings) {
             embedDisqus(settings);
         });
     }
-    window.disqusPlugin = { setup: setupDisqus };
+    exportPlugin({ setup: setupDisqus }, "disqus");
 }(window));(function (window) {
     "use strict";
     var DISPLAY_NAME = "Instagram";
@@ -1019,47 +1024,76 @@ function setupService(service, url, el, settings) {
     };
 }(window));(function (window) {
     "use strict";
-    var API_URL = "https://www.googleapis.com/blogger/v3/";
+    var API_URL = "https://public-api.wordpress.com/rest/v1";
     var nextId = 0;
     function getPosts(settings, postId, tag, offset) {
-        var params = "?maxResults=20&key=" + settings.api_key + "&fields=items(content%2Cid%2Clabels%2Cpublished%2Ctitle%2Curl)" + "%2CnextPageToken";
-        if (offset && nextId)
-            params += "&pageToken=" + nextId;
-        if (tag)
-            params += "&labels=" + tag;
-        else if (settings.tag_slug)
-            params += "&labels=" + tag;
+        var post_id = "";
+        var params = "";
         if (postId)
-            params = "/" + postId + "?key=" + settings.api_key + "&content%2Cid%2Clabels%2Cpublished%2Ctitle%2Curl";
-        return asyncGet(API_URL + "blogs/" + settings.blog_id + "/posts" + params).then(function (res) {
-            nextId = res.nextPageToken;
-            if (!nextId)
-                window.reachedEnd = true;
-            if (postId)
-                res = { items: [res] };
-            res["items"].forEach(function (post) {
-                post.date = post.published;
-                post.body = post.content;
-                post.tags = post.labels;
-                post.tags = post.labels;
-                post.type = "text";    //????
+            post_id += postId;
+        else if (tag)
+            params += "?tag=" + tag.replace(/\s/g, "-");
+        else if (settings.tag_slug)
+            params += "?tag=" + settings.tag_slug.replace(/\s/g, "-");
+        if (offset && nextId)
+            params += (params ? "&" : "?") + "offset=" + nextId;
+        var wpApiUrl = [
+            API_URL,
+            "/sites/",
+            settings.blog_url,
+            "/posts/",
+            post_id,
+            params
+        ].join("");
+        return asyncGet(wpApiUrl).then(function (data) {
+            if (data.error)
+                data = {
+                    found: 0,
+                    posts: []
+                };
+            else if (postId)
+                data = {
+                    found: 1,
+                    posts: [data]
+                };
+            $.each(data.posts, function (i, p) {
+                var newTags = [];
+                p.id = p.ID;
+                p.body = p.content;
+                p.content = null;
+                if (p.type === "post") {
+                    p.type = "text";
+                }
+                for (var tag in p.tags) {
+                    if (p.tags.hasOwnProperty(tag))
+                        newTags.push(tag);
+                }
+                p.tags = newTags;
+                // TODO: figure out how to preserve timezone info and make it
+                // consistent with python's datetime.strptime
+                if (p.date.lastIndexOf("+") > 0) {
+                    p.date = p.date.substring(0, p.date.lastIndexOf("+"));
+                } else {
+                    p.date = p.date.substring(0, p.date.lastIndexOf("-"));
+                }
             });
-            return Promise.resolve(res["items"]);
+            nextId += 20;
+            return Promise.resolve(data.posts);
         });
     }
     function fetchPosts(settings) {
-        nextId = "";
+        nextId = 0;
         return getPosts(settings, undefined, undefined, false);
     }
     function fetchMorePosts(settings) {
         return getPosts(settings, undefined, undefined, true);
     }
     function fetchOnePost(settings, postId) {
-        nextId = "";
+        nextId = 0;
         return getPosts(settings, postId, undefined, false);
     }
     function fetchBlogTag(settings, tag) {
-        nextId = "";
+        nextId = 0;
         return getPosts(settings, undefined, tag, false);
     }
     function fetchBlogTagMore(settings, tag) {
@@ -1071,7 +1105,7 @@ function setupService(service, url, el, settings) {
         fetchPost: fetchOnePost,
         fetchTag: fetchBlogTag,
         fetchTagMore: fetchBlogTagMore
-    }, "blogger");
+    }, "wordpress");
 }(window));(function (window) {
     "use strict";
     var DISPLAY_NAME = "Contact";

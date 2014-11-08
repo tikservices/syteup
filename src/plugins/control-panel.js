@@ -27,5 +27,5 @@
             $("#control-panel").removeAttr("id");
         });
     }
-    window.controlPanelPlugin = { setup: setupControlPanel };
+    exportPlugin({ setup: setupControlPanel }, "control_panel");
 }(window));

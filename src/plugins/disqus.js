@@ -36,5 +36,5 @@
             embedDisqus(settings);
         });
     }
-    window.disqusPlugin = { setup: setupDisqus };
+    exportPlugin({ setup: setupDisqus }, "disqus");
 }(window));

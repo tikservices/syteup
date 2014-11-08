@@ -16,5 +16,5 @@
             return false;
         };
     }
-    window.woopraPlugin = { setup: setupWoopra };
+    exportPlugin({ setup: setupWoopra }, "woopra");
 }(window));

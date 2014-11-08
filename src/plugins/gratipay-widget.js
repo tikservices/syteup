@@ -4,5 +4,5 @@
         window.grtpAPI = "https://grtp.co/v1/";
         loadJS("//grtp.co/v1.js", {}, { gratipayUsername: settings.username }, document.getElementById("header-widgets"));
     }
-    window.gratipayWidgetPlugin = { setup: setup };
+    exportPlugin({ setup: setup }, "gratipay_widget");
 }(window));

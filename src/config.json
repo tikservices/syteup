@@ -1,7 +1,7 @@
 {
   "version": "0.1.0",
   "deployment_mode": "dev",
-  "blog_platform": "blogger",
+  "blog_platform": "wordpress",
   "fields": {
     "username": "lejenome",
     "realname": "Moez Bouhlel",

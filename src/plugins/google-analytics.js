@@ -27,5 +27,5 @@
                //        });
                // ga('send', 'event', 'image2', 'clicked')
     }
-    window.googleAnalyticsPlugin = { setup: setupGoogleAnalytics };
+    exportPlugin({ setup: setupGoogleAnalytics }, "googleAnalytics");
 }(window));

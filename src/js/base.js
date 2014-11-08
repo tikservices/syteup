@@ -135,12 +135,16 @@ function loadJS(src, obj, data, parentEl) {
             for (var el in data)
                 if (data.hasOwnProperty(el))
                     script.dataset[el] = data[el];
-        function onload() {
+        function onload(e) {
             /* jshint validthis:true */
             this.removeEventListener("load", onload);
+            this.removeEventListener("loadend", onload);
+            this.removeEventListener("afterscriptexecute", onload);
             resolve();
         }
         script.addEventListener("load", onload);
+        script.addEventListener("loadend", onload);
+        script.addEventListener("afterscriptexecute", onload);
         (parentEl || document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(script);
     });
 }
