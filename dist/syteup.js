@@ -201,7 +201,9 @@ function setupBlog(settings) {
     registerHomeItemClick(settings);
     window.sharethis_enabled = settings["blogs_settings"]["plugins"]["sharethis"] || false;
     if (settings["blogs_settings"]["plugins"]["disqus"])
-        window.disqusPlugin.setup(settings["plugins_settings"]["disqus"]);
+        importM("disqusPlugin", "plugins/disqus").then(function ($plugin) {
+            $plugin.setup(settings["plugins_settings"]["disqus"]);
+        });
     window.reachedEnd = false;
     if (location.hash.substr(0, 7) === "#!post/")
         postsOpts = { id: location.hash.slice(7).split("#")[0] };
@@ -210,7 +212,9 @@ function setupBlog(settings) {
     return fetchBlogPosts(0, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"], postsOpts).then(function (offset) {
         postOffset = offset;
         if (window.sharethis_enabled)
-            window.sharethisPlugin.setup(settings["plugins_settings"]["sharethis"]);
+            importM("sharethisPlugin", "plugins/sharethis").then(function ($plugin) {
+                $plugin.setup(settings["plugins_settings"]["sharethis"]);
+            });
         return Promise.resolve();
     });
 }
@@ -1024,76 +1028,51 @@ function setupService(service, url, el, settings) {
     }, "soundcloud");
 }(window));(function (window) {
     "use strict";
-    var API_URL = "https://public-api.wordpress.com/rest/v1";
+    var API_URL = "https://www.googleapis.com/blogger/v3/";
     var nextId = 0;
     function getPosts(settings, postId, tag, offset) {
-        var post_id = "";
-        var params = "";
-        if (postId)
-            post_id += postId;
-        else if (tag)
-            params += "?tag=" + tag.replace(/\s/g, "-");
-        else if (settings.tag_slug)
-            params += "?tag=" + settings.tag_slug.replace(/\s/g, "-");
+        var params = "?maxResults=20&key=" + settings.api_key + "&fields=items(content%2Cid%2Clabels%2Cpublished%2Ctitle%2Curl)" + "%2CnextPageToken";
         if (offset && nextId)
-            params += (params ? "&" : "?") + "offset=" + nextId;
-        var wpApiUrl = [
-            API_URL,
-            "/sites/",
-            settings.blog_url,
-            "/posts/",
-            post_id,
-            params
-        ].join("");
-        return asyncGet(wpApiUrl).then(function (data) {
-            if (data.error)
-                data = {
-                    found: 0,
-                    posts: []
-                };
-            else if (postId)
-                data = {
-                    found: 1,
-                    posts: [data]
-                };
-            $.each(data.posts, function (i, p) {
-                var newTags = [];
-                p.id = p.ID;
-                p.body = p.content;
-                p.content = null;
-                if (p.type === "post") {
-                    p.type = "text";
-                }
-                for (var tag in p.tags) {
-                    if (p.tags.hasOwnProperty(tag))
-                        newTags.push(tag);
-                }
-                p.tags = newTags;
-                // TODO: figure out how to preserve timezone info and make it
-                // consistent with python's datetime.strptime
-                if (p.date.lastIndexOf("+") > 0) {
-                    p.date = p.date.substring(0, p.date.lastIndexOf("+"));
-                } else {
-                    p.date = p.date.substring(0, p.date.lastIndexOf("-"));
-                }
+            params += "&pageToken=" + nextId;
+        if (tag)
+            params += "&labels=" + tag;
+        else if (settings.tag_slug)
+            params += "&labels=" + tag;
+        if (postId)
+            params = "/" + postId + "?key=" + settings.api_key + "&content%2Cid%2Clabels%2Cpublished%2Ctitle%2Curl";
+        return asyncGet(API_URL + "blogs/" + settings.blog_id + "/posts" + params).then(function (res) {
+            if (res.error) {
+                window.reachedEnd = true;
+                return Promise.resolve([]);
+            }
+            nextId = res.nextPageToken;
+            if (!nextId)
+                window.reachedEnd = true;
+            if (postId)
+                res = { items: [res] };
+            res["items"].forEach(function (post) {
+                post.date = post.published;
+                post.body = post.content;
+                post.tags = post.labels;
+                post.tags = post.labels;
+                post.type = "text";    //????
             });
-            nextId += 20;
-            return Promise.resolve(data.posts);
+            return Promise.resolve(res["items"]);
         });
     }
     function fetchPosts(settings) {
-        nextId = 0;
+        nextId = "";
         return getPosts(settings, undefined, undefined, false);
     }
     function fetchMorePosts(settings) {
         return getPosts(settings, undefined, undefined, true);
     }
     function fetchOnePost(settings, postId) {
-        nextId = 0;
+        nextId = "";
         return getPosts(settings, postId, undefined, false);
     }
     function fetchBlogTag(settings, tag) {
-        nextId = 0;
+        nextId = "";
         return getPosts(settings, undefined, tag, false);
     }
     function fetchBlogTagMore(settings, tag) {
@@ -1105,7 +1084,7 @@ function setupService(service, url, el, settings) {
         fetchPost: fetchOnePost,
         fetchTag: fetchBlogTag,
         fetchTagMore: fetchBlogTagMore
-    }, "wordpress");
+    }, "blogger");
 }(window));(function (window) {
     "use strict";
     var DISPLAY_NAME = "Contact";

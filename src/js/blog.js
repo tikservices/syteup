@@ -6,7 +6,9 @@ function setupBlog(settings) {
     registerHomeItemClick(settings);
     window.sharethis_enabled = settings["blogs_settings"]["plugins"]["sharethis"] || false;
     if (settings["blogs_settings"]["plugins"]["disqus"])
-        window.disqusPlugin.setup(settings["plugins_settings"]["disqus"]);
+        importM("disqusPlugin", "plugins/disqus").then(function ($plugin) {
+            $plugin.setup(settings["plugins_settings"]["disqus"]);
+        });
     window.reachedEnd = false;
     if (location.hash.substr(0, 7) === "#!post/")
         postsOpts = { id: location.hash.slice(7).split("#")[0] };
@@ -15,7 +17,9 @@ function setupBlog(settings) {
     return fetchBlogPosts(0, settings["blogs_settings"][settings["blog_platform"]], settings["blog_platform"], postsOpts).then(function (offset) {
         postOffset = offset;
         if (window.sharethis_enabled)
-            window.sharethisPlugin.setup(settings["plugins_settings"]["sharethis"]);
+            importM("sharethisPlugin", "plugins/sharethis").then(function ($plugin) {
+                $plugin.setup(settings["plugins_settings"]["sharethis"]);
+            });
         return Promise.resolve();
     });
 }

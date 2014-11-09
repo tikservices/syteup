@@ -13,6 +13,10 @@
         if (postId)
             params = "/" + postId + "?key=" + settings.api_key + "&content%2Cid%2Clabels%2Cpublished%2Ctitle%2Curl";
         return asyncGet(API_URL + "blogs/" + settings.blog_id + "/posts" + params).then(function (res) {
+            if (res.error) {
+                window.reachedEnd = true;
+                return Promise.resolve([]);
+            }
             nextId = res.nextPageToken;
             if (!nextId)
                 window.reachedEnd = true;
