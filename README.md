@@ -13,16 +13,35 @@ You can see it in action on [my personalsite](http://lejenome.github.io/).
 Syteup use [Tumblr](http://tumblr.com), [Wordpress.com](http://wordpress.com/)
 or [Blogger](https://www.blogger.com/) for blogging and your blog will be the
 primary page of the site.
+![Syteyp Wordpress](docs/imgs/screenshot-blog-wordpress.png)
 
 ### Social Services
 
 Suteup currently support many different social services:
-[Github](https://github.com/), [Flickr](https://www.flickr.com/),
-[SoundCloud](https://soundcloud.com/), [Last.fm](http://www.last.fm/),
-[StackOverflow](http://stackoverflow.com/), [Bitbucket](https://bitbucket.org/),
-[Dribbble](https://dribbble.com/), [Instagram](http://instagram.com/),
-[Youtube](https://www.youtube.com/), [LinkedIn](https://www.linkedin.com/),
-[Facebook](https://www.facebook.com/), [Google+](https://plus.google.com/),...
+[Github](https://github.com/)
+![Syteyp Github](docs/imgs/screenshot-github.png)
+[Flickr](https://www.flickr.com/)
+![Syteyp Flickr](docs/imgs/screenshot-flickr.png)
+[SoundCloud](https://soundcloud.com/)
+![Syteyp SoundCloud](docs/imgs/screenshot-soundcloud.png)
+[Last.fm](http://www.last.fm/)
+![Syteyp Last.fm](docs/imgs/screenshot-lastfm.png)
+[StackOverflow](http://stackoverflow.com/)
+![Syteyp StackOverflow](docs/imgs/screenshot-stackoverflow.png)
+[Bitbucket](https://bitbucket.org/)
+![Syteyp Bitbucket](docs/imgs/screenshot-bitbucket.png)
+[Dribbble](https://dribbble.com/)
+![Syteyp Dribbble](docs/imgs/screenshot-dribbble.png)
+[Instagram](http://instagram.com/)
+![Syteyp Instagram](docs/imgs/screenshot-instagram.png)
+[Youtube](https://www.youtube.com/)
+![Syteyp Youtube](docs/imgs/screenshot-youtube.png)
+[LinkedIn](https://www.linkedin.com/)
+![Syteyp LinkedIn](docs/imgs/screenshot-linkedin.png)
+[Facebook](https://www.facebook.com/)
+![Syteyp Facebook](docs/imgs/screenshot-facebook.png)
+[Google+](https://plus.google.com/)
+![Syteyp Google+](docs/imgs/screenshot-gplus.png)
 
 Some other services integration is planed. For more up to date list of currently
 supported services and planed services isavailable on
