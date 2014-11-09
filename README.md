@@ -4,7 +4,12 @@
 really simple but powerful packaged personal site that has social integrations
 like GitHub, Dribbble, Instagram, Tumblr, Wordpress,
 Linkedin, Last.fm, SoundCloud, Bitbucket, StackOverflow, Flickr.
-You can see it in action on [my personal website](http://lejenome.github.io/).
+
+# Demo
+
+You can see Syteup in action on [my personal website](http://lejenome.github.io/).
+A more up to date but less stable version is available
+[here](http://lejenome.github.io/syteup/demo).
 
 ## Social Integrations
 
