@@ -49,10 +49,10 @@
             });
         });
     }
-    window.foursquareService = {
+    exportService({
         displayName: DISPLAY_NAME,
         template: "foursquare.html",
         setup: setupFoursquare,
         fetch: fetchData
-    };
+    }, "foursquare");
 }(window));

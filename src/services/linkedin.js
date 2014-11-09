@@ -48,10 +48,10 @@
             return Promise.resolve({ profile: res[0] });
         });
     }
-    window.linkedinService = {
+    exportService({
         displayName: DISPLAY_NAME,
         template: "linkedin.html",
         setup: setupLinkedin,
         fetch: fetchData
-    };
+    }, "linkedin");
 }(window));

@@ -34,10 +34,10 @@
             return Promise.resolve(res);
         });
     }
-    window.facebookService = {
+    exportService({
         displayName: DISPLAY_NAME,
         template: "facebook.html",
         setup: setupFacebook,
         fetch: fetchData
-    };
+    }, "facebook");
 }(window));

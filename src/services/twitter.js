@@ -44,10 +44,10 @@
                                                //            return Promise.resolve(result);
         });
     }
-    window.twitterService = {
+    exportService({
         displayName: DISPLAY_NAME,
         template: "twitter.html",
         setup: setupTwitter,
         fetch: fetchData
-    };
+    }, "twitter");
 }(window));

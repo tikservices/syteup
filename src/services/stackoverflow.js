@@ -33,10 +33,10 @@
             });
         });
     }
-    window.stackoverflowService = {
+    exportService({
         displayName: DISPLAY_NAME,
         template: "stackoverflow.html",
         setup: setupStackoverflow,
         fetch: fetchData
-    };
+    }, "stackoverflow");
 }(window));

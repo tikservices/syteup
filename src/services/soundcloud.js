@@ -20,10 +20,10 @@
             };
         });
     }
-    window.soundcloudService = {
+    exportService({
         displayName: DISPLAY_NAME,
         template: "soundcloud.html",
         setup: setupSoundcloud,
         fetch: fetchData
-    };
+    }, "soundcloud");
 }(window));

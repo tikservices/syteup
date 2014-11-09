@@ -532,75 +532,75 @@ function setupPlugin(plugin, settings) {
     });
 }"use strict";
 function setupService(service, url, el, settings) {
-    var href = el.href;
-    // set $service to the current service object
-    var $service = window[formatModuleName(service) + "Service"];
-    // just open url in case of errors
-    if ($("#" + service + "-profile").length > 0) {
-        window.location = href;
-        return;
-    }
-    if (!$service) {
-        console.error("Service Not Found:", service);
-        window.location = href;
-        return;
-    }
-    // show spinner
-    var spinner = new Spinner(spin_opts).spin();
-    $("#" + service + "-item-link").append(spinner.el);
-    var promises = [
-        $service.fetch(settings),
-        asyncText("templates/" + $service.template)
-    ];
-    if ($service.supportMore)
-        promises.push(asyncText("templates/" + $service.templateMore));
-    // request templates && fetch service data
-    return Promise.all(promises).then(function (results) {
-        var serviceData = results[0], view = results[1], viewMore = results[2];
-        var $modal;
-        if (!serviceData || serviceData.error) {
+    return importM(formatModuleName(service) + "Service", "services/" + formatModulePath(service)).then(function ($service) {
+        var href = el.href;
+        // just open url in case of errors
+        if ($("#" + service + "-profile").length > 0) {
             window.location = href;
             return;
         }
-        // compile the current view template
-        var template = Handlebars.compile(view);
-        // setup the template data
-        serviceData = $service.setup(serviceData, settings);
-        if (!serviceData) {
+        if (!$service) {
+            console.error("Service Not Found:", service);
             window.location = href;
             return;
         }
-        $modal = $(template(serviceData)).modal().on("hidden.bs.modal", function () {
-            $(this).remove();
-            if (currSelection === service) {
-                adjustSelection("home");
+        // show spinner
+        var spinner = new Spinner(spin_opts).spin();
+        $("#" + service + "-item-link").append(spinner.el);
+        var promises = [
+            $service.fetch(settings),
+            asyncText("templates/" + $service.template)
+        ];
+        if ($service.supportMore)
+            promises.push(asyncText("templates/" + $service.templateMore));
+        // request templates && fetch service data
+        return Promise.all(promises).then(function (results) {
+            var serviceData = results[0], view = results[1], viewMore = results[2];
+            var $modal;
+            if (!serviceData || serviceData.error) {
+                window.location = href;
+                return;
             }
-        });
-        // If service support fetching more data
-        if ($service.supportMore) {
-            var moreTemplate = Handlebars.compile(viewMore);
-            $modal.find("#load-more-data").click(function (e) {
-                var spinnerMore = new Spinner(spin_opts).spin();
-                $(this).append(spinnerMore.el);
-                // fetch more service data && add it to the modal
-                $service.fetchMore(settings).then(function (serviceMoreData) {
-                    serviceMoreData = $service.setupMore(serviceMoreData, settings);
-                    $("." + service + " .profile-data").append(moreTemplate(serviceMoreData));
-                    spinnerMore.stop();
-                }).catch(function (error) {
-                    if (error === NO_MORE_DATA) {
-                        $(this).remove();
-                    }
-                    spinnerMore.stop();
-                });
+            // compile the current view template
+            var template = Handlebars.compile(view);
+            // setup the template data
+            serviceData = $service.setup(serviceData, settings);
+            if (!serviceData) {
+                window.location = href;
+                return;
+            }
+            $modal = $(template(serviceData)).modal().on("hidden.bs.modal", function () {
+                $(this).remove();
+                if (currSelection === service) {
+                    adjustSelection("home");
+                }
             });
-        }
-        spinner.stop();
-        console.info("Service Setuped:", service);
-    }).catch(function (error) {
-        //TODO
-        alertError(error);
-        console.error("Service Not Setuped:", service);
+            // If service support fetching more data
+            if ($service.supportMore) {
+                var moreTemplate = Handlebars.compile(viewMore);
+                $modal.find("#load-more-data").click(function (e) {
+                    var spinnerMore = new Spinner(spin_opts).spin();
+                    $(this).append(spinnerMore.el);
+                    // fetch more service data && add it to the modal
+                    $service.fetchMore(settings).then(function (serviceMoreData) {
+                        serviceMoreData = $service.setupMore(serviceMoreData, settings);
+                        $("." + service + " .profile-data").append(moreTemplate(serviceMoreData));
+                        spinnerMore.stop();
+                    }).catch(function (error) {
+                        if (error === NO_MORE_DATA) {
+                            $(this).remove();
+                        }
+                        spinnerMore.stop();
+                    });
+                });
+            }
+            spinner.stop();
+            console.info("Service Setuped:", service);
+        }).catch(function (error) {
+            //TODO
+            alertError(error);
+            console.error("Service Not Setuped:", service);
+        });
     });
 }(function (window) {
     "use strict";
@@ -786,7 +786,7 @@ function setupService(service, url, el, settings) {
         else
             return Promise.reject(NO_MORE_DATA);
     }
-    window.instagramService = {
+    exportService({
         displayName: DISPLAY_NAME,
         template: "instagram.html",
         templateMore: "instagram-more.html",
@@ -795,7 +795,7 @@ function setupService(service, url, el, settings) {
         supportMore: true,
         fetchMore: fetchMore,
         setupMore: setupInstagramMore
-    };
+    }, "instagram");
 }(window));(function (window) {
     "use strict";
     var DISPLAY_NAME = "Dribbble";
@@ -813,12 +813,12 @@ function setupService(service, url, el, settings) {
     function fetchData(settings) {
         return asyncGet(API_URL + settings.username + "/shots");
     }
-    window.dribbbleService = {
+    exportService({
         displayName: DISPLAY_NAME,
         template: "dribbble.html",
         setup: setupDribbble,
         fetch: fetchData
-    };
+    }, "dribbble");
 }(window));(function (window) {
     "use strict";
     var DISPLAY_NAME = "Flickr";
@@ -835,12 +835,12 @@ function setupService(service, url, el, settings) {
     function fetchData(settings) {
         return asyncGet("http://api.flickr.com/services/feeds/photos_public.gne?id=" + settings.client_id + "&format=json&lang=en-us", undefined, "jsoncallback");
     }
-    window.flickrService = {
+    exportService({
         displayName: DISPLAY_NAME,
         template: "flickr.html",
         setup: setupFlickr,
         fetch: fetchData
-    };
+    }, "flickr");
 }(window));(function (window) {
     "use strict";
     var DISPLAY_NAME = "Bitbucket";
@@ -876,12 +876,12 @@ function setupService(service, url, el, settings) {
             }
         });
     }
-    window.bitbucketService = {
+    exportService({
         displayName: DISPLAY_NAME,
         template: "bitbucket.html",
         setup: setupBitbucket,
         fetch: fetchData
-    };
+    }, "bitbucket");
 }(window));(function (window) {
     "use strict";
     var DISPLAY_NAME = "Last.fm";
@@ -939,12 +939,12 @@ function setupService(service, url, el, settings) {
             });
         });
     }
-    window.lastfmService = {
+    exportService({
         displayName: DISPLAY_NAME,
         template: "lastfm.html",
         setup: setupLastfm,
         fetch: fetchData
-    };
+    }, "lastfm");
 }(window));(function (window) {
     "use strict";
     var DISPLAY_NAME = "Youtube";
@@ -988,12 +988,12 @@ function setupService(service, url, el, settings) {
             });
         });
     }
-    window.youtubeService = {
+    exportService({
         displayName: DISPLAY_NAME,
         template: "youtube.html",
         setup: setupYoutube,
         fetch: fetchData
-    };
+    }, "youtube");
 }(window));(function (window) {
     "use strict";
     var DISPLAY_NAME = "SoundCloud";
@@ -1016,12 +1016,12 @@ function setupService(service, url, el, settings) {
             };
         });
     }
-    window.soundcloudService = {
+    exportService({
         displayName: DISPLAY_NAME,
         template: "soundcloud.html",
         setup: setupSoundcloud,
         fetch: fetchData
-    };
+    }, "soundcloud");
 }(window));(function (window) {
     "use strict";
     var API_URL = "https://public-api.wordpress.com/rest/v1";
@@ -1139,10 +1139,10 @@ function setupService(service, url, el, settings) {
             return Promise.resolve(settings);
         }
     }
-    window.syteupContactService = {
+    exportService({
         displayName: DISPLAY_NAME,
         setup: setupContact,
         fetch: fetchContact,
         template: "syteup-contact.html"
-    };
+    }, "syteup_contact");
 }(window));

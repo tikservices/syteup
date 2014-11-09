@@ -47,7 +47,7 @@
         else
             return Promise.reject(NO_MORE_DATA);
     }
-    window.instagramService = {
+    exportService({
         displayName: DISPLAY_NAME,
         template: "instagram.html",
         templateMore: "instagram-more.html",
@@ -56,5 +56,5 @@
         supportMore: true,
         fetchMore: fetchMore,
         setupMore: setupInstagramMore
-    };
+    }, "instagram");
 }(window));

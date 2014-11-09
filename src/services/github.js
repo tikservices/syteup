@@ -21,10 +21,10 @@
             return Promise.resolve(context);
         });
     }
-    window.githubService = {
+    exportService({
         displayName: DISPLAY_NAME,
         template: "github.html",
         setup: setupGithub,
         fetch: fetchData
-    };
+    }, "github");
 }(window));

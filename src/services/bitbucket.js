@@ -33,10 +33,10 @@
             }
         });
     }
-    window.bitbucketService = {
+    exportService({
         displayName: DISPLAY_NAME,
         template: "bitbucket.html",
         setup: setupBitbucket,
         fetch: fetchData
-    };
+    }, "bitbucket");
 }(window));

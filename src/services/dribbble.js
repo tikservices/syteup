@@ -15,10 +15,10 @@
     function fetchData(settings) {
         return asyncGet(API_URL + settings.username + "/shots");
     }
-    window.dribbbleService = {
+    exportService({
         displayName: DISPLAY_NAME,
         template: "dribbble.html",
         setup: setupDribbble,
         fetch: fetchData
-    };
+    }, "dribbble");
 }(window));

@@ -80,10 +80,10 @@
     //      context.recent_games = games_array;
     //      return context;
     //      }
-    window.steamService = {
+    exportService({
         displayName: DISPLAY_NAME,
         template: "steam.html",
         setup: setupSteam,
         fetch: fetchData
-    };
+    }, "steam");
 }(window));

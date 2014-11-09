@@ -55,10 +55,10 @@
             });
         });
     }
-    window.lastfmService = {
+    exportService({
         displayName: DISPLAY_NAME,
         template: "lastfm.html",
         setup: setupLastfm,
         fetch: fetchData
-    };
+    }, "lastfm");
 }(window));

@@ -14,10 +14,10 @@
     function fetchData(settings) {
         return asyncGet("http://api.flickr.com/services/feeds/photos_public.gne?id=" + settings.client_id + "&format=json&lang=en-us", undefined, "jsoncallback");
     }
-    window.flickrService = {
+    exportService({
         displayName: DISPLAY_NAME,
         template: "flickr.html",
         setup: setupFlickr,
         fetch: fetchData
-    };
+    }, "flickr");
 }(window));

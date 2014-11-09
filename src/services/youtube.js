@@ -41,10 +41,10 @@
             });
         });
     }
-    window.youtubeService = {
+    exportService({
         displayName: DISPLAY_NAME,
         template: "youtube.html",
         setup: setupYoutube,
         fetch: fetchData
-    };
+    }, "youtube");
 }(window));

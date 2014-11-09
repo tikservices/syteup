@@ -38,10 +38,10 @@
             return Promise.resolve(context);
         });
     }
-    window.gplusService = {
+    exportService({
         displayName: DISPLAY_NAME,
         template: "gplus.html",
         setup: setupGplus,
         fetch: fetchData
-    };
+    }, "gplus");
 }(window));

@@ -45,10 +45,10 @@
             asyncGet(settings.entity_url + "/posts/count?entities=" + settings.url)
         ]);
     }
-    window.tentService = {
+    exportService({
         displayName: DISPLAY_NAME,
         template: "tent.html",
         setup: setupTent,
         fetch: fetchData
-    };
+    }, "tent");
 }(window));
