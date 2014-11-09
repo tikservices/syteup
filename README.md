@@ -4,7 +4,7 @@
 really simple but powerful packaged personal site that has social integrations
 like GitHub, Dribbble, Instagram, Tumblr, Wordpress,
 Linkedin, Last.fm, SoundCloud, Bitbucket, StackOverflow, Flickr.
-You can see it in action on [my personalsite](http://lejenome.github.io/).
+You can see it in action on [my personal website](http://lejenome.github.io/).
 
 ## Social Integrations
 
