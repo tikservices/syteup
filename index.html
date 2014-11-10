@@ -17,17 +17,23 @@
     <link rel="stylesheet" href="stylesheets/ie.css">
     <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <script>
+        var GITHUB_USERNAME = "lejenome",
+            GITHUB_REPONAME = "syteup",
+            PROJECT_NAME = "Syteup",
+            PROJECT_DESC = "A simple but powerful packaged personal site that has social integrations like GitHub, Dribbble, Instagram, Tumblr, Wordpress, Linkedin, Last.fm, SoundCloud, Bitbucket, StackOverflow, Flickr";
+    </script>
 
 </head>
 
 <body>
     <div id="header">
         <nav>
-            <li class="fork"><a href="https://github.com/lejenome/syteup">View On GitHub</a>
+            <li class="fork"><a id="fork" href="">View On GitHub</a>
             </li>
-            <li class="downloads"><a href="https://github.com/lejenome/syteup/zipball/master">ZIP</a>
+            <li class="downloads"><a id="zip" href="">ZIP</a>
             </li>
-            <li class="downloads"><a href="https://github.com/lejenome/syteup/tarball/master">TAR</a>
+            <li class="downloads"><a id="tar" href="">TAR</a>
             </li>
             <li class="title">DOWNLOADS</li>
         </nav>
@@ -38,28 +44,37 @@
 
         <section>
             <div id="title">
-                <h1>Syteup</h1>
-                <p>A simple but powerful packaged personal site that has social integrations like GitHub, Dribbble, Instagram, Tumblr, Wordpress, Linkedin, Last.fm, SoundCloud, Bitbucket, StackOverflow, Flickr</p>
+                <h1 id="name"></h1>
+                <p id="desc"></p>
                 <hr>
-                <span class="credits left">Project maintained by <a href="https://github.com/lejenome">lejenome</a></span>
+                <span class="credits left">Project maintained by <a id="user_url" href=""></a></span>
                 <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
             </div>
 
-	    </h1>
+            </h1>
             <div id="markdown"></div>
         </section>
 
         <script>
-            var md = document.getElementById("markdown");
+            function el(id) {
+                return document.getElementById(id);
+            }
+            document.title = PROJECT_NAME + " by " + GITHUB_USERNAME;
+            el("fork").href = "https://github.com/" + GITHUB_USERNAME + "/" + GITHUB_REPONAME;
+            el("zip").href = "https://github.com/" + GITHUB_USERNAME + "/" + GITHUB_REPONAME + "/zipball/master";
+            el("tar").href = "https://github.com/" + GITHUB_USERNAME + "/" + GITHUB_REPONAME + "/tarball/master";
+            el("user_url").href = "https://github.com/" + GITHUB_USERNAME;
+            el("user_url").textContent = GITHUB_USERNAME;
+            el("name").textContent = PROJECT_NAME;
+            el("desc").textContent = PROJECT_DESC;
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "https://api.github.com/repos/lejenome/syteup/readme");
-	    xhr.setRequestHeader("Accept", "application/vnd.github.v3.html");
-	    xhr.overrideMimeType("text/plain");
+            xhr.open("GET", "https://api.github.com/repos/" + GITHUB_USERNAME + "/" + GITHUB_REPONAME + "/readme");
+            xhr.setRequestHeader("Accept", "application/vnd.github.v3.html");
             xhr.onload = function() {
                 if (this.status !== 200) md.innerHTML = "<p>Ooops! Internal Error!</p><p>Turn back later</p>";
-		else {
-			md.innerHTML = this.responseText;
-		}
+                else {
+                    el("markdown").innerHTML = this.responseText;
+                }
             };
             xhr.send();
         </script>
