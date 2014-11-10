@@ -49,16 +49,16 @@
             <div id="markdown"></div>
         </section>
 
-        <script src="marked.min.js"></script>
         <script>
             var md = document.getElementById("markdown");
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "README.md");
+            xhr.open("GET", "https://api.github.com/repos/lejenome/syteup/readme");
+	    xhr.setRequestHeader("Accept", "application/vnd.github.v3.html");
 	    xhr.overrideMimeType("text/plain");
             xhr.onload = function() {
                 if (this.status !== 200) md.innerHTML = "<p>Ooops! Internal Error!</p><p>Turn back later</p>";
 		else {
-			md.innerHTML = marked(this.responseText);
+			md.innerHTML = this.responseText;
 		}
             };
             xhr.send();
