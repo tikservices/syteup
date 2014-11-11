@@ -22,18 +22,20 @@
     "blog",
     "news"
   ],
+  "os": [
+    "!win32"
+  ],
   "devDependencies": {
     "bower": "",
-    "jshint": "2.5.10",
-    "fixmyjs": "0.13.6",
-    "js-beautify": "1.5.4",
-    "jscs": "*",
-    "jsonlint": "*",
-    "json": "*",
-    "uglifyjs": "2.4.15",
-    "less": "2.0.0",
-    "less-plugin-clean-css": "*",
-    "html-minifier": "*"
+    "jshint": "",
+    "fixmyjs": ">=0.13.6",
+    "js-beautify": ">=1.5.4",
+    "jsonlint": "",
+    "json": "",
+    "uglifyjs": "",
+    "less": ">=2.0.0",
+    "less-plugin-clean-css": "",
+    "html-minifier": ""
   },
   "scripts": {
     "test": "make test -j1",

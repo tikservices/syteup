@@ -11,20 +11,17 @@ fix-js:
 	find $(SRC) \( -path $(SRC)/less -o -path $(SRC)/js/libs \) -prune -a -type f -o -name "*.js" -or -name "*.json" | xargs -n 1 fixmyjs -c .jshintrc || true
 lint: lint-js lint-json
 lint-json:
-	ls .jsbeautifyrc .jshintrc .jscsrc package.json | xargs -n 1 jsonlint -ip
+	ls .jsbeautifyrc .jshintrc package.json | xargs -n 1 jsonlint -ip
 	find $(SRC) -name "*.json" | xargs -n 1 jsonlint -ip
 lint-js:
 	jshint $(SRC)
-beautify: beautify-html # beautify-js
+beautify: beautify-html
 beautify-js:
 	find $(SRC) \( -path $(SRC)/js/libs -o -path $(SRC)/less \) -prune -a -type f -o -name "*.js" -or -name "*.json" | xargs -n 1 js-beautify --type=js -r
 beautify-css:
 	find $(SRC) -name "*.less" -or -name "*.css" | xargs -n 1 js-beautify --type=css -r
 beautify-html:
 	find $(SRC) -path $(SRC)/templates -prune -a -type f -o -name "*.html" | xargs -n 1 js-beautify --type=html -r
-style-check: style-check-js
-style-check-js:
-	jscs $(SRC)
 dist: minify # appcache
 appcache:
 	sed -i "s|\(# last updated: \).*|\1$(shell date --rfc-3339=seconds --utc)|" $(DIST)/syteup.appcache
