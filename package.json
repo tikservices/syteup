@@ -32,6 +32,7 @@
     "json": "*",
     "uglifyjs": "2.4.15",
     "less": "2.0.0",
+    "less-plugin-clean-css": "*",
     "html-minifier": "*"
   },
   "scripts": {
