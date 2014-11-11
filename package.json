@@ -24,14 +24,14 @@
   ],
   "devDependencies": {
     "bower": "",
-    "jshint": ">=0.13.6",
-    "fixmyjs": ">=0.13.3",
-    "js-beautify": "*",
+    "jshint": "2.5.10",
+    "fixmyjs": "0.13.6",
+    "js-beautify": "1.5.4",
     "jscs": "*",
     "jsonlint": "*",
     "json": "*",
-    "uglifyjs": "*",
-    "less": "*",
+    "uglifyjs": "2.4.15",
+    "less": "2.0.0",
     "html-minifier": "*"
   },
   "scripts": {
