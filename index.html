@@ -71,13 +71,13 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
         xhr.open("GET", "https://api.github.com/repos/" + GITHUB_USERNAME + "/" + GITHUB_REPONAME + "/readme");
         xhr.setRequestHeader("Accept", "application/vnd.github.v3.html");
         xhr.onload = function() {
-            if (this.status !== 200) el("md").innerHTML = "<p>Ooops! Internal Error! :(</p>";
+            if (this.status !== 200) el("md").innerHTML = "<p>Ooops! Internal Error :(</p>";
             else {
                 el("md").innerHTML = this.responseText;
             }
         };
         xhr.onerror = function() {
-            el("md").innerHTML = "<p>Ooops! Internal Error! :(</p>";
+            el("md").innerHTML = "<p>Ooops! Internal Error :(</p>";
         };
         xhr.send();
     </script>
