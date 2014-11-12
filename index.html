@@ -1,16 +1,16 @@
+---
+---
 <!doctype html>
 <html>
 
-<head>
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Syteup by lejenome</title>
+    <title>{{ site.github.project_title | xml_escape }} by {{ site.github.owner_name | xml_escape }}</title>
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <!--<script defer
-src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>-->
-    <!--<script defer src="javascripts/respond.js"></script>-->
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script defer src="javascripts/respond.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -18,70 +18,57 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="stylesheets/ie.css">
     <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <script>
-        var GITHUB_USERNAME = "lejenome",
-            GITHUB_REPONAME = "syteup",
-            PROJECT_NAME = "Syteup",
-            PROJECT_DESC = "A simple but powerful packaged personal site that has social integrations like GitHub, Dribbble, Instagram, Tumblr, Wordpress, Linkedin, Last.fm, SoundCloud, Bitbucket, StackOverflow, Flickr";
-    </script>
 
-</head>
+  </head>
 
-<body>
+  <body>
+
     <div id="header">
-        <nav>
-            <li class="fork"><a id="fork" href="">View On GitHub</a>
-            </li>
-            <li class="downloads"><a id="zip" href="">ZIP</a>
-            </li>
-            <li class="downloads"><a id="tar" href="">TAR</a>
-            </li>
-            <li class="title">DOWNLOADS</li>
-        </nav>
+      <nav>
+        <li class="fork"><a href="{{ site.github.repository_url }}">View On GitHub</a>
+        </li>
+        <li class="downloads"><a href="{{ site.github.zip_url }}">ZIP</a>
+        </li>
+        <li class="downloads"><a href="{{ site.github.tar_url }}">TAR</a>
+        </li>
+        <li class="title">DOWNLOADS</li>
+      </nav>
     </div>
     <!-- end header -->
 
     <div class="wrapper">
 
-        <section>
-            <div id="title">
-                <h1 id="name"></h1>
-                <p id="desc"></p>
-                <hr>
-                <span class="credits left">Project maintained by <a id="user_url" href=""></a></span>
-                <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
-            </div>
-            <div id="md">Loading Content...</div>
-        </section>
+      <section>
+        <div id="title">
+          <h1>{{ site.github.owner_name | xml_escape }}</h1>
+          <p>{{ site.github.project_tagline | xml_escape }}</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name | xml_escape }}</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+        <div id="md">Loading Content...</div>
+      </section>
     </div>
 
     <script>
-        function el(id) {
-            return document.getElementById(id);
+      function el(id) {
+        return document.getElementById(id);
+      }
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "{{ site.github.api_url }}/repos/{{ site.github.repository_nwo }}/readme");
+      xhr.setRequestHeader("Accept", "application/vnd.github.v3.html");
+      xhr.onload = function() {
+        if (this.status !== 200) el("md").innerHTML = "<p>Ooops! Internal Error :(</p>";
+        else {
+          el("md").innerHTML = this.responseText;
         }
-        document.title = PROJECT_NAME + " by " + GITHUB_USERNAME;
-        var url = el("user_url").href = "https://github.com/" + GITHUB_USERNAME;
-        el("fork").href = url = url + "/" + GITHUB_REPONAME;
-        el("zip").href = url + "/zipball/master";
-        el("tar").href = url + "/tarball/master";
-        el("user_url").textContent = GITHUB_USERNAME;
-        el("name").textContent = PROJECT_NAME;
-        el("desc").textContent = PROJECT_DESC;
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "https://api.github.com/repos/" + GITHUB_USERNAME + "/" + GITHUB_REPONAME + "/readme");
-        xhr.setRequestHeader("Accept", "application/vnd.github.v3.html");
-        xhr.onload = function() {
-            if (this.status !== 200) el("md").innerHTML = "<p>Ooops! Internal Error :(</p>";
-            else {
-                el("md").innerHTML = this.responseText;
-            }
-        };
-        xhr.onerror = function() {
-            el("md").innerHTML = "<p>Ooops! Internal Error :(</p>";
-        };
-        xhr.send();
+      };
+      xhr.onerror = function() {
+        el("md").innerHTML = "<p>Ooops! Internal Error :(</p>";
+      };
+      xhr.send();
     </script>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-</body>
+  </body>
 
 </html>
