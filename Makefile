@@ -41,6 +41,7 @@ minify-pre:
 	sed -i 's|.*<script .*||' $(DIST)/index.html
 	sed -i 's|.*stylesheet/less.*||' $(DIST)/index.html
 	sed -i 's|<!--syteup.min.css-->|<link rel="stylesheet" href="syteup.min.css" type="text/css"  charset="UTF-8" media="screen, projection">|' $(DIST)/index.html
+	sed -i 's|<!--syteup-profiles.min.css-->|<link rel="stylesheet" href="syteup-profiles.min.css" type="text/css"  charset="UTF-8" media="screen, projection">|' $(DIST)/index.html
 	sed -i 's|<!--syteup.libs.js-->|<script defer src="syteup.libs.js" type="text/javascript" charset="UTF-8"></script>|' $(DIST)/index.html
 	sed -i 's|<!--syteup.min.js-->|<script defer src="syteup.min.js" type="text/javascript" charset="UTF-8"></script>|' $(DIST)/index.html
 	sed -i 's|<!--syteup-modules.min.js-->|<script defer src="syteup-modules.min.js" type="text/javascript" charset="UTF-8"></script>|' $(DIST)/index.html
@@ -61,5 +62,6 @@ minify-js-libs:
 	#grep -o "js/libs/.*.js" $(SRC)/index.html | sed 's,^,$(SRC)/,' | xargs cat >> $(DIST)/syteup.libs.js
 minify-css:
 	lessc $(LESSCFLAGS)  $(SRC)/less/styles.less $(DIST)/syteup.min.css
+	lessc $(LESSCFLAGS)  $(SRC)/less/profiles.less $(DIST)/syteup-profiles.min.css
 minify-html:
 	html-minifier $(HTMLMINIFIERFLAGS) $(DIST)/index.html -o $(DIST)/index.html
