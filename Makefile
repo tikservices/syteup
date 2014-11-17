@@ -41,7 +41,7 @@ minify-pre:
 	sed -i 's|.*<script .*||' $(DIST)/index.html
 	sed -i 's|.*stylesheet/less.*||' $(DIST)/index.html
 	sed -i 's|<!--syteup.min.css-->|<link rel="stylesheet" href="syteup.min.css" type="text/css"  charset="UTF-8" media="screen, projection">|' $(DIST)/index.html
-	sed -i 's|<!--syteup-profiles.min.css-->|<link rel="stylesheet" href="syteup-profiles.min.css" type="text/css"  charset="UTF-8" media="screen, projection">|' $(DIST)/index.html
+	sed -i 's|<!--syteup-profiles.min.css-->|<link rel="stylesheet" href="syteup-profiles.min.css" id="profiles-style" type="text/css"  charset="UTF-8" media="only x">|' $(DIST)/index.html
 	sed -i 's|<!--syteup.libs.js-->|<script defer src="syteup.libs.js" type="text/javascript" charset="UTF-8"></script>|' $(DIST)/index.html
 	sed -i 's|<!--syteup.min.js-->|<script defer src="syteup.min.js" type="text/javascript" charset="UTF-8"></script>|' $(DIST)/index.html
 	sed -i 's|<!--syteup-modules.min.js-->|<script defer src="syteup-modules.min.js" type="text/javascript" charset="UTF-8"></script>|' $(DIST)/index.html

@@ -17,7 +17,10 @@ asyncGet("config.json", {}).then(function (settings) {
         new Promise(function (resolve, reject) {
             setupLinks(settings);
             resolve();
-        }).then(setupBlog(settings)).then(setupPlugins(settings));
+        }).then(setupBlog(settings)).then(function () {
+            document.getElementById("profiles-style").media = "all";
+            setupPlugins(settings);
+        });
     });
 }).catch(function (error) {
     console.error("ERROR: Main Promise Rejected! To bad to break a vow");
