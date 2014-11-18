@@ -481,7 +481,7 @@ asyncGet("config.json", {}).then(function (settings) {
     document.getElementById("field-description").textContent = settings["fields"]["description"];
     document.getElementById("field-url").textContent = settings["fields"]["url"];
     document.head.getElementsByTagName("title")[0].textContent = settings["fields"]["username"] + " [" + settings["fields"]["realname"] + "]";
-    document.head.getElementsByTagName("meta")[0].content = settings["fields"]["realname"] + " : " + settings["fields"]["description"];
+    document.getElementById("meta-description").content = settings["fields"]["realname"] + " : " + settings["fields"]["description"];
     //SERVICES SETTINGS
     if (settings["services"]["flickr"])
         window.flickr_id = settings["services_settings"]["flickr"]["id"];
