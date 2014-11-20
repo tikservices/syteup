@@ -65,3 +65,6 @@ minify-css:
 	lessc $(LESSCFLAGS)  $(SRC)/less/profiles.less $(DIST)/syteup-profiles.min.css
 minify-html:
 	html-minifier $(HTMLMINIFIERFLAGS) $(DIST)/index.html -o $(DIST)/index.html
+
+rss:
+	node build/rss-generator.js $(SRC) $(CONF) $(DIST)
