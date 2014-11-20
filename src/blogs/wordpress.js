@@ -32,7 +32,7 @@
                     found: 1,
                     posts: [data]
                 };
-            $.each(data.posts, function (i, p) {
+            Array.forEach(data.posts, function (p, i) {
                 var newTags = [];
                 p.id = p.ID;
                 p.body = p.content;

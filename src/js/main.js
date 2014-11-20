@@ -1,9 +1,14 @@
 "use strict";
 asyncGet("config.json", {}).then(function (settings) {
     //FIELDS SETTINGS
+    function getHostname(url) {
+        var parser = document.createElement("a");
+        parser.href = url;
+        return parser.hostname;
+    }
     document.getElementById("field-realname").textContent = settings["fields"]["realname"];
     document.getElementById("field-description").textContent = settings["fields"]["description"];
-    document.getElementById("field-url").textContent = settings["fields"]["url"];
+    document.getElementById("field-url").textContent = getHostname(settings["fields"]["url"]);
     document.head.getElementsByTagName("title")[0].textContent = settings["fields"]["username"] + " [" + settings["fields"]["realname"] + "]";
     document.getElementById("meta-description").content = settings["fields"]["realname"] + " : " + settings["fields"]["description"];
     //SERVICES SETTINGS
