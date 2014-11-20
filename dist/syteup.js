@@ -109,12 +109,6 @@ window.syncGet = function(url, success, headers, failure) {
                     dataType: "jsonp",
                     async: false,
                     success: function (res) {
-                        if ("meta" in res && Object.keys(res).length === 2)
-                            console.log("WARRNING!", "ayncGet result may not be as needed", url, res);
-                        /*                            if ("data" in res)
-                                res = res.data;
-                            else if ("response" in res)
-                                res = res.response;*/
                         resolve(res);
                     },
                     error: function (xhr, status) {
