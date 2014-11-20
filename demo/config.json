@@ -1,12 +1,12 @@
 {
   "version": "0.2.0",
   "deployment_mode": "dev",
-  "blog_platform": "blogger",
+  "blog_platform": "wordpress",
   "fields": {
     "username": "lejenome",
     "realname": "Moez Bouhlel",
-    "description": "FOSS and  IT fan",
-    "url": "lejenome.github.io",
+    "description": "Write Code For Fun",
+    "url": "http://lejenome.me/syteup/demo",
     "contact": {
       "email": "bmoez.j@gmail.com",
       "mobile": "(216) 00000000",
@@ -37,7 +37,7 @@
       "include_query": false
     },
     "rss": {
-      "url": "http://lejenome.tumblr.com/rss"
+      "url": "rss"
     },
     "disqus": {
       "url": "",
