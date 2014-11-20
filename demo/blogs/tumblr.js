@@ -14,7 +14,7 @@
             params = "&offset=" + nextId;
         return asyncGet(API_URL + settings.blog_url + "/posts" + params).then(function (res) {
             nextId += 20;
-            return Promise.resolve(res.posts);
+            return Promise.resolve(res.response.posts);
         });
     }
     function fetchPosts(settings) {

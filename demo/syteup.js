@@ -110,10 +110,11 @@ window.syncGet = function(url, success, headers, failure) {
                     async: false,
                     success: function (res) {
                         if ("meta" in res && Object.keys(res).length === 2)
-                            if ("data" in res)
+                            console.log("WARRNING!", "ayncGet result may not be as needed", url, res);
+                        /*                            if ("data" in res)
                                 res = res.data;
                             else if ("response" in res)
-                                res = res.response;
+                                res = res.response;*/
                         resolve(res);
                     },
                     error: function (xhr, status) {
