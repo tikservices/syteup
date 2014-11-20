@@ -613,61 +613,21 @@ function setupService(service, url, el, settings) {
     });
 }(function (window) {
     "use strict";
-    var API_URL = "https://public-api.wordpress.com/rest/v1";
+    var API_URL = "https://api.tumblr.com/v2/blog/";
     var nextId = 0;
     function getPosts(settings, postId, tag, offset) {
-        var post_id = "";
-        var params = "";
+        var params = "?api_key=" + settings.api_key;
         if (postId)
-            post_id += postId;
+            params += "&id=" + postId;
         else if (tag)
-            params += "?tag=" + tag.replace(/\s/g, "-");
+            params += "&tag=" + tag;
         else if (settings.tag_slug)
-            params += "?tag=" + settings.tag_slug.replace(/\s/g, "-");
-        if (offset && nextId)
-            params += (params ? "&" : "?") + "offset=" + nextId;
-        var wpApiUrl = [
-            API_URL,
-            "/sites/",
-            settings.blog_url,
-            "/posts/",
-            post_id,
-            params
-        ].join("");
-        return asyncGet(wpApiUrl).then(function (data) {
-            if (data.error)
-                data = {
-                    found: 0,
-                    posts: []
-                };
-            else if (postId)
-                data = {
-                    found: 1,
-                    posts: [data]
-                };
-            Array.forEach(data.posts, function (p, i) {
-                var newTags = [];
-                p.id = p.ID;
-                p.body = p.content;
-                p.content = null;
-                if (p.type === "post") {
-                    p.type = "text";
-                }
-                for (var tag in p.tags) {
-                    if (p.tags.hasOwnProperty(tag))
-                        newTags.push(tag);
-                }
-                p.tags = newTags;
-                // TODO: figure out how to preserve timezone info and make it
-                // consistent with python's datetime.strptime
-                if (p.date.lastIndexOf("+") > 0) {
-                    p.date = p.date.substring(0, p.date.lastIndexOf("+"));
-                } else {
-                    p.date = p.date.substring(0, p.date.lastIndexOf("-"));
-                }
-            });
+            params += "&tag=" + settings.tag_slug;
+        if (offset)
+            params = "&offset=" + nextId;
+        return asyncGet(API_URL + settings.blog_url + "/posts" + params).then(function (res) {
             nextId += 20;
-            return Promise.resolve(data.posts);
+            return Promise.resolve(res.response.posts);
         });
     }
     function fetchPosts(settings) {
@@ -694,5 +654,5 @@ function setupService(service, url, el, settings) {
         fetchPost: fetchOnePost,
         fetchTag: fetchBlogTag,
         fetchTagMore: fetchBlogTagMore
-    }, "wordpress");
+    }, "tumblr");
 }(window));
