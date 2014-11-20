@@ -13,7 +13,8 @@
             asyncGet(API_URL + "users/" + settings.client_id),
             asyncGet(API_URL + "users/" + settings.client_id + "/repos")
         ]).then(function (res) {
-            res = res.data;
+            res[0] = res[0].data;
+            res[1] = res[1].data;
             context.user = res[0];
             context.repos = res[1];
             context["repos"].sort(function (r1, r2) {
