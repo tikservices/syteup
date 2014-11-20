@@ -27,6 +27,8 @@
             asyncGet(API_URL + "users/" + settings.user_id + "/?access_token=" + settings.access_token),
             asyncGet(API_URL + "users/" + settings.user_id + "/media/recent/?access_token=" + settings.access_token)
         ]).then(function (res) {
+            res[0] = res[0].data;
+            res[1] = res[1].data;
             nextId = res[1]["pagination"]["next_max_id"];
             return Promise.resolve({
                 "user": res[0],
