@@ -1,50 +1,51 @@
-"use strict";
-//Global configs and functions shared between js
-window.UNKNOWN_ERROR = -1;
-window.NO_MORE_DATA = -2;
-window.MODULE_NOT_FOUND = -3;
-function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-window.spin_opts = {
-    lines: 9,
-    length: 5,
-    width: 2,
-    radius: 4,
-    rotate: 9,
-    color: "#4c4c4c",
-    speed: 1.5,
-    trail: 40,
-    shadow: false,
-    hwaccel: true,
-    className: "spinner",
-    zIndex: 2000000000,
-    left: "90%"
-};
-function formatModuleName(module) {
-    return module.replace(/_(.)/g, function (match, p1) {
-        return p1.toUpperCase();
-    });
-}
-function formatModulePath(module) {
-    return module.replace(/_(.)/g, function (match, p1) {
-        return "-" + p1;
-    });
-}
-function alertError(error, errorMessage) {
-    return asyncText("templates/alert.html").then(function (view) {
-        var template = Handlebars.compile(view);
-        $(template({
-            error: error,
-            error_message: errorMessage
-        })).modal().on("hidden.bs.modal", function () {
-            $(this).remove();
+(function (window) {
+    "use strict";
+    //Global configs and functions shared between js
+    window.UNKNOWN_ERROR = -1;
+    window.NO_MORE_DATA = -2;
+    window.MODULE_NOT_FOUND = -3;
+    window.numberWithCommas = function (x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
+    window.spin_opts = {
+        lines: 9,
+        length: 5,
+        width: 2,
+        radius: 4,
+        rotate: 9,
+        color: "#4c4c4c",
+        speed: 1.5,
+        trail: 40,
+        shadow: false,
+        hwaccel: true,
+        className: "spinner",
+        zIndex: 2000000000,
+        left: "90%"
+    };
+    window.formatModuleName = function (module) {
+        return module.replace(/_(.)/g, function (match, p1) {
+            return p1.toUpperCase();
         });
-        return Promise.resolve();
-    });
-}
-/*
-function syncGet(url, success, headers, failure) {
+    };
+    window.formatModulePath = function (module) {
+        return module.replace(/_(.)/g, function (match, p1) {
+            return "-" + p1;
+        });
+    };
+    window.alertError = function (error, errorMessage) {
+        return asyncText("templates/alert.html").then(function (view) {
+            var template = Handlebars.compile(view);
+            $(template({
+                error: error,
+                error_message: errorMessage
+            })).modal().on("hidden.bs.modal", function () {
+                $(this).remove();
+            });
+            return Promise.resolve();
+        });
+    };
+    /*
+window.syncGet = function(url, success, headers, failure) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, false);
     xhr.onload = function () {
@@ -68,132 +69,133 @@ function syncGet(url, success, headers, failure) {
     xhr.send();
 }
 */
-function asyncText(url, headers) {
-    return new Promise(function (resolve, reject) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", url, false);
-        if (xhr.overrideMimeType)
-            xhr.overrideMimeType("text/plain");
-        xhr.onload = function () {
-            if (this.status !== 200) {
-                reject(this.status);
-                return;
-            }
-            resolve(this.responseText);
-        };
-        xhr.onerror = function () {
-            reject();
-        };
-        if (headers) {
-            for (var header in headers) {
-                if (headers.hasOwnProperty(header))
-                    xhr.setRequestHeader(header, headers[header]);
-            }
-        }
-        xhr.send();
-    });
-}
-function asyncGet(url, headers, jsonp) {
-    if (headers)
-        return asyncText(url, headers).then(function (res) {
-            return Promise.resolve(JSON.parse(res));
-        });
-    else
+    window.asyncText = function (url, headers) {
         return new Promise(function (resolve, reject) {
-            $.ajax({
-                url: url,
-                jsonp: jsonp,
-                contentType: "application/json; charset=utf-8",
-                type: "GET",
-                dataType: "jsonp",
-                async: false,
-                success: function (res) {
-                    if ("meta" in res && Object.keys(res).length === 2)
-                        if ("data" in res)
-                            res = res.data;
-                        else if ("response" in res)
-                            res = res.response;
-                    resolve(res);
-                },
-                error: function (xhr, status) {
-                    reject(status);
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", url, false);
+            if (xhr.overrideMimeType)
+                xhr.overrideMimeType("text/plain");
+            xhr.onload = function () {
+                if (String(this.status) !== "200") {
+                    reject(this.status);
+                    return;
                 }
+                resolve(this.responseText);
+            };
+            xhr.onerror = function () {
+                reject();
+            };
+            if (headers) {
+                for (var header in headers) {
+                    if (headers.hasOwnProperty(header))
+                        xhr.setRequestHeader(header, headers[header]);
+                }
+            }
+            xhr.send();
+        });
+    };
+    window.asyncGet = function (url, headers, jsonp) {
+        if (headers || typeof $ !== "function")
+            return asyncText(url, headers).then(function (res) {
+                return Promise.resolve(JSON.parse(res));
             });
+        else
+            return new Promise(function (resolve, reject) {
+                $.ajax({
+                    url: url,
+                    jsonp: jsonp,
+                    contentType: "application/json; charset=utf-8",
+                    type: "GET",
+                    dataType: "jsonp",
+                    async: false,
+                    success: function (res) {
+                        if ("meta" in res && Object.keys(res).length === 2)
+                            if ("data" in res)
+                                res = res.data;
+                            else if ("response" in res)
+                                res = res.response;
+                        resolve(res);
+                    },
+                    error: function (xhr, status) {
+                        reject(status);
+                    }
+                });
+            });
+    };
+    window.loadJS = function (src, obj, data, parentEl) {
+        return new Promise(function (resolve, reject) {
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.async = true;
+            script.src = src.replace(/^\/\//, "https:" === document.location.protocol ? "https://" : "http://");
+            if (obj)
+                for (var opt in obj)
+                    if (obj.hasOwnProperty(opt))
+                        script[opt] = obj[opt];
+            if (data)
+                for (var el in data)
+                    if (data.hasOwnProperty(el))
+                        script.dataset[el] = data[el];
+            function onload(e) {
+                /* jshint validthis:true */
+                this.removeEventListener("load", onload);
+                this.removeEventListener("loadend", onload);
+                this.removeEventListener("afterscriptexecute", onload);
+                resolve();
+            }
+            script.addEventListener("load", onload);
+            script.addEventListener("loadend", onload);
+            script.addEventListener("afterscriptexecute", onload);
+            (parentEl || document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(script);
         });
-}
-function loadJS(src, obj, data, parentEl) {
-    return new Promise(function (resolve, reject) {
-        var script = document.createElement("script");
-        script.type = "text/javascript";
-        script.async = true;
-        script.src = src.replace(/^\/\//, "https:" === document.location.protocol ? "https://" : "http://");
-        if (obj)
-            for (var opt in obj)
-                if (obj.hasOwnProperty(opt))
-                    script[opt] = obj[opt];
-        if (data)
-            for (var el in data)
-                if (data.hasOwnProperty(el))
-                    script.dataset[el] = data[el];
-        function onload(e) {
-            /* jshint validthis:true */
-            this.removeEventListener("load", onload);
-            this.removeEventListener("loadend", onload);
-            this.removeEventListener("afterscriptexecute", onload);
-            resolve();
-        }
-        script.addEventListener("load", onload);
-        script.addEventListener("loadend", onload);
-        script.addEventListener("afterscriptexecute", onload);
-        (parentEl || document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(script);
-    });
-}
-function exportM(obj, name) {
-    //	if(window.System) {
-    //	        /*jshint esnext:true*/
-    //		export default obj;
-    //	} else
-    if (typeof module !== "undefined" && module.export) {
-        module.export[name] = obj;
-    } else if (typeof define === "function" && define.amd) {
-        define(name, function () {
-            return obj;
-        });
-    } else {
-        window[name] = obj;
-    }
-}
-function exportBlog(blog, name) {
-    exportM(blog, formatModuleName(name) + "Blog");
-}
-function exportService(service, name) {
-    exportM(service, formatModuleName(name) + "Service");
-}
-function exportPlugin(plugin, name) {
-    exportM(plugin, formatModuleName(name) + "Plugin");
-}
-function importM(name, path) {
-    return new Promise(function (resolve, reject) {
-        if (window[name]) {
-            resolve(window[name]);    //		} else if (window.System) {
-                                      //			/*global System*/
-                                      //			System.import(path).then(function(_) {
-                                      //				resolve(_[name] || _);
-                                      //			});
+    };
+    window.exportM = function (obj, name) {
+        //	if(window.System) {
+        //	        /*jshint esnext:true*/
+        //		export default obj;
+        //	} else
+        if (typeof module !== "undefined" && module.export) {
+            module.export[name] = obj;
         } else if (typeof define === "function" && define.amd) {
-            require([path], function (_) {
-                resolve(_[name], _);
+            define(name, function () {
+                return obj;
             });
-        } else if (typeof module !== "undefined" && module.exports) {
-            var _module = require(path);
-            resolve(_module[name] || _module);
         } else {
-            loadJS(path + ".js").then(function () {
-                resolve(window[name]);
-            });
+            window[name] = obj;
         }
-    });
-}"use strict";
+    };
+    window.exportBlog = function (blog, name) {
+        exportM(blog, formatModuleName(name) + "Blog");
+    };
+    window.exportService = function (service, name) {
+        exportM(service, formatModuleName(name) + "Service");
+    };
+    window.exportPlugin = function (plugin, name) {
+        exportM(plugin, formatModuleName(name) + "Plugin");
+    };
+    window.importM = function (name, path) {
+        return new Promise(function (resolve, reject) {
+            if (window[name]) {
+                resolve(window[name]);    //		} else if (window.System) {
+                                          //			/*global System*/
+                                          //			System.import(path).then(function(_) {
+                                          //				resolve(_[name] || _);
+                                          //			});
+            } else if (typeof define === "function" && define.amd) {
+                require([path], function (_) {
+                    resolve(_[name], _);
+                });
+            } else if (typeof module !== "undefined" && module.exports) {
+                var _module = require(path);
+                resolve(_module[name] || _module);
+            } else {
+                loadJS(path + ".js").then(function () {
+                    resolve(window[name]);
+                });
+            }
+        });
+    };
+}(window || global));"use strict";
 var postOffset, postsOpts;
 function setupBlog(settings) {
     registerPostLinkClick(settings);
@@ -477,9 +479,14 @@ function adjustSelection(component, callback) {
 }"use strict";
 asyncGet("config.json", {}).then(function (settings) {
     //FIELDS SETTINGS
+    function getHostname(url) {
+        var parser = document.createElement("a");
+        parser.href = url;
+        return parser.hostname;
+    }
     document.getElementById("field-realname").textContent = settings["fields"]["realname"];
     document.getElementById("field-description").textContent = settings["fields"]["description"];
-    document.getElementById("field-url").textContent = settings["fields"]["url"];
+    document.getElementById("field-url").textContent = getHostname(settings["fields"]["url"]);
     document.head.getElementsByTagName("title")[0].textContent = settings["fields"]["username"] + " [" + settings["fields"]["realname"] + "]";
     document.getElementById("meta-description").content = settings["fields"]["realname"] + " : " + settings["fields"]["description"];
     //SERVICES SETTINGS
@@ -611,51 +618,76 @@ function setupService(service, url, el, settings) {
     });
 }(function (window) {
     "use strict";
-    var API_URL = "https://www.googleapis.com/blogger/v3/";
+    var API_URL = "https://public-api.wordpress.com/rest/v1";
     var nextId = 0;
     function getPosts(settings, postId, tag, offset) {
-        var params = "?maxResults=20&key=" + settings.api_key + "&fields=items(content%2Cid%2Clabels%2Cpublished%2Ctitle%2Curl)" + "%2CnextPageToken";
-        if (offset && nextId)
-            params += "&pageToken=" + nextId;
-        if (tag)
-            params += "&labels=" + tag;
-        else if (settings.tag_slug)
-            params += "&labels=" + tag;
+        var post_id = "";
+        var params = "";
         if (postId)
-            params = "/" + postId + "?key=" + settings.api_key + "&content%2Cid%2Clabels%2Cpublished%2Ctitle%2Curl";
-        return asyncGet(API_URL + "blogs/" + settings.blog_id + "/posts" + params).then(function (res) {
-            if (res.error) {
-                window.reachedEnd = true;
-                return Promise.resolve([]);
-            }
-            nextId = res.nextPageToken;
-            if (!nextId)
-                window.reachedEnd = true;
-            if (postId)
-                res = { items: [res] };
-            res["items"].forEach(function (post) {
-                post.date = post.published;
-                post.body = post.content;
-                post.tags = post.labels;
-                post.tags = post.labels;
-                post.type = "text";    //????
+            post_id += postId;
+        else if (tag)
+            params += "?tag=" + tag.replace(/\s/g, "-");
+        else if (settings.tag_slug)
+            params += "?tag=" + settings.tag_slug.replace(/\s/g, "-");
+        if (offset && nextId)
+            params += (params ? "&" : "?") + "offset=" + nextId;
+        var wpApiUrl = [
+            API_URL,
+            "/sites/",
+            settings.blog_url,
+            "/posts/",
+            post_id,
+            params
+        ].join("");
+        return asyncGet(wpApiUrl).then(function (data) {
+            if (data.error)
+                data = {
+                    found: 0,
+                    posts: []
+                };
+            else if (postId)
+                data = {
+                    found: 1,
+                    posts: [data]
+                };
+            Array.forEach(data.posts, function (p, i) {
+                var newTags = [];
+                p.id = p.ID;
+                p.body = p.content;
+                p.content = null;
+                if (p.type === "post") {
+                    p.type = "text";
+                }
+                for (var tag in p.tags) {
+                    if (p.tags.hasOwnProperty(tag))
+                        newTags.push(tag);
+                }
+                p.tags = newTags;
+                // TODO: figure out how to preserve timezone info and make it
+                // consistent with python's datetime.strptime
+                if (p.date.lastIndexOf("+") > 0) {
+                    p.date = p.date.substring(0, p.date.lastIndexOf("+"));
+                } else {
+                    p.date = p.date.substring(0, p.date.lastIndexOf("-"));
+                }
             });
-            return Promise.resolve(res["items"]);
+            nextId += 20;
+            return Promise.resolve(data.posts);
         });
     }
     function fetchPosts(settings) {
-        nextId = "";
+        nextId = 0;
         return getPosts(settings, undefined, undefined, false);
     }
     function fetchMorePosts(settings) {
         return getPosts(settings, undefined, undefined, true);
     }
     function fetchOnePost(settings, postId) {
-        nextId = "";
+        nextId = 0;
         return getPosts(settings, postId, undefined, false);
     }
     function fetchBlogTag(settings, tag) {
-        nextId = "";
+        nextId = 0;
         return getPosts(settings, undefined, tag, false);
     }
     function fetchBlogTagMore(settings, tag) {
@@ -667,5 +699,5 @@ function setupService(service, url, el, settings) {
         fetchPost: fetchOnePost,
         fetchTag: fetchBlogTag,
         fetchTagMore: fetchBlogTagMore
-    }, "blogger");
+    }, "wordpress");
 }(window));
