@@ -24,6 +24,8 @@ fs.readFile(CONF, "UTF-8", function(e, config){
 			fs.writeFile(process.argv[4] + "/feed", rss);
 		else
 			console.log(rss);
+	}).catch(function(e) {
+		console.error("Error while fetching posts or gen the feed!", e);
 	});
 });
 });
@@ -38,8 +40,8 @@ function genRSS(C, P) {
 	rss += '<link>' + C.fields.url + '</link>';
 	Array.forEach(P, function(p, i) {
 		rss += '<item>';
-		rss += '<title>' + encodeXML(p.title) + '</title>';
-		rss += '<description>' + encodeXML(p.body) + '</description>';
+		if(p.title)rss += '<title>' + encodeXML(p.title) + '</title>';
+		if(p.body) rss += '<description>' + encodeXML(p.body) + '</description>';
 		rss += '<link>' + C.fields.url + '#!post/' + p.id  + '</link>';
 		rss += '<pubDate>' + moment(p.date, "YYYY-MM-DD HH:mm:ss").format("ddd, DD MMM YYYY HH:mm:ss G\\MT") + '</pubDate>';
                 rss += '<guid>' + C.fields.url + ',' +C.blogs_settings[C.blog_platform].blog_url +','+  p.id+ '</guid>';
