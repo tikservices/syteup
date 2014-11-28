@@ -23,11 +23,11 @@
     "tests"
   ],
   "dependencies": {
-    "less": "2.0.0-b3",
+    "less": "2.0.0",
     "bootstrap": "3.2.0",
     "handlebars": "2.0.0",
     "jquery": "2.1.1",
-    "moment": "2.8.3",
+    "moment": "2.8.4",
     "spin.js": "2.0.1",
     "google-code-prettify": "1.0.3"
   }
