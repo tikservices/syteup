@@ -94,12 +94,12 @@ First, you need to setup Syteup requirements by runnig the following commands:
 npm install
 bower update
 ```
-then, you needs to setup the
-[src/config.json](https://github.com/lejenome/syteup/tree/master/src/config.json)
-file for your needs as explained on the
+then, you needs to rename
+[src/config.json.sample](https://github.com/lejenome/syteup/tree/master/src/config.json.sample)
+file to `config.json` and customize it for your needs as explained on the
 flowing section then run
 ```shell
-npm run pre-commit
+npm run dist
 ```
 which will update the
 [dist/](https://github.com/lejenome/syteup/blob/master/dist/)

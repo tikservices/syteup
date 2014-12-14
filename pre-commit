@@ -6,4 +6,3 @@
 
 echo "Running pre-commit hook! should take some seconds"
 npm run pre-commit
-#make -j1
