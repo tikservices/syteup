@@ -118,8 +118,28 @@ make -j1 SRC=~/syteup/src DIST=/srv/website/www CONF=~/my_config.json
 
 ### General Setup
 
-```
-TODO
+
+Change all avatars images on [src/imgs](src/imgs) folder (pic.img, favicon.ico,
+apple-touch-icon\*.png) by your avatar images with same sizes.
+
+Setup the options of `fields` object on `config.json` file
+
+```javascript
+  "fields": {
+    "username": String, // the pseudonym (nickname) you mostly known by
+    "realname": String, // your complete real name
+    "description": String, // a very short 'About Me' line
+    "url": String, // the url of your website
+    "contact": {
+      "email": String, // your email
+      "mobile": String, // [optional] your phone number e.g: (216) 00000000
+      "tel": String, // [optional] your telephone number e.g: (216) 00000000
+      "fax": String, // [optional] your fax number e.g: (216) 1111111
+      "address": String, // [optional] just a short address e.g: Texas, USA
+      "pgp_url": String, // [optional] url of your public pgp key file on your site e.g: /pubkey.asc
+      "fingerprint": String, // [optional] your pgp key fingerprint e.g: 3A1D ADDD 332D 2EFB F816  21C3 84D8 5721 7365 9C9D
+      "ssh_url": String // [optional] your ssh public certificate file url on your site e.g: /id_rsa.pub
+    }
 ```
 
 ### Blog Setup
