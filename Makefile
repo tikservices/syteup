@@ -9,17 +9,17 @@ pre-commit: beautify fix test dist
 test: lint # style-check
 fix: fix-js
 fix-js:
-	find $(SRC) \( -path $(SRC)/less -o -path $(SRC)/js/libs \) -prune -a -type f -o -name "*.js" -or -name "*.json" | xargs -n 1 fixmyjs -c .jshintrc || true
+	find $(SRC) -path $(SRC)/js/libs -prune -a -type f -o -name "*.js" -or -name "*.json" | xargs -n 1 fixmyjs -c .jshintrc || true
 lint: lint-js lint-json
 lint-json:
 	ls .jsbeautifyrc .jshintrc package.json | xargs -n 1 jsonlint -ip
 	for json in `find $(SRC) -name "*.json"`; do jsonlint -ip $${json};done
 	jsonlint -ip $(CONF)
 lint-js:
-	jshint $(SRC)
+	jshint $(SRC) --exclude $(SRC)/js/libs
 beautify: beautify-html
 beautify-js:
-	find $(SRC) \( -path $(SRC)/js/libs -o -path $(SRC)/less \) -prune -a -type f -o -name "*.js" -or -name "*.json" | xargs -n 1 js-beautify --type=js -r
+	find $(SRC) -path $(SRC)/js/libs -prune -a -type f -o -name "*.js" -or -name "*.json" | xargs -n 1 js-beautify --type=js -r
 beautify-css:
 	find $(SRC) -name "*.less" -or -name "*.css" | xargs -n 1 js-beautify --type=css -r
 beautify-html:

@@ -18,6 +18,7 @@ DONE (new service code design):
     - blog / Tumblr          [DONE]
     - blog / blogger         [DONE]
     - plugin / Rss             [DONE]
+    - plugin / Segment         [DONE]
     - plugin / ControlPanel    [DONE]
     - plugin / Woopra          [DONE] [NOT TESTED]
     - plugin / Disqus          [DONE]
