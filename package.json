@@ -38,7 +38,7 @@
     "html-minifier": ""
   },
   "scripts": {
-    "test": "make test -j1",
-    "pre-commit": "make -j1"
+    "test": "make -j1 test CONF=src/config.json.sample ALL_BLOG_PLATFORMS=true",
+    "pre-commit": "make -j1 CONF=src/config.json.sample  ALL_BLOG_PLATFORMS=true"
   }
 }

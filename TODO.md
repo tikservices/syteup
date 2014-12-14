@@ -13,27 +13,27 @@ DONE (new service code design):
     - service / Stack Overflow  [DONE]
     - service / Google+         [DONE]
     - service / Facebook        [DONE]
-    - plugin / Rss             [DONE]
-    - plugin / ControlPanel    [DONE]
-    - plugin / Woopra          [DONE]
-    - plugin / Disqus          [DONE]
+    - service / LinkedIn        [DONE]
     - blog / Wordpress       [DONE]
     - blog / Tumblr          [DONE]
     - blog / blogger         [DONE]
-    - plugin / ShareThis       [DONE]
+    - plugin / Rss             [DONE]
+    - plugin / ControlPanel    [DONE]
+    - plugin / Woopra          [DONE] [NOT TESTED]
+    - plugin / Disqus          [DONE]
+    - plugin / ShareThis       [DONE] [NOT TESTED]
     - plugin / GoogleAnalytics [DONE]
-    - service / LinkedIn        [DONE]
 
 ALMOST (js + async:promise + JSONP):
 
 INPROGRESS (python || CORS || sync:XMLHttpRequest with GET):
 
     - service / Tent.io         [JS] [API NOT WELL DOCUMENTED]
-    - service / Twitter         [JS] [400]
 
 WICHLIST:
 
     - service / Steam           [SOP] [NO-JSONP]
+    - service / Twitter         [JS] [400]
     - service / Foursquare      [DANGEROUS TOKENS]
     - service / Picasa          [Deprecated]
     - service / Netflix
@@ -55,6 +55,7 @@ WICHLIST:
     - service / googlecode
     - service / launchpad
     - plugin / Sitemap
+    - plugin / Donate
 
 EXTRA:
 

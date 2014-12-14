@@ -1,6 +1,7 @@
 SRC=src
 DIST=dist
 CONF=$(SRC)/config.json
+ALL_BLOG_PLATFORMS=false # just to force support of all availbale blog platforms
 LESSCFLAGS=--no-ie-compat --no-js --strict-imports --strict-math=on -rp=$(SRC)/ -x --clean-css
 HTMLMINIFIERFLAGS=--remove-comments --collapse-whitespace --minify-js
 
@@ -12,7 +13,8 @@ fix-js:
 lint: lint-js lint-json
 lint-json:
 	ls .jsbeautifyrc .jshintrc package.json | xargs -n 1 jsonlint -ip
-	find $(SRC) -name "*.json" | xargs -n 1 jsonlint -ip
+	for json in `find $(SRC) -name "*.json"`; do jsonlint -ip $${json};done
+	jsonlint -ip $(CONF)
 lint-js:
 	jshint $(SRC)
 beautify: beautify-html
@@ -48,7 +50,8 @@ minify-pre:
 minify-js-core:
 	rm $(DIST)/syteup.js || true
 	cat $(SRC)/js/*.js >> $(DIST)/syteup.js
-	cat $(CONF)| json "blog_platform" | sed 's,_,-,g;s,\(.*\),$(SRC)/blogs/\1.js,' | xargs cat >> $(DIST)/syteup.js
+	( $(ALL_BLOG_PLATFORMS) && cat $(SRC)/blogs/*.js \
+		|| ( cat $(CONF)| json "blog_platform" | sed 's,_,-,g;s,\(.*\),$(SRC)/blogs/\1.js,' | xargs cat )) >> $(DIST)/syteup.js
 	uglifyjs -c --screw-ie8 $(DIST)/syteup.js -o $(DIST)/syteup.min.js
 minify-js-modules:
 	rm $(DIST)/syteup-modules.js || true
