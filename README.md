@@ -114,9 +114,53 @@ make -j1 SRC=~/syteup/src DIST=/srv/website/www CONF=~/my_config.json
 
 ## Setup
 
+**IN PROGRESS**
+
+### General Setup
+
 ```
-IN PROGRESS
+TODO
 ```
+
+### Blog Setup
+
+Set `blog_platform` to the bloggin platform that you will use, availbale platforms
+are **"tumblr"** and **"blogger"** and **"wordpress"**.
+
+Next, you need to setup the options of the choosen platform on the
+`blogs_settings.<platform_name>` object as follow:
+
+#### Wordpress
+
+```javascript
+    "wordpress": {
+      "blog_url": String, // the url of your wordpress.com blog
+      "tag_slug": String // [optional] tags of posts to import (space separated)
+    }
+```
+
+#### Blogger
+
+```javascript
+    "blogger": {
+      "blog_url": String, // your blog url
+      "blog_id": String, // your blog id number (you can use https://developers.google.com/apis-explorer/#p/blogger/v3/blogger.blogs.getByUrl)
+      "api_key": String, // your api key (NEED MORE DOCUMENTATION)
+      "tag_slug": String // [optional] tags of posts to import (comma separated)
+    }
+```
+
+#### Tumblr
+
+```javascript
+    "tumblr": {
+      "blog_url": String, // your blog url
+      "api_key": String, // your api key (NEED MORE DOCUMENTATION)
+      "tag_slug": String // [optional] tag of posts to import (just one tag)
+    }
+```
+
+### Services Setup
 
 For every service you would to enable, you should set `services.<service_name>` on
 `config.json` file to `true` and setup it options object
@@ -125,27 +169,27 @@ For every service you would to enable, you should set `services.<service_name>` 
 Disabled services can safely removed from booth `services` and
 `services_settings` objects on the config file.
 
-### Github
+#### Github
 
 enable `services.github` and confgure `services_settings.github` as follow:
 ```javascript
     "github": {
-        "url": String, // url of your profile page
-        "client_id": String // your username
+      "url": String, // url of your profile page
+      "client_id": String // your username
     }
 ```
 
-### StackOverflow
+#### StackOverflow
 
 enable `services.stackoverflow` and confgure `services_settings.stackoverflow` as follow:
 ```javascript
     "stackoverflow": {
-        "url": String, // url of your profile page
-        "userid": String // your id number
+      "url": String, // url of your profile page
+      "userid": String // your id number
     }
 ```
 
-### Flickr
+#### Flickr
 
 enable `services.flickr` and confgure `services_settings.flickr` as follow:
 ```javascript
@@ -155,7 +199,7 @@ enable `services.flickr` and confgure `services_settings.flickr` as follow:
     }
 ```
 
-### Bitbucket
+#### Bitbucket
 
 enable `services.bitbucket` and confgure `services_settings.bitbucket` as follow:
 ```javascript
@@ -166,7 +210,7 @@ enable `services.bitbucket` and confgure `services_settings.bitbucket` as follow
     }
 ```
 
-### SoundCloud
+#### SoundCloud
 
 enable `services.soundcloud` and confgure `services_settings.soundcloud` as follow:
 ```javascript
@@ -179,7 +223,7 @@ enable `services.soundcloud` and confgure `services_settings.soundcloud` as foll
     }
 ```
 
-### Last.fm
+#### Last.fm
 
 enable `services.lastfm` and confgure `services_settings.lastfm` as follow:
 ```javascript
@@ -190,7 +234,7 @@ enable `services.lastfm` and confgure `services_settings.lastfm` as follow:
     }
 ```
 
-### Dribbble
+#### Dribbble
 
 enable `services.dribbble` and confgure `services_settings.dribbble` as follow:
 ```javascript
@@ -200,7 +244,7 @@ enable `services.dribbble` and confgure `services_settings.dribbble` as follow:
     }
 ```
 
-### Youtube
+#### Youtube
 
 enable `services.youtube` and confgure `services_settings.youtube` as follow:
 ```javascript
@@ -211,7 +255,7 @@ enable `services.youtube` and confgure `services_settings.youtube` as follow:
     }
 ```
 
-### Google+
+#### Google+
 
 enable `services.gplus` and confgure `services_settings.gplus` as follow:
 ```javascript
@@ -222,7 +266,7 @@ enable `services.gplus` and confgure `services_settings.gplus` as follow:
     }
 ```
 
-### Facebook
+#### Facebook
 
 enable `services.facebook` and confgure `services_settings.facebook` as follow:
 ```javascript
@@ -233,7 +277,7 @@ enable `services.facebook` and confgure `services_settings.facebook` as follow:
     }
 ```
 
-### Instagram
+#### Instagram
 
 enable `services.instagram` and confgure `services_settings.instagram` as follow:
 ```javascript
@@ -244,7 +288,7 @@ enable `services.instagram` and confgure `services_settings.instagram` as follow
     }
 ```
 
-### LinkedIn
+#### LinkedIn
 
 enable `services.linkedin` and confgure `services_settings.linkedin` as follow:
 ```javascript
@@ -252,6 +296,12 @@ enable `services.linkedin` and confgure `services_settings.linkedin` as follow:
       "url": String, // url of your profile page
       "access_token": String // your access token key (NEED MORE DOCUMENTATION)
     }
+```
+
+### Plugins setup
+
+```
+TODO
 ```
 
 ## Credit
