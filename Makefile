@@ -58,7 +58,7 @@ minify-js-modules:
 	cat $(CONF) | json "plugins" | json -Mac "this.value===true" key | sed 's,_,-,g;s,\(.*\),$(SRC)/plugins/\1.js,' | xargs cat >> $(DIST)/syteup-modules.js
 	cat $(CONF) | json "blogs_settings.plugins" | json -Mac "this.value===true" key | sed 's,_,-,g;s,\(.*\),$(SRC)/plugins/\1.js,' | xargs cat >> $(DIST)/syteup-modules.js
 	cat $(CONF) | json "services" | json -Mac "this.value===true" key | sed 's,_,-,g;s,\(.*\),$(SRC)/services/\1.js,' | xargs cat >> $(DIST)/syteup-modules.js
-	json -f $(CONF) -c 'typeof(this.fields.contact)==="object"' >/dev/null && cat $(SRC)/services/syteup-contact.js >> $(DIST)/syteup-modules.js
+	json -f $(CONF) -c 'typeof(this.fields.contact)==="object"' >/dev/null && cat $(SRC)/services/contact.js >> $(DIST)/syteup-modules.js
 	uglifyjs -c --screw-ie8 $(DIST)/syteup-modules.js -o $(DIST)/syteup-modules.min.js
 minify-js-libs:
 	grep -o "../bower_components/.*.js" $(SRC)/index.html | sed 's,^,$(SRC)/,;s,.*less/.*,,' | xargs cat | uglifyjs -c --screw-ie3 -o $(DIST)/syteup.libs.js

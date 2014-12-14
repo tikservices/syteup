@@ -12,9 +12,9 @@ function setupLinks(settings) {
         if (Object.keys(settings["fields"]["contact"]).length === 1 && settings["fields"]["contact"].email) {
             settings["fields"]["contact"] = settings["fields"]["contact"].email;
         } else {
-            enabledServices.push("syteup_contact");
-            settings["services_settings"]["syteup_contact"] = settings["fields"]["contact"];
-            settings["services_settings"]["syteup_contact"]["url"] = "mailto:" + settings["fields"]["contact"]["email"];
+            enabledServices.push("contact");
+            settings["services_settings"]["contact"] = settings["fields"]["contact"];
+            settings["services_settings"]["contact"]["url"] = "mailto:" + settings["fields"]["contact"]["email"];
         }
     }
     //CREATE LINKS ITEMS FOR ENABLED SERVICES
