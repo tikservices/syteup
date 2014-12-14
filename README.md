@@ -115,7 +115,143 @@ make -j1 SRC=~/syteup/src DIST=/srv/website/www CONF=~/my_config.json
 ## Setup
 
 ```
-TODO
+IN PROGRESS
+```
+
+For every service you would to enable, you should set `services.<service_name>` on
+`config.json` file to `true` and setup it options object
+`services_settings.<service_name>` on same file.
+
+Disabled services can safely removed from booth `services` and
+`services_settings` objects on the config file.
+
+### Github
+
+enable `services.github` and confgure `services_settings.github` as follow:
+```javascript
+    "github": {
+        "url": String, // url of your profile page
+        "client_id": String // your username
+    }
+```
+
+### StackOverflow
+
+enable `services.stackoverflow` and confgure `services_settings.stackoverflow` as follow:
+```javascript
+    "stackoverflow": {
+        "url": String, // url of your profile page
+        "userid": String // your id number
+    }
+```
+
+### Flickr
+
+enable `services.flickr` and confgure `services_settings.flickr` as follow:
+```javascript
+    "flickr": {
+      "url": String, // url of your profile page
+      "client_id": String // your id (you can get it from http://idgettr.com/)
+    }
+```
+
+### Bitbucket
+
+enable `services.bitbucket` and confgure `services_settings.bitbucket` as follow:
+```javascript
+    "bitbucket": {
+      "url": String, // url of your profile page
+      "username": String, // your username
+      "show_forks": Boolean // show number of forks (It require a http request for every repository
+    }
+```
+
+### SoundCloud
+
+enable `services.soundcloud` and confgure `services_settings.soundcloud` as follow:
+```javascript
+    "soundcloud": {
+      "url": String, // url of your profile page
+      "username": String, // your username
+      "client_id": String, // your client_id (NEED MORE DOCUMENTATION)
+      "show_artwork": Boolean, // show tracks artworks
+      "player_color": String // color of tracks player
+    }
+```
+
+### Last.fm
+
+enable `services.lastfm` and confgure `services_settings.lastfm` as follow:
+```javascript
+    "lastfm": {
+      "url": String, // url of your profile page
+      "username": String, // your username
+      "api_key": String // your api key (NEED MORE DOCUMENTATION)
+    }
+```
+
+### Dribbble
+
+enable `services.dribbble` and confgure `services_settings.dribbble` as follow:
+```javascript
+    "dribbble": {
+      "url": String, // url of your profile page
+      "username": String // your username
+    }
+```
+
+### Youtube
+
+enable `services.youtube` and confgure `services_settings.youtube` as follow:
+```javascript
+    "youtube": {
+      "url": String, // url of your profile page
+      "username": String, // your username
+      "api_key": String // your api key (NEED MORE DOCUMENTATION)
+    }
+```
+
+### Google+
+
+enable `services.gplus` and confgure `services_settings.gplus` as follow:
+```javascript
+    "gplus": {
+      "url": String, // url of your profile page
+      "user_id": String, // your id number
+      "api_key": String // your api key (NEED MORE DOCUMENTATION)
+    }
+```
+
+### Facebook
+
+enable `services.facebook` and confgure `services_settings.facebook` as follow:
+```javascript
+    "facebook": {
+      "url": String, // url of your profile page
+      "username": String, // your username
+      "access_token": String // your access token key (NEED MORE DOCUMENTATION)
+    }
+```
+
+### Instagram
+
+enable `services.instagram` and confgure `services_settings.instagram` as follow:
+```javascript
+    "instagram": {
+      "url": String, // url of your profile page
+      "access_token": String, // your access token key (NEED MORE DOCUMENTATION)
+      "user_id": String // you id number
+    }
+```
+
+### LinkedIn
+
+enable `services.linkedin` and confgure `services_settings.linkedin` as follow:
+```javascript
+    "linkedin": {
+      "url": String, // url of your profile page
+      "access_token": String // your access token key (NEED MORE DOCUMENTATION)
+    }
 ```
 
 ## Credit
