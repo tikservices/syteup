@@ -1,4 +1,10 @@
+#!/usr/bin/node
 "use strict";
+
+if (process.argv.length < 4) {
+	console.error("USAGE: " + process.argv[1] + " <src_dir> <config_file> [<dist_dir>]");
+	return 1;
+}
 var SRC = process.argv[2];
 if(/^[^\/]/.test(SRC)) SRC = "../" + SRC;
 var CONF = process.argv[3];
