@@ -2,12 +2,16 @@
     "use strict";
     var DISPLAY_NAME = "Youtube";
     var API_URL = "https://www.googleapis.com/youtube/v3/";
+    var BASE_URL = "https://www.youtube.com/user/";
+    function getURL(settings) {
+        return BASE_URL + settings.username;
+    }
     function setupYoutube(youtubeData, settings) {
         if (youtubeData.message || youtubeData.activities.length === 0) {
             return;
         }
-        youtubeData.statistics.url = settings.url;
-        youtubeData.channel.url = settings.url;
+        youtubeData.statistics.url = BASE_URL + settings.username;
+        youtubeData.channel.url = BASE_URL + settings.username;
         $.each(youtubeData.activities, function (i, t) {
             t.publishedAt = moment.utc(t.publishedAt, "YYYY-MM-DD HH:mm:ss").fromNow();
             t.img = t.thumbnails["default"].url;
@@ -44,6 +48,7 @@
     exportService({
         displayName: DISPLAY_NAME,
         template: "youtube.html",
+        getURL: getURL,
         setup: setupYoutube,
         fetch: fetchData
     }, "youtube");

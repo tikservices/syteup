@@ -1,6 +1,10 @@
 (function (window) {
     "use strict";
     var DISPLAY_NAME = "Flickr";
+    var BASE_URL = "https://www.flickr.com/photos/";
+    function getURL(settings) {
+        return BASE_URL + settings.username;
+    }
     function setupFlickr(flickrData, settings) {
         if (flickrData.items === 0) {
             return;
@@ -12,11 +16,12 @@
         return flickrData;
     }
     function fetchData(settings) {
-        return asyncGet("http://api.flickr.com/services/feeds/photos_public.gne?id=" + settings.client_id + "&format=json&lang=en-us", undefined, "jsoncallback");
+        return asyncGet("http://api.flickr.com/services/feeds/photos_public.gne?id=" + settings.user_id + "&format=json&lang=en-us", undefined, "jsoncallback");
     }
     exportService({
         displayName: DISPLAY_NAME,
         template: "flickr.html",
+        getURL: getURL,
         setup: setupFlickr,
         fetch: fetchData
     }, "flickr");

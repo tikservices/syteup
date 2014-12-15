@@ -1,6 +1,9 @@
 (function (window) {
     "use strict";
     var DISPLAY_NAME = "Contact";
+    function getURL(settings) {
+        return "mailto:" + settings.email;
+    }
     function setupContact(data, settings) {
         if (data.tel)
             data.tel_uri = "tel:+" + data.tel.match(/\((.*)\) (.*)/).slice(1).join("");
@@ -33,6 +36,7 @@
     }
     exportService({
         displayName: DISPLAY_NAME,
+        getURL: getURL,
         setup: setupContact,
         fetch: fetchContact,
         template: "contact.html"

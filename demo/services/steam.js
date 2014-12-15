@@ -2,6 +2,10 @@
     "use strict";
     var DISPLAY_NAME = "Steam";
     var API_URL = "";
+    var BASE_URL = "";
+    function getURL(settings) {
+        return BASE_URL + settings.username;
+    }
     function setupSteam(steamData, settings) {
         return {
             "user": steamData.user,
@@ -83,6 +87,7 @@
     exportService({
         displayName: DISPLAY_NAME,
         template: "steam.html",
+        getURL: getURL,
         setup: setupSteam,
         fetch: fetchData
     }, "steam");

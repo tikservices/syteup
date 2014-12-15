@@ -137,7 +137,11 @@
     "use strict";
     var DISPLAY_NAME = "Instagram";
     var API_URL = "https://api.instagram.com/v1/";
+    var BASE_URL = "http://instagram.com/";
     var nextId;
+    function getURL(settings) {
+        return BASE_URL + settings.username;
+    }
     function setupInstagram(instagramData, settings) {
         if (instagramData.media === 0) {
             return;
@@ -186,6 +190,7 @@
         displayName: DISPLAY_NAME,
         template: "instagram.html",
         templateMore: "instagram-more.html",
+        getURL: getURL,
         setup: setupInstagram,
         fetch: fetchData,
         supportMore: true,
@@ -196,6 +201,10 @@
     "use strict";
     var DISPLAY_NAME = "Dribbble";
     var API_URL = "https://api.dribbble.com/players/";
+    var BASE_URL = "https://dribbble.com/";
+    function getURL(settings) {
+        return BASE_URL + settings.username;
+    }
     function setupDribbble(dribbbleData, settings) {
         var user = dribbbleData.shots[0].player;
         user.following_count = numberWithCommas(user.following_count);
@@ -212,12 +221,17 @@
     exportService({
         displayName: DISPLAY_NAME,
         template: "dribbble.html",
+        getURL: getURL,
         setup: setupDribbble,
         fetch: fetchData
     }, "dribbble");
 }(window));(function (window) {
     "use strict";
     var DISPLAY_NAME = "Flickr";
+    var BASE_URL = "https://www.flickr.com/photos/";
+    function getURL(settings) {
+        return BASE_URL + settings.username;
+    }
     function setupFlickr(flickrData, settings) {
         if (flickrData.items === 0) {
             return;
@@ -229,11 +243,12 @@
         return flickrData;
     }
     function fetchData(settings) {
-        return asyncGet("http://api.flickr.com/services/feeds/photos_public.gne?id=" + settings.client_id + "&format=json&lang=en-us", undefined, "jsoncallback");
+        return asyncGet("http://api.flickr.com/services/feeds/photos_public.gne?id=" + settings.user_id + "&format=json&lang=en-us", undefined, "jsoncallback");
     }
     exportService({
         displayName: DISPLAY_NAME,
         template: "flickr.html",
+        getURL: getURL,
         setup: setupFlickr,
         fetch: fetchData
     }, "flickr");
@@ -241,6 +256,10 @@
     "use strict";
     var DISPLAY_NAME = "Bitbucket";
     var API_URL = "https://api.bitbucket.org/1.0/";
+    var BASE_URL = "https://bitbucket.org/";
+    function getURL(settings) {
+        return BASE_URL + settings.username;
+    }
     function setupBitbucket(bitbucketData, settings) {
         bitbucketData.user.followers = numberWithCommas(bitbucketData.user.followers);
         return bitbucketData;
@@ -275,6 +294,7 @@
     exportService({
         displayName: DISPLAY_NAME,
         template: "bitbucket.html",
+        getURL: getURL,
         setup: setupBitbucket,
         fetch: fetchData
     }, "bitbucket");
@@ -282,6 +302,10 @@
     "use strict";
     var DISPLAY_NAME = "Last.fm";
     var API_URL = "https://ws.audioscrobbler.com/2.0/";
+    var BASE_URL = "https://www.last.fm/user/";
+    function getURL(settings) {
+        return BASE_URL + settings.username;
+    }
     function setupLastfm(lastfmData, settings) {
         /* Add extra helper to parse out the #text fields in context passed to
          * handlebars.  The '#' character is reserved by the handlebars templating
@@ -338,6 +362,7 @@
     exportService({
         displayName: DISPLAY_NAME,
         template: "lastfm.html",
+        getURL: getURL,
         setup: setupLastfm,
         fetch: fetchData
     }, "lastfm");
@@ -345,12 +370,16 @@
     "use strict";
     var DISPLAY_NAME = "Youtube";
     var API_URL = "https://www.googleapis.com/youtube/v3/";
+    var BASE_URL = "https://www.youtube.com/user/";
+    function getURL(settings) {
+        return BASE_URL + settings.username;
+    }
     function setupYoutube(youtubeData, settings) {
         if (youtubeData.message || youtubeData.activities.length === 0) {
             return;
         }
-        youtubeData.statistics.url = settings.url;
-        youtubeData.channel.url = settings.url;
+        youtubeData.statistics.url = BASE_URL + settings.username;
+        youtubeData.channel.url = BASE_URL + settings.username;
         $.each(youtubeData.activities, function (i, t) {
             t.publishedAt = moment.utc(t.publishedAt, "YYYY-MM-DD HH:mm:ss").fromNow();
             t.img = t.thumbnails["default"].url;
@@ -387,6 +416,7 @@
     exportService({
         displayName: DISPLAY_NAME,
         template: "youtube.html",
+        getURL: getURL,
         setup: setupYoutube,
         fetch: fetchData
     }, "youtube");
@@ -394,6 +424,10 @@
     "use strict";
     var DISPLAY_NAME = "SoundCloud";
     var API_URL = "https://api.soundcloud.com/";
+    var BASE_URL = "https://soundcloud.com/";
+    function getURL(settings) {
+        return BASE_URL + settings.username;
+    }
     function setupSoundcloud(soundcloudData, settings) {
         return soundcloudData;
     }
@@ -415,12 +449,16 @@
     exportService({
         displayName: DISPLAY_NAME,
         template: "soundcloud.html",
+        getURL: getURL,
         setup: setupSoundcloud,
         fetch: fetchData
     }, "soundcloud");
 }(window));(function (window) {
     "use strict";
     var DISPLAY_NAME = "Contact";
+    function getURL(settings) {
+        return "mailto:" + settings.email;
+    }
     function setupContact(data, settings) {
         if (data.tel)
             data.tel_uri = "tel:+" + data.tel.match(/\((.*)\) (.*)/).slice(1).join("");
@@ -453,6 +491,7 @@
     }
     exportService({
         displayName: DISPLAY_NAME,
+        getURL: getURL,
         setup: setupContact,
         fetch: fetchContact,
         template: "contact.html"
