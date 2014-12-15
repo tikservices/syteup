@@ -1,18 +1,15 @@
 "use strict";
 function setupService(service, el, settings) {
     return importM(formatModuleName(service) + "Service", "services/" + formatModulePath(service)).then(function ($service) {
-        //        var href = el.href;
         if (!$service) {
             console.error("Service Not Found:", service);
-            //            window.location = href;
+            // TODO: reject with an alert ?!
             return;
         }
         settings.url = $service.getURL(settings);
-        el.href = settings.url;
-        var href = el.href;
         // just open url in case of errors
         if ($("#" + service + "-profile").length > 0) {
-            window.location = href;
+            window.location = settings.url;
             return;
         }
         // show spinner
@@ -29,7 +26,7 @@ function setupService(service, el, settings) {
             var serviceData = results[0], view = results[1], viewMore = results[2];
             var $modal;
             if (!serviceData || serviceData.error) {
-                window.location = href;
+                window.location = settings.url;
                 return;
             }
             // compile the current view template
@@ -37,7 +34,7 @@ function setupService(service, el, settings) {
             // setup the template data
             serviceData = $service.setup(serviceData, settings);
             if (!serviceData) {
-                window.location = href;
+                window.location = settings.url;
                 return;
             }
             $modal = $(template(serviceData)).modal().on("hidden.bs.modal", function () {

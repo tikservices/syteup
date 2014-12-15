@@ -399,25 +399,26 @@ function setupLinks(settings) {
         }
     }
     //CREATE LINKS ITEMS FOR ENABLED SERVICES
-    var main_nav = document.getElementsByClassName("main-nav")[0], i;
+    var main_nav = document.getElementById("main-nav"), i;
     main_nav.innerHTML = "";
     if (settings["blog_platform"].length)
-        addLinkItem(main_nav, "home", "#", "Home");
+        addLinkItem(main_nav, "home", "Home", "#");
     for (i = 0; i < enabledServices.length; i++) {
-        var service = enabledServices[i], $service = window[formatModuleName(service) + "Service"], text;
-        if ($service) {
+        var service = enabledServices[i];
+        var $service = window[formatModuleName(service) + "Service"];
+        var text;
+        if ($service)
             text = $service.displayName;
-            settings["services_settings"][service]["url"] = $service.getURL(settings["services_settings"][service]);
-        } else {
+        else
             text = service[0].toUpperCase() + service.slice(1);
-        }
-        addLinkItem(main_nav, service, settings["services_settings"][service]["url"], text);
+        addLinkItem(main_nav, service, text);
     }
     if (typeof settings["fields"]["contact"] === "string")
-        addLinkItem(main_nav, "contact", "mailto:" + settings["fields"]["contact"] + "?subject=Hello", "Contact");
+        addLinkItem(main_nav, "contact", "Contact", "mailto:" + settings["fields"]["contact"] + "?subject=Hello");
     linkClickHandler(settings);
+    processHash();
 }
-function addLinkItem(main_nav, name, href, text) {
+function addLinkItem(main_nav, name, text, href) {
     var li, link;
     li = document.createElement("li");
     link = document.createElement("a");
@@ -428,7 +429,7 @@ function addLinkItem(main_nav, name, href, text) {
     main_nav.appendChild(li);
 }
 function linkClickHandler(settings) {
-    $(".main-nav a").click(function (e) {
+    $("#main-nav a").click(function (e) {
         var newSelection;
         if (e.which === 2)
             return;
@@ -477,6 +478,15 @@ function adjustSelection(component, callback) {
     $(".main-nav").children("li").removeClass("sel");
     $("#" + component + "-item-link").parent().addClass("sel");
     window.currSelection = component;
+}
+function processHash() {
+    // if location hash is an item name, click it
+    var hash = window.location.hash.slice(1);
+    if (hash && hash.match(/^[\w-]+$/)) {
+        var item = document.getElementById(hash + "-item-link");
+        if (item && item.parentElement.parentElement.id === "main-nav")
+            item.click();
+    }
 }"use strict";
 asyncGet("config.json", {}).then(function (settings) {
     //FIELDS SETTINGS
@@ -548,18 +558,15 @@ function setupPlugin(plugin, settings) {
 }"use strict";
 function setupService(service, el, settings) {
     return importM(formatModuleName(service) + "Service", "services/" + formatModulePath(service)).then(function ($service) {
-        //        var href = el.href;
         if (!$service) {
             console.error("Service Not Found:", service);
-            //            window.location = href;
+            // TODO: reject with an alert ?!
             return;
         }
         settings.url = $service.getURL(settings);
-        el.href = settings.url;
-        var href = el.href;
         // just open url in case of errors
         if ($("#" + service + "-profile").length > 0) {
-            window.location = href;
+            window.location = settings.url;
             return;
         }
         // show spinner
@@ -576,7 +583,7 @@ function setupService(service, el, settings) {
             var serviceData = results[0], view = results[1], viewMore = results[2];
             var $modal;
             if (!serviceData || serviceData.error) {
-                window.location = href;
+                window.location = settings.url;
                 return;
             }
             // compile the current view template
@@ -584,7 +591,7 @@ function setupService(service, el, settings) {
             // setup the template data
             serviceData = $service.setup(serviceData, settings);
             if (!serviceData) {
-                window.location = href;
+                window.location = settings.url;
                 return;
             }
             $modal = $(template(serviceData)).modal().on("hidden.bs.modal", function () {
