@@ -119,7 +119,7 @@ make -j1 SRC=~/syteup/src DIST=/srv/website/www CONF=~/my_config.json
 ### General Setup
 
 
-Change all avatars images on [src/imgs](src/imgs) folder (pic.img, favicon.ico,
+Change all avatars images on [src/imgs](src/imgs) folder (pic.png, favicon.ico,
 apple-touch-icon\*.png) by your avatar images with same sizes.
 
 Setup the options of `fields` object on `config.json` file
@@ -165,7 +165,7 @@ Next, you need to setup the options of the choosen platform on the
     "blogger": {
       "blog_url": String, // your blog url
       "blog_id": String, // your blog id number (you can use https://developers.google.com/apis-explorer/#p/blogger/v3/blogger.blogs.getByUrl)
-      "api_key": String, // your api key (NEED MORE DOCUMENTATION)
+      "api_key": String, // your api key (TODO: NEED MORE DOCUMENTATION)
       "tag_slug": String // [optional] tags of posts to import (comma separated)
     }
 ```
@@ -175,7 +175,7 @@ Next, you need to setup the options of the choosen platform on the
 ```javascript
     "tumblr": {
       "blog_url": String, // your blog url
-      "api_key": String, // your api key (NEED MORE DOCUMENTATION)
+      "api_key": String, // your api key (TODO: NEED MORE DOCUMENTATION)
       "tag_slug": String // [optional] tag of posts to import (just one tag)
     }
 ```
@@ -191,7 +191,7 @@ Disabled services can safely removed from booth `services` and
 
 #### Github
 
-enable `services.github` and confgure `services_settings.github` as follow:
+enable `services.github` and configure `services_settings.github` as follow:
 ```javascript
     "github": {
       "url": String, // url of your profile page
@@ -201,7 +201,7 @@ enable `services.github` and confgure `services_settings.github` as follow:
 
 #### StackOverflow
 
-enable `services.stackoverflow` and confgure `services_settings.stackoverflow` as follow:
+enable `services.stackoverflow` and configure `services_settings.stackoverflow` as follow:
 ```javascript
     "stackoverflow": {
       "url": String, // url of your profile page
@@ -211,7 +211,7 @@ enable `services.stackoverflow` and confgure `services_settings.stackoverflow` a
 
 #### Flickr
 
-enable `services.flickr` and confgure `services_settings.flickr` as follow:
+enable `services.flickr` and configure `services_settings.flickr` as follow:
 ```javascript
     "flickr": {
       "url": String, // url of your profile page
@@ -221,7 +221,7 @@ enable `services.flickr` and confgure `services_settings.flickr` as follow:
 
 #### Bitbucket
 
-enable `services.bitbucket` and confgure `services_settings.bitbucket` as follow:
+enable `services.bitbucket` and configure `services_settings.bitbucket` as follow:
 ```javascript
     "bitbucket": {
       "url": String, // url of your profile page
@@ -232,12 +232,12 @@ enable `services.bitbucket` and confgure `services_settings.bitbucket` as follow
 
 #### SoundCloud
 
-enable `services.soundcloud` and confgure `services_settings.soundcloud` as follow:
+enable `services.soundcloud` and configure `services_settings.soundcloud` as follow:
 ```javascript
     "soundcloud": {
       "url": String, // url of your profile page
       "username": String, // your username
-      "client_id": String, // your client_id (NEED MORE DOCUMENTATION)
+      "client_id": String, // your client_id (TODO: NEED MORE DOCUMENTATION)
       "show_artwork": Boolean, // show tracks artworks
       "player_color": String // color of tracks player
     }
@@ -245,18 +245,18 @@ enable `services.soundcloud` and confgure `services_settings.soundcloud` as foll
 
 #### Last.fm
 
-enable `services.lastfm` and confgure `services_settings.lastfm` as follow:
+enable `services.lastfm` and configure `services_settings.lastfm` as follow:
 ```javascript
     "lastfm": {
       "url": String, // url of your profile page
       "username": String, // your username
-      "api_key": String // your api key (NEED MORE DOCUMENTATION)
+      "api_key": String // your api key (TODO: NEED MORE DOCUMENTATION)
     }
 ```
 
 #### Dribbble
 
-enable `services.dribbble` and confgure `services_settings.dribbble` as follow:
+enable `services.dribbble` and configure `services_settings.dribbble` as follow:
 ```javascript
     "dribbble": {
       "url": String, // url of your profile page
@@ -266,62 +266,142 @@ enable `services.dribbble` and confgure `services_settings.dribbble` as follow:
 
 #### Youtube
 
-enable `services.youtube` and confgure `services_settings.youtube` as follow:
+enable `services.youtube` and configure `services_settings.youtube` as follow:
 ```javascript
     "youtube": {
       "url": String, // url of your profile page
       "username": String, // your username
-      "api_key": String // your api key (NEED MORE DOCUMENTATION)
+      "api_key": String // your api key (TODO: NEED MORE DOCUMENTATION)
     }
 ```
 
 #### Google+
 
-enable `services.gplus` and confgure `services_settings.gplus` as follow:
+enable `services.gplus` and configure `services_settings.gplus` as follow:
 ```javascript
     "gplus": {
       "url": String, // url of your profile page
       "user_id": String, // your id number
-      "api_key": String // your api key (NEED MORE DOCUMENTATION)
+      "api_key": String // your api key (TODO: NEED MORE DOCUMENTATION)
     }
 ```
 
 #### Facebook
 
-enable `services.facebook` and confgure `services_settings.facebook` as follow:
+enable `services.facebook` and configure `services_settings.facebook` as follow:
 ```javascript
     "facebook": {
       "url": String, // url of your profile page
       "username": String, // your username
-      "access_token": String // your access token key (NEED MORE DOCUMENTATION)
+      "access_token": String // your access token key (TODO: NEED MORE DOCUMENTATION)
     }
 ```
 
 #### Instagram
 
-enable `services.instagram` and confgure `services_settings.instagram` as follow:
+enable `services.instagram` and configure `services_settings.instagram` as follow:
 ```javascript
     "instagram": {
       "url": String, // url of your profile page
-      "access_token": String, // your access token key (NEED MORE DOCUMENTATION)
+      "access_token": String, // your access token key (TODO: NEED MORE DOCUMENTATION)
       "user_id": String // you id number
     }
 ```
 
 #### LinkedIn
 
-enable `services.linkedin` and confgure `services_settings.linkedin` as follow:
+enable `services.linkedin` and configure `services_settings.linkedin` as follow:
 ```javascript
     "linkedin": {
       "url": String, // url of your profile page
-      "access_token": String // your access token key (NEED MORE DOCUMENTATION)
+      "access_token": String // your access token key (TODO: NEED MORE DOCUMENTATION)
     }
 ```
 
 ### Plugins setup
 
+Enabling a plugin depend on the type of plugin, either it's a generic plugin or
+a blog plugin. For generic plugins, set `plugins.<plugin_name>` to `true`. and
+for blogs plugins, set `blogs_settings.plugins.<plugin_name>` to `true`.
+
+Settings of every plugin are availbale on the `plugins_settings.<plugin_name>`
+object on `config.json` file as follow:
+
+#### Disqus
+
+This plugin will enable disqus comments on every post. Just
+enable `blogs_settings.plugins.disqus` and configure `plugins_settings.disqus` as follow:
+```javascript
+    "disqus": {
+      "url": String, // [optional] your disqus profile url
+      "shortname": String, // your username
+      "just_count": Boolean // [optional] just show the number of comments instead of the 'Show Comments' buttons
+    }
 ```
-TODO
+
+#### ShareThis
+
+This plugin will add ShareThis widget to every post. Just
+enable `blogs_settings.plugins.sharethis` and configure `plugins_settings.sharethis`
+as follow:
+```javascript
+    "sharethis": {
+      "publisher_key": String // your key
+    }
+```
+
+#### RSS
+
+This plugin will add RSS entry that any browser can subscribe to. Just
+enable `plugins.rss` and configure `plugins_settings.rss` as follow:
+```javascript
+    "rss": {
+      "url": String // the url of your rss feed file or an external rss feed from your blog platform
+    }
+```
+
+#### Google Analytics
+
+This plugin will enable Google Analytics tracking. Just
+enable `plugins.google_analytics` and configure `plugins_settings.google_analytics`
+ as follow:
+```javascript
+    "google_analytics": {
+      "tracking_id": String // your tracking id e.g: UA-XXXXXXX-2
+    }
+```
+
+#### Woopra
+
+This plugin will enable Woopra tracking. Just
+enable `plugins.woopra` and configure `plugins_settings.woopra` as follow:
+```javascript
+    "woopra": {
+      "tracking_domain": String, // TODO
+      "idle_timeout": Number, // TODO
+      "include_query": Boolean // TODO
+    }
+```
+
+#### Segment
+
+This plugin will enable Segment services. Just
+enable `plugins.segment` and configure `plugins_settings.segment` as follow:
+```javascript
+    "segment": {
+      "write_key": String // your write key
+    }
+```
+
+#### Gratipay Widget
+
+This plugin will add Gratupay widget bollow the navigation menu. Just
+enable `plugins.gratipay_widget` and configure `plugins_settings.gratipay_widget`
+as follow:
+```javascript
+    "gratipay_widget": {
+      "username": String // your gratipay username
+    }
 ```
 
 ## Credit
