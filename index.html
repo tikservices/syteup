@@ -3,7 +3,7 @@
 <!doctype html>
 <html>
 
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Syteup by {{ site.github.owner_name | xml_escape }}</title>
@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
     <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script defer src="javascripts/respond.js"></script>
+    <script defer src="https://google-code-prettify.googlecode.com/svn/loader/prettify.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://google-code-prettify.googlecode.com/svn/trunk/styles/sons-of-obsidian.css"></link>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -19,56 +21,89 @@
     <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-  </head>
+</head>
 
-  <body>
+<body>
 
     <div id="header">
-      <nav>
-        <li class="fork"><a href="{{ site.github.repository_url }}">View On GitHub</a>
-        </li>
-        <li class="downloads"><a href="{{ site.github.zip_url }}">ZIP</a>
-        </li>
-        <li class="downloads"><a href="{{ site.github.tar_url }}">TAR</a>
-        </li>
-        <li class="title">DOWNLOADS</li>
-      </nav>
+        <nav>
+            <li class="fork"><a href="{{ site.github.repository_url }}">View On GitHub</a>
+            </li>
+            <li class="downloads"><a href="{{ site.github.zip_url }}">ZIP</a>
+            </li>
+            <li class="downloads"><a href="{{ site.github.tar_url }}">TAR</a>
+            </li>
+            <li class="title">DOWNLOADS</li>
+        </nav>
     </div>
     <!-- end header -->
 
     <div class="wrapper">
 
-      <section>
-        <div id="title">
-          <h1>Syteup</h1>
-          <p>{{ site.github.project_tagline | xml_escape }}</p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name | xml_escape }}</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
-        </div>
-        <div id="md">Loading Content...</div>
-      </section>
+        <section>
+            <div id="title">
+                <h1>Syteup</h1>
+                <p>{{ site.github.project_tagline | xml_escape }}</p>
+                <hr>
+                <span class="credits left">Project maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name | xml_escape }}</a></span>
+                <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+            </div>
+            <div id="md">Loading Content...</div>
+        </section>
     </div>
 
     <script>
-      function el(id) {
-        return document.getElementById(id);
-      }
-      var xhr = new XMLHttpRequest();
-      xhr.open("GET", "{{ site.github.api_url }}/repos/{{ site.github.repository_nwo }}/readme");
-      xhr.setRequestHeader("Accept", "application/vnd.github.v3.html");
-      xhr.onload = function() {
-        if (this.status !== 200) el("md").innerHTML = "<p>Ooops! Internal Error :(</p>";
-        else {
-          el("md").innerHTML = this.responseText;
+        // wrap github languages alias to google-code-prettify alias
+        var lang_wrapper = {
+            "mediawiki": "wiki",
+            "javascript": "js",
+            "python": "py",
+            "shell": "sh",
+            "ruby": "rb",
+            "java": "java",
+            "c": "c",
+            "cpp": "cpp",
+            "html": "html",
+            "css": "css",
+            "perl": "perl",
+            "xml": "xml",
+            "erlang": "erl"
+        };
+
+        function el(id) {
+            return document.getElementById(id);
         }
-      };
-      xhr.onerror = function() {
-        el("md").innerHTML = "<p>Ooops! Internal Error :(</p>";
-      };
-      xhr.send();
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "{{ site.github.api_url }}/repos/{{ site.github.repository_nwo }}/readme");
+        xhr.setRequestHeader("Accept", "application/vnd.github.v3.html");
+        xhr.onload = function() {
+            if (this.status !== 200) el("md").innerHTML = "<p>Ooops! Internal Error :(</p>";
+            else {
+                el("md").innerHTML = this.responseText;
+                Array.forEach(el("md").getElementsByClassName("highlight"), function(e, i) {
+                    var lang = e.className.match(/highlight-([^ ]*)/);
+                    if (lang && lang_wrapper[lang[1]])
+                        lang = lang_wrapper[lang[1]];
+                    else return;
+
+                    var pre = e.getElementsByTagName("pre")[0];
+                    pre.className = "prettyprint";
+                    var code = document.createElement("code");
+                    code.className = "language-" + lang;
+
+                    code.textContent = e.textContent;
+                    pre.innerHTML = "";
+                    pre.appendChild(code);
+                });
+                if (window["prettyPrint"]) prettyPrint();
+            }
+        };
+        xhr.onerror = function() {
+            el("md").innerHTML = "<p>Ooops! Internal Error :(</p>";
+        };
+        xhr.send();
     </script>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-  </body>
+</body>
 
 </html>
