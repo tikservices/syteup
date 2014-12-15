@@ -70,4 +70,4 @@ minify-html:
 	html-minifier $(HTMLMINIFIERFLAGS) $(DIST)/index.html -o $(DIST)/index.html
 
 rss:
-	node build/rss-generator.js $(SRC) $(CONF) $(DIST)
+	node tools/rss-generator.js $(SRC) $(CONF) $(DIST)
