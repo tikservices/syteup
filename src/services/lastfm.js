@@ -2,6 +2,10 @@
     "use strict";
     var DISPLAY_NAME = "Last.fm";
     var API_URL = "https://ws.audioscrobbler.com/2.0/";
+    var BASE_URL = "https://www.last.fm/user/";
+    function getURL(settings) {
+        return BASE_URL + settings.username;
+    }
     function setupLastfm(lastfmData, settings) {
         /* Add extra helper to parse out the #text fields in context passed to
          * handlebars.  The '#' character is reserved by the handlebars templating
@@ -58,6 +62,7 @@
     exportService({
         displayName: DISPLAY_NAME,
         template: "lastfm.html",
+        getURL: getURL,
         setup: setupLastfm,
         fetch: fetchData
     }, "lastfm");

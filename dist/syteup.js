@@ -381,7 +381,6 @@ function setupBlogHeaderScroll() {
         });
     });
 }"use strict";
-var $url;
 var allComponents = [], enabledServices = [];
 window.currSelection = "home";
 function setupLinks(settings) {
@@ -400,58 +399,63 @@ function setupLinks(settings) {
         }
     }
     //CREATE LINKS ITEMS FOR ENABLED SERVICES
-    var main_nav = document.getElementsByClassName("main-nav")[0];
+    var main_nav = document.getElementsByClassName("main-nav")[0], i;
     main_nav.innerHTML = "";
     if (settings["blog_platform"].length)
-        addLinkItem(main_nav, "/", "home-item-link", "Home");
-    var i;
+        addLinkItem(main_nav, "home", "#", "Home");
     for (i = 0; i < enabledServices.length; i++) {
-        var service = enabledServices[i];
-        var $service = window[formatModuleName(service) + "Service"];
-        var text;
-        if ($service)
+        var service = enabledServices[i], $service = window[formatModuleName(service) + "Service"], text;
+        if ($service) {
             text = $service.displayName;
-        else
+            settings["services_settings"][service]["url"] = $service.getURL(settings["services_settings"][service]);
+        } else {
             text = service[0].toUpperCase() + service.slice(1);
-        addLinkItem(main_nav, settings["services_settings"][service]["url"], service + "-item-link", text);
+        }
+        addLinkItem(main_nav, service, settings["services_settings"][service]["url"], text);
     }
     if (typeof settings["fields"]["contact"] === "string")
-        addLinkItem(main_nav, "mailto:" + settings["fields"]["contact"] + "?subject=Hello", "contact-item-link", "Contact");
+        addLinkItem(main_nav, "contact", "mailto:" + settings["fields"]["contact"] + "?subject=Hello", "Contact");
     linkClickHandler(settings);
 }
-function addLinkItem(main_nav, href, id, text) {
+function addLinkItem(main_nav, name, href, text) {
     var li, link;
     li = document.createElement("li");
     link = document.createElement("a");
-    link.href = href;
-    link.id = id;
+    link.href = href || "#" + name;
+    link.id = name + "-item-link";
     link.textContent = text;
     li.appendChild(link);
     main_nav.appendChild(li);
 }
 function linkClickHandler(settings) {
     $(".main-nav a").click(function (e) {
+        var newSelection;
         if (e.which === 2)
             return;
         e.preventDefault();
         e.stopPropagation();
-        if (this.href === $url)
-            return;
-        $url = this.href;
+        // get the name of newly selected item
         if (this.id === "home-item-link") {
-            adjustSelection("home");
-            return;
+            newSelection = "home";
         } else {
             var i;
             for (i = 0; i < enabledServices.length; i++) {
                 var service = enabledServices[i];
                 if (this.id === service + "-item-link") {
-                    adjustSelection(service, setupService.bind(this, service, $url, this, settings["services_settings"][service]));
-                    return;
+                    newSelection = service;
+                    break;
                 }
             }
         }
-        window.location = this.href;
+        // then  handle the click depending on this newly selected item name
+        if (newSelection === undefined)
+            window.location = this.href;
+        else if (newSelection === currSelection)
+            return;
+        else if (newSelection === "home")
+            adjustSelection("home");
+        else
+            adjustSelection(newSelection, setupService.bind(this, newSelection, this, settings["services_settings"][newSelection]));
     });
 }
 function adjustSelection(component, callback) {
@@ -472,8 +476,6 @@ function adjustSelection(component, callback) {
     }
     $(".main-nav").children("li").removeClass("sel");
     $("#" + component + "-item-link").parent().addClass("sel");
-    if (component === "home")
-        $url = null;
     window.currSelection = component;
 }"use strict";
 asyncGet("config.json", {}).then(function (settings) {
@@ -544,16 +546,19 @@ function setupPlugin(plugin, settings) {
         });
     });
 }"use strict";
-function setupService(service, url, el, settings) {
+function setupService(service, el, settings) {
     return importM(formatModuleName(service) + "Service", "services/" + formatModulePath(service)).then(function ($service) {
+        //        var href = el.href;
+        if (!$service) {
+            console.error("Service Not Found:", service);
+            //            window.location = href;
+            return;
+        }
+        settings.url = $service.getURL(settings);
+        el.href = settings.url;
         var href = el.href;
         // just open url in case of errors
         if ($("#" + service + "-profile").length > 0) {
-            window.location = href;
-            return;
-        }
-        if (!$service) {
-            console.error("Service Not Found:", service);
             window.location = href;
             return;
         }

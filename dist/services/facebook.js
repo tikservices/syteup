@@ -2,6 +2,10 @@
     "use strict";
     var DISPLAY_NAME = "Facebook";
     var API_URL = "https://graph.facebook.com/v2.1/";
+    var BASE_URL = "https://facebook.com/";
+    function getURL(settings) {
+        return BASE_URL + settings.username;
+    }
     function setupFacebook(facebookData, settings) {
         facebookData.url = "https://facebook.com/" + settings.username;
         facebookData.image = "imgs/pic.png";
@@ -37,6 +41,7 @@
     exportService({
         displayName: DISPLAY_NAME,
         template: "facebook.html",
+        getURL: getURL,
         setup: setupFacebook,
         fetch: fetchData
     }, "facebook");

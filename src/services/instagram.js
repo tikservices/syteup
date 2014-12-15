@@ -2,7 +2,11 @@
     "use strict";
     var DISPLAY_NAME = "Instagram";
     var API_URL = "https://api.instagram.com/v1/";
+    var BASE_URL = "http://instagram.com/";
     var nextId;
+    function getURL(settings) {
+        return BASE_URL + settings.username;
+    }
     function setupInstagram(instagramData, settings) {
         if (instagramData.media === 0) {
             return;
@@ -51,6 +55,7 @@
         displayName: DISPLAY_NAME,
         template: "instagram.html",
         templateMore: "instagram-more.html",
+        getURL: getURL,
         setup: setupInstagram,
         fetch: fetchData,
         supportMore: true,

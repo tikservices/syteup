@@ -2,6 +2,10 @@
     "use strict";
     var DISPLAY_NAME = "Google+";
     var API_URL = "https://www.googleapis.com/plus/v1/";
+    var BASE_URL = "https://plus.google.com/";
+    function getURL(settings) {
+        return BASE_URL + settings.user_id;
+    }
     function setupGplus(gplusData, settings) {
         $.each(gplusData.activities, function (i, t) {
             if (t.verb === "post")
@@ -41,6 +45,7 @@
     exportService({
         displayName: DISPLAY_NAME,
         template: "gplus.html",
+        getURL: getURL,
         setup: setupGplus,
         fetch: fetchData
     }, "gplus");

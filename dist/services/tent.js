@@ -7,6 +7,9 @@
         });
         return text;
     }
+    function getURL(settings) {
+        return settings.url;
+    }
     function setupTent(tentData, settings) {
         var tent_posts = tentData[0], tent_profile = tentData[1], tent_followers = tentData[2], tent_followings = tentData[3], tent_posts_count = tentData[4];
         var user = tent_profile["https://tent.io/types/info/basic/v0.1.0"];
@@ -48,6 +51,7 @@
     exportService({
         displayName: DISPLAY_NAME,
         template: "tent.html",
+        getURL: getURL,
         setup: setupTent,
         fetch: fetchData
     }, "tent");

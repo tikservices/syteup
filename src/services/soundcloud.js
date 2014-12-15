@@ -2,6 +2,10 @@
     "use strict";
     var DISPLAY_NAME = "SoundCloud";
     var API_URL = "https://api.soundcloud.com/";
+    var BASE_URL = "https://soundcloud.com/";
+    function getURL(settings) {
+        return BASE_URL + settings.username;
+    }
     function setupSoundcloud(soundcloudData, settings) {
         return soundcloudData;
     }
@@ -23,6 +27,7 @@
     exportService({
         displayName: DISPLAY_NAME,
         template: "soundcloud.html",
+        getURL: getURL,
         setup: setupSoundcloud,
         fetch: fetchData
     }, "soundcloud");

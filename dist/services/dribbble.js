@@ -2,6 +2,10 @@
     "use strict";
     var DISPLAY_NAME = "Dribbble";
     var API_URL = "https://api.dribbble.com/players/";
+    var BASE_URL = "https://dribbble.com/";
+    function getURL(settings) {
+        return BASE_URL + settings.username;
+    }
     function setupDribbble(dribbbleData, settings) {
         var user = dribbbleData.shots[0].player;
         user.following_count = numberWithCommas(user.following_count);
@@ -18,6 +22,7 @@
     exportService({
         displayName: DISPLAY_NAME,
         template: "dribbble.html",
+        getURL: getURL,
         setup: setupDribbble,
         fetch: fetchData
     }, "dribbble");

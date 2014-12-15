@@ -1,6 +1,10 @@
 (function (window) {
     "use strict";
     var DISPLAY_NAME = "Flickr";
+    var BASE_URL = "https://www.flickr.com/photos/";
+    function getURL(settings) {
+        return BASE_URL + settings.username;
+    }
     function setupFlickr(flickrData, settings) {
         if (flickrData.items === 0) {
             return;
@@ -17,6 +21,7 @@
     exportService({
         displayName: DISPLAY_NAME,
         template: "flickr.html",
+        getURL: getURL,
         setup: setupFlickr,
         fetch: fetchData
     }, "flickr");

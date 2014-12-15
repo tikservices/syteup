@@ -2,6 +2,10 @@
     "use strict";
     var DISPLAY_NAME = "StackOverflow";
     var API_URL = "https://api.stackexchange.com/2.2/";
+    var BASE_URL = "https://stackoverflow.com/users/";
+    function getURL(settings) {
+        return BASE_URL + settings.user_id + "/" + settings.username;
+    }
     function setupStackoverflow(stackoverflowData, settings) {
         var user = stackoverflowData.user;
         var badge_count = user.badge_counts.bronze + user.badge_counts.silver + user.badge_counts.gold;
@@ -24,8 +28,8 @@
     }
     function fetchData(settings) {
         return Promise.all([
-            asyncGet(API_URL + "users/" + settings.userid + "?site=stackoverflow&filter=!-*f(6q3e0kZX"),
-            asyncGet(API_URL + "users/" + settings.userid + "/timeline?site=stackoverflow")
+            asyncGet(API_URL + "users/" + settings.user_id + "?site=stackoverflow&filter=!-*f(6q3e0kZX"),
+            asyncGet(API_URL + "users/" + settings.user_id + "/timeline?site=stackoverflow")
         ]).then(function (res) {
             return Promise.resolve({
                 user: res[0]["items"][0],
@@ -36,6 +40,7 @@
     exportService({
         displayName: DISPLAY_NAME,
         template: "stackoverflow.html",
+        getURL: getURL,
         setup: setupStackoverflow,
         fetch: fetchData
     }, "stackoverflow");

@@ -2,6 +2,10 @@
     "use strict";
     var DISPLAY_NAME = "Foursquare";
     var API_URL = "";
+    var BASE_URL = "";
+    function getURL(settings) {
+        return BASE_URL + settings.username;
+    }
     function setupFoursquare(foursquareData, settings) {
         var photo_dict = foursquareData.user["photo"];
         if (photo_dict) {
@@ -52,6 +56,7 @@
     exportService({
         displayName: DISPLAY_NAME,
         template: "foursquare.html",
+        getURL: getURL,
         setup: setupFoursquare,
         fetch: fetchData
     }, "foursquare");

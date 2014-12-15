@@ -2,6 +2,10 @@
     "use strict";
     var DISPLAY_NAME = "Bitbucket";
     var API_URL = "https://api.bitbucket.org/1.0/";
+    var BASE_URL = "https://bitbucket.org/";
+    function getURL(settings) {
+        return BASE_URL + settings.username;
+    }
     function setupBitbucket(bitbucketData, settings) {
         bitbucketData.user.followers = numberWithCommas(bitbucketData.user.followers);
         return bitbucketData;
@@ -36,6 +40,7 @@
     exportService({
         displayName: DISPLAY_NAME,
         template: "bitbucket.html",
+        getURL: getURL,
         setup: setupBitbucket,
         fetch: fetchData
     }, "bitbucket");

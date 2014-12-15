@@ -2,6 +2,10 @@
     "use strict";
     var DISPLAY_NAME = "Twitter";
     var API_URL = "https://api.twitter.com/1.1/";
+    var BASE_URL = "https://twitter.com/";
+    function getURL(settings) {
+        return BASE_URL + settings.username;
+    }
     function twitterLinkify(text) {
         text = text.replace(/(https?:\/\/\S+)/gi, function (s) {
             return "<a href='" + s + "'>" + s + "</a>";
@@ -47,6 +51,7 @@
     exportService({
         displayName: DISPLAY_NAME,
         template: "twitter.html",
+        getURL: getURL,
         setup: setupTwitter,
         fetch: fetchData
     }, "twitter");

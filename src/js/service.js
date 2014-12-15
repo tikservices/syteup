@@ -1,14 +1,17 @@
 "use strict";
-function setupService(service, url, el, settings) {
+function setupService(service, el, settings) {
     return importM(formatModuleName(service) + "Service", "services/" + formatModulePath(service)).then(function ($service) {
+        //        var href = el.href;
+        if (!$service) {
+            console.error("Service Not Found:", service);
+            //            window.location = href;
+            return;
+        }
+        settings.url = $service.getURL(settings);
+        el.href = settings.url;
         var href = el.href;
         // just open url in case of errors
         if ($("#" + service + "-profile").length > 0) {
-            window.location = href;
-            return;
-        }
-        if (!$service) {
-            console.error("Service Not Found:", service);
             window.location = href;
             return;
         }

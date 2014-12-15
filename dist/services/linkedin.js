@@ -2,6 +2,10 @@
     "use strict";
     var DISPLAY_NAME = "LinkedIn";
     var API_URL = "https://api.linkedin.com/v1";
+    var BASE_URL = "https://www.linkedin.com/in/";
+    function getURL(settings) {
+        return BASE_URL + settings.username;
+    }
     function setupLinkedin(linkedinData, settings) {
         linkedinData.profile["profile_url"] = "http://linkedin.com/profile/view?id=" + linkedinData.profile["id"];
         linkedinData.profile["summary"] = linkedinData.profile["summary"].replace("\n", "<br />", "g");
@@ -51,6 +55,7 @@
     exportService({
         displayName: DISPLAY_NAME,
         template: "linkedin.html",
+        getURL: getURL,
         setup: setupLinkedin,
         fetch: fetchData
     }, "linkedin");
