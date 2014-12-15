@@ -165,20 +165,24 @@ Next, you need to setup the options of the choosen platform on the
 "blogger": {
   "blog_url": String, // your blog url
   "blog_id": String, // your blog id number (you can use https://developers.google.com/apis-explorer/#p/blogger/v3/blogger.blogs.getByUrl)
-  "api_key": String, // your api key (TODO: NEED MORE DOCUMENTATION)
+  "api_key": String, // your api key (See Below)
   "tag_slug": String // [optional] tags of posts to import (comma separated)
 }
 ```
+Steps to get your `api_key` are explained on the youtube section below.
 
 #### Tumblr
 
 ```javascript
 "tumblr": {
   "blog_url": String, // your blog url
-  "api_key": String, // your api key (TODO: NEED MORE DOCUMENTATION)
+  "api_key": String, // your api key (See Below)
   "tag_slug": String // [optional] tag of posts to import (just one tag)
 }
 ```
+To get your `api_key`, register a new app [here](https://www.tumblr.com/oauth/register)
+with any name and your website url as the default callback url. The "OAuth
+Consumer Key" of the application is your `api_key`.
 
 ### Services Setup
 
@@ -234,11 +238,14 @@ enable `services.soundcloud` and configure `services_settings.soundcloud` as fol
 ```javascript
 "soundcloud": {
   "username": String, // your username
-  "client_id": String, // your client_id (TODO: NEED MORE DOCUMENTATION)
+  "client_id": String, // your client_id (See Below)
   "show_artwork": Boolean, // show tracks artworks
   "player_color": String // color of tracks player
 }
 ```
+To get an `client_id`, register an app [here](http://soundcloud.com/you/apps)
+with any name you want, after you accept their Developer Policies, you get your
+Client ID.
 
 #### Last.fm
 
@@ -246,9 +253,12 @@ enable `services.lastfm` and configure `services_settings.lastfm` as follow:
 ```javascript
 "lastfm": {
   "username": String, // your username
-  "api_key": String // your api key (TODO: NEED MORE DOCUMENTATION)
+  "api_key": String // your api key (See Below)
 }
 ```
+To get an `api_key`, register a non comercial account
+[here](http://www.last.fm/api/account/create) with any name and a small
+description, then you will get your API Key.
 
 #### Dribbble
 
@@ -265,9 +275,15 @@ enable `services.youtube` and configure `services_settings.youtube` as follow:
 ```javascript
 "youtube": {
   "username": String, // your username
-  "api_key": String // your api key (TODO: NEED MORE DOCUMENTATION)
+  "api_key": String // your api key (See Below)
 }
 ```
+To get an `api_key`, create a project
+[here](https://console.developers.google.com/) with any name then click "Enable
+an API" and enable the API you need ("YouTube Data API v3" for YouTube,
+"Blogger API v3" for Blogger, "Google+ API" for Google+). Then on "Cendentials"
+tab, click "Create a new Key" then "Browser Key" and enter your website url then
+"Create" to get your API KEY.
 
 #### Google+
 
@@ -275,9 +291,10 @@ enable `services.gplus` and configure `services_settings.gplus` as follow:
 ```javascript
 "gplus": {
   "user_id": String, // your user id number
-  "api_key": String // your api key (TODO: NEED MORE DOCUMENTATION)
+  "api_key": String // your api key (See Below)
 }
 ```
+Steps to get your `api_key` are explained on the youtube section above.
 
 #### Facebook
 
@@ -285,9 +302,18 @@ enable `services.facebook` and configure `services_settings.facebook` as follow:
 ```javascript
 "facebook": {
   "username": String, // your username
-  "access_token": String // your access token key (TODO: NEED MORE DOCUMENTATION)
+  "access_token": String // your access token key (See Below)
 }
 ```
+to get you read only `access_token`, create a web application
+[here](https://developers.facebook.com/quickstarts/?platform=web), then choose
+it from [here](https://developers.facebook.com/apps/) next "Settings" next
+"Advanced" and add "http://lejenome.me/tests/syteup-settings/facebook.html" to
+"Valid OAuth redirect URIs" and enable "Client OAuth Login" and copy your APP
+ID and APP Secret from the "Dashboard" to
+[here](http://lejenome.me/tests/syteup-settings/facebook.html) which will help
+you request your access token. Still need more explainations? Sorry, it
+really sucks.
 
 #### Instagram
 
@@ -306,9 +332,16 @@ enable `services.linkedin` and configure `services_settings.linkedin` as follow:
 ```javascript
 "linkedin": {
   "username": String, // your username
-  "access_token": String // your access token key (TODO: NEED MORE DOCUMENTATION)
+  "access_token": String // your access token key (See Below)
 }
 ```
+To get your read only `access_token`, register a new app
+[here](https://www.linkedin.com/secure/developer). Select "r_basicprofile" and
+"r_fullprofile" as your default scopes and add
+"http://lejenome.me/tests/syteup-settings/linkedin.html?client_id=<YOUR_API_KEY>&client_secret=<YOUR_SECRET_API>"
+to "OAuth 2.0 Redirect URLs" after replacing the two parameters with your
+API Key and your Secret Key. Then use this
+[link](http://lejenome.me//tests/syteup-settings/linkedin.html) to request your access token.
 
 ### Plugins setup
 
