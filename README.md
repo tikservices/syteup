@@ -125,21 +125,21 @@ apple-touch-icon\*.png) by your avatar images with same sizes.
 Setup the options of `fields` object on `config.json` file
 
 ```javascript
-  "fields": {
-    "username": String, // the pseudonym (nickname) you mostly known by
-    "realname": String, // your complete real name
-    "description": String, // a very short 'About Me' line
-    "url": String, // the url of your website
-    "contact": {
-      "email": String, // your email
-      "mobile": String, // [optional] your phone number e.g: (216) 00000000
-      "tel": String, // [optional] your telephone number e.g: (216) 00000000
-      "fax": String, // [optional] your fax number e.g: (216) 1111111
-      "address": String, // [optional] just a short address e.g: Texas, USA
-      "pgp_url": String, // [optional] url of your public pgp key file on your site e.g: /pubkey.asc
-      "fingerprint": String, // [optional] your pgp key fingerprint e.g: 3A1D ADDD 332D 2EFB F816  21C3 84D8 5721 7365 9C9D
-      "ssh_url": String // [optional] your ssh public certificate file url on your site e.g: /id_rsa.pub
-    }
+"fields": {
+  "username": String, // the pseudonym (nickname) you mostly known by
+  "realname": String, // your complete real name
+  "description": String, // a very short 'About Me' line
+  "url": String, // the url of your website
+  "contact": {
+    "email": String, // your email
+    "mobile": String, // [optional] your phone number e.g: (216) 00000000
+    "tel": String, // [optional] your telephone number e.g: (216) 00000000
+    "fax": String, // [optional] your fax number e.g: (216) 1111111
+    "address": String, // [optional] just a short address e.g: Texas, USA
+    "pgp_url": String, // [optional] url of your public pgp key file on your site e.g: /pubkey.asc
+    "fingerprint": String, // [optional] your pgp key fingerprint e.g: 3A1D ADDD 332D 2EFB F816  21C3 84D8 5721 7365 9C9D
+    "ssh_url": String // [optional] your ssh public certificate file url on your site e.g: /id_rsa.pub
+  }
 ```
 
 ### Blog Setup
@@ -153,31 +153,31 @@ Next, you need to setup the options of the choosen platform on the
 #### Wordpress
 
 ```javascript
-    "wordpress": {
-      "blog_url": String, // the url of your wordpress.com blog
-      "tag_slug": String // [optional] tags of posts to import (space separated)
-    }
+"wordpress": {
+  "blog_url": String, // the url of your wordpress.com blog
+  "tag_slug": String // [optional] tags of posts to import (space separated)
+}
 ```
 
 #### Blogger
 
 ```javascript
-    "blogger": {
-      "blog_url": String, // your blog url
-      "blog_id": String, // your blog id number (you can use https://developers.google.com/apis-explorer/#p/blogger/v3/blogger.blogs.getByUrl)
-      "api_key": String, // your api key (TODO: NEED MORE DOCUMENTATION)
-      "tag_slug": String // [optional] tags of posts to import (comma separated)
-    }
+"blogger": {
+  "blog_url": String, // your blog url
+  "blog_id": String, // your blog id number (you can use https://developers.google.com/apis-explorer/#p/blogger/v3/blogger.blogs.getByUrl)
+  "api_key": String, // your api key (TODO: NEED MORE DOCUMENTATION)
+  "tag_slug": String // [optional] tags of posts to import (comma separated)
+}
 ```
 
 #### Tumblr
 
 ```javascript
-    "tumblr": {
-      "blog_url": String, // your blog url
-      "api_key": String, // your api key (TODO: NEED MORE DOCUMENTATION)
-      "tag_slug": String // [optional] tag of posts to import (just one tag)
-    }
+"tumblr": {
+  "blog_url": String, // your blog url
+  "api_key": String, // your api key (TODO: NEED MORE DOCUMENTATION)
+  "tag_slug": String // [optional] tag of posts to import (just one tag)
+}
 ```
 
 ### Services Setup
@@ -193,129 +193,129 @@ Disabled services can safely removed from booth `services` and
 
 enable `services.github` and configure `services_settings.github` as follow:
 ```javascript
-    "github": {
-      "url": String, // url of your profile page
-      "client_id": String // your username
-    }
+"github": {
+  "url": String, // url of your profile page
+  "client_id": String // your username
+}
 ```
 
 #### StackOverflow
 
 enable `services.stackoverflow` and configure `services_settings.stackoverflow` as follow:
 ```javascript
-    "stackoverflow": {
-      "url": String, // url of your profile page
-      "userid": String // your id number
-    }
+"stackoverflow": {
+  "url": String, // url of your profile page
+  "userid": String // your id number
+}
 ```
 
 #### Flickr
 
 enable `services.flickr` and configure `services_settings.flickr` as follow:
 ```javascript
-    "flickr": {
-      "url": String, // url of your profile page
-      "client_id": String // your id (you can get it from http://idgettr.com/)
-    }
+"flickr": {
+  "url": String, // url of your profile page
+  "client_id": String // your id (you can get it from http://idgettr.com/)
+}
 ```
 
 #### Bitbucket
 
 enable `services.bitbucket` and configure `services_settings.bitbucket` as follow:
 ```javascript
-    "bitbucket": {
-      "url": String, // url of your profile page
-      "username": String, // your username
-      "show_forks": Boolean // show number of forks (It require a http request for every repository
-    }
+"bitbucket": {
+  "url": String, // url of your profile page
+  "username": String, // your username
+  "show_forks": Boolean // show number of forks (It require a http request for every repository
+}
 ```
 
 #### SoundCloud
 
 enable `services.soundcloud` and configure `services_settings.soundcloud` as follow:
 ```javascript
-    "soundcloud": {
-      "url": String, // url of your profile page
-      "username": String, // your username
-      "client_id": String, // your client_id (TODO: NEED MORE DOCUMENTATION)
-      "show_artwork": Boolean, // show tracks artworks
-      "player_color": String // color of tracks player
-    }
+"soundcloud": {
+  "url": String, // url of your profile page
+  "username": String, // your username
+  "client_id": String, // your client_id (TODO: NEED MORE DOCUMENTATION)
+  "show_artwork": Boolean, // show tracks artworks
+  "player_color": String // color of tracks player
+}
 ```
 
 #### Last.fm
 
 enable `services.lastfm` and configure `services_settings.lastfm` as follow:
 ```javascript
-    "lastfm": {
-      "url": String, // url of your profile page
-      "username": String, // your username
-      "api_key": String // your api key (TODO: NEED MORE DOCUMENTATION)
-    }
+"lastfm": {
+  "url": String, // url of your profile page
+  "username": String, // your username
+  "api_key": String // your api key (TODO: NEED MORE DOCUMENTATION)
+}
 ```
 
 #### Dribbble
 
 enable `services.dribbble` and configure `services_settings.dribbble` as follow:
 ```javascript
-    "dribbble": {
-      "url": String, // url of your profile page
-      "username": String // your username
-    }
+"dribbble": {
+  "url": String, // url of your profile page
+  "username": String // your username
+}
 ```
 
 #### Youtube
 
 enable `services.youtube` and configure `services_settings.youtube` as follow:
 ```javascript
-    "youtube": {
-      "url": String, // url of your profile page
-      "username": String, // your username
-      "api_key": String // your api key (TODO: NEED MORE DOCUMENTATION)
-    }
+"youtube": {
+  "url": String, // url of your profile page
+  "username": String, // your username
+  "api_key": String // your api key (TODO: NEED MORE DOCUMENTATION)
+}
 ```
 
 #### Google+
 
 enable `services.gplus` and configure `services_settings.gplus` as follow:
 ```javascript
-    "gplus": {
-      "url": String, // url of your profile page
-      "user_id": String, // your id number
-      "api_key": String // your api key (TODO: NEED MORE DOCUMENTATION)
-    }
+"gplus": {
+  "url": String, // url of your profile page
+  "user_id": String, // your id number
+  "api_key": String // your api key (TODO: NEED MORE DOCUMENTATION)
+}
 ```
 
 #### Facebook
 
 enable `services.facebook` and configure `services_settings.facebook` as follow:
 ```javascript
-    "facebook": {
-      "url": String, // url of your profile page
-      "username": String, // your username
-      "access_token": String // your access token key (TODO: NEED MORE DOCUMENTATION)
-    }
+"facebook": {
+  "url": String, // url of your profile page
+  "username": String, // your username
+  "access_token": String // your access token key (TODO: NEED MORE DOCUMENTATION)
+}
 ```
 
 #### Instagram
 
 enable `services.instagram` and configure `services_settings.instagram` as follow:
 ```javascript
-    "instagram": {
-      "url": String, // url of your profile page
-      "access_token": String, // your access token key (TODO: NEED MORE DOCUMENTATION)
-      "user_id": String // you id number
-    }
+"instagram": {
+  "url": String, // url of your profile page
+  "access_token": String, // your access token key (TODO: NEED MORE DOCUMENTATION)
+  "user_id": String // you id number
+}
 ```
 
 #### LinkedIn
 
 enable `services.linkedin` and configure `services_settings.linkedin` as follow:
 ```javascript
-    "linkedin": {
-      "url": String, // url of your profile page
-      "access_token": String // your access token key (TODO: NEED MORE DOCUMENTATION)
-    }
+"linkedin": {
+  "url": String, // url of your profile page
+  "access_token": String // your access token key (TODO: NEED MORE DOCUMENTATION)
+}
 ```
 
 ### Plugins setup
@@ -332,11 +332,11 @@ object on `config.json` file as follow:
 This plugin will enable disqus comments on every post. Just
 enable `blogs_settings.plugins.disqus` and configure `plugins_settings.disqus` as follow:
 ```javascript
-    "disqus": {
-      "url": String, // [optional] your disqus profile url
-      "shortname": String, // your username
-      "just_count": Boolean // [optional] just show the number of comments instead of the 'Show Comments' buttons
-    }
+"disqus": {
+  "url": String, // [optional] your disqus profile url
+  "shortname": String, // your username
+  "just_count": Boolean // [optional] just show the number of comments instead of the 'Show Comments' buttons
+}
 ```
 
 #### ShareThis
@@ -345,9 +345,9 @@ This plugin will add ShareThis widget to every post. Just
 enable `blogs_settings.plugins.sharethis` and configure `plugins_settings.sharethis`
 as follow:
 ```javascript
-    "sharethis": {
-      "publisher_key": String // your key
-    }
+"sharethis": {
+  "publisher_key": String // your key
+}
 ```
 
 #### RSS
@@ -355,9 +355,9 @@ as follow:
 This plugin will add RSS entry that any browser can subscribe to. Just
 enable `plugins.rss` and configure `plugins_settings.rss` as follow:
 ```javascript
-    "rss": {
-      "url": String // the url of your rss feed file or an external rss feed from your blog platform
-    }
+"rss": {
+  "url": String // the url of your rss feed file or an external rss feed from your blog platform
+}
 ```
 
 #### Google Analytics
@@ -366,9 +366,9 @@ This plugin will enable Google Analytics tracking. Just
 enable `plugins.google_analytics` and configure `plugins_settings.google_analytics`
  as follow:
 ```javascript
-    "google_analytics": {
-      "tracking_id": String // your tracking id e.g: UA-XXXXXXX-2
-    }
+"google_analytics": {
+  "tracking_id": String // your tracking id e.g: UA-XXXXXXX-2
+}
 ```
 
 #### Woopra
@@ -376,11 +376,11 @@ enable `plugins.google_analytics` and configure `plugins_settings.google_analyti
 This plugin will enable Woopra tracking. Just
 enable `plugins.woopra` and configure `plugins_settings.woopra` as follow:
 ```javascript
-    "woopra": {
-      "tracking_domain": String, // TODO
-      "idle_timeout": Number, // TODO
-      "include_query": Boolean // TODO
-    }
+"woopra": {
+  "tracking_domain": String, // TODO
+  "idle_timeout": Number, // TODO
+  "include_query": Boolean // TODO
+}
 ```
 
 #### Segment
@@ -388,9 +388,9 @@ enable `plugins.woopra` and configure `plugins_settings.woopra` as follow:
 This plugin will enable Segment services. Just
 enable `plugins.segment` and configure `plugins_settings.segment` as follow:
 ```javascript
-    "segment": {
-      "write_key": String // your write key
-    }
+"segment": {
+  "write_key": String // your write key
+}
 ```
 
 #### Gratipay Widget
@@ -399,9 +399,9 @@ This plugin will add Gratupay widget bollow the navigation menu. Just
 enable `plugins.gratipay_widget` and configure `plugins_settings.gratipay_widget`
 as follow:
 ```javascript
-    "gratipay_widget": {
-      "username": String // your gratipay username
-    }
+"gratipay_widget": {
+  "username": String // your gratipay username
+}
 ```
 
 ## Credit
