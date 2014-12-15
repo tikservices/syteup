@@ -194,8 +194,7 @@ Disabled services can safely removed from booth `services` and
 enable `services.github` and configure `services_settings.github` as follow:
 ```javascript
 "github": {
-  "url": String, // url of your profile page
-  "client_id": String // your username
+  "username": String // your username
 }
 ```
 
@@ -204,8 +203,8 @@ enable `services.github` and configure `services_settings.github` as follow:
 enable `services.stackoverflow` and configure `services_settings.stackoverflow` as follow:
 ```javascript
 "stackoverflow": {
-  "url": String, // url of your profile page
-  "userid": String // your id number
+  "username": String, // your username
+  "user_id": String // your user id number
 }
 ```
 
@@ -214,8 +213,8 @@ enable `services.stackoverflow` and configure `services_settings.stackoverflow` 
 enable `services.flickr` and configure `services_settings.flickr` as follow:
 ```javascript
 "flickr": {
-  "url": String, // url of your profile page
-  "client_id": String // your id (you can get it from http://idgettr.com/)
+  "username": String, // your username
+  "user_id": String // your user id (you can get it from http://idgettr.com/)
 }
 ```
 
@@ -224,7 +223,6 @@ enable `services.flickr` and configure `services_settings.flickr` as follow:
 enable `services.bitbucket` and configure `services_settings.bitbucket` as follow:
 ```javascript
 "bitbucket": {
-  "url": String, // url of your profile page
   "username": String, // your username
   "show_forks": Boolean // show number of forks (It require a http request for every repository
 }
@@ -235,7 +233,6 @@ enable `services.bitbucket` and configure `services_settings.bitbucket` as follo
 enable `services.soundcloud` and configure `services_settings.soundcloud` as follow:
 ```javascript
 "soundcloud": {
-  "url": String, // url of your profile page
   "username": String, // your username
   "client_id": String, // your client_id (TODO: NEED MORE DOCUMENTATION)
   "show_artwork": Boolean, // show tracks artworks
@@ -248,7 +245,6 @@ enable `services.soundcloud` and configure `services_settings.soundcloud` as fol
 enable `services.lastfm` and configure `services_settings.lastfm` as follow:
 ```javascript
 "lastfm": {
-  "url": String, // url of your profile page
   "username": String, // your username
   "api_key": String // your api key (TODO: NEED MORE DOCUMENTATION)
 }
@@ -259,7 +255,6 @@ enable `services.lastfm` and configure `services_settings.lastfm` as follow:
 enable `services.dribbble` and configure `services_settings.dribbble` as follow:
 ```javascript
 "dribbble": {
-  "url": String, // url of your profile page
   "username": String // your username
 }
 ```
@@ -269,7 +264,6 @@ enable `services.dribbble` and configure `services_settings.dribbble` as follow:
 enable `services.youtube` and configure `services_settings.youtube` as follow:
 ```javascript
 "youtube": {
-  "url": String, // url of your profile page
   "username": String, // your username
   "api_key": String // your api key (TODO: NEED MORE DOCUMENTATION)
 }
@@ -280,8 +274,7 @@ enable `services.youtube` and configure `services_settings.youtube` as follow:
 enable `services.gplus` and configure `services_settings.gplus` as follow:
 ```javascript
 "gplus": {
-  "url": String, // url of your profile page
-  "user_id": String, // your id number
+  "user_id": String, // your user id number
   "api_key": String // your api key (TODO: NEED MORE DOCUMENTATION)
 }
 ```
@@ -291,7 +284,6 @@ enable `services.gplus` and configure `services_settings.gplus` as follow:
 enable `services.facebook` and configure `services_settings.facebook` as follow:
 ```javascript
 "facebook": {
-  "url": String, // url of your profile page
   "username": String, // your username
   "access_token": String // your access token key (TODO: NEED MORE DOCUMENTATION)
 }
@@ -302,9 +294,9 @@ enable `services.facebook` and configure `services_settings.facebook` as follow:
 enable `services.instagram` and configure `services_settings.instagram` as follow:
 ```javascript
 "instagram": {
-  "url": String, // url of your profile page
+  "username": String, // your username
   "access_token": String, // your access token key (TODO: NEED MORE DOCUMENTATION)
-  "user_id": String // you id number
+  "user_id": String // your user id number
 }
 ```
 
@@ -313,7 +305,7 @@ enable `services.instagram` and configure `services_settings.instagram` as follo
 enable `services.linkedin` and configure `services_settings.linkedin` as follow:
 ```javascript
 "linkedin": {
-  "url": String, // url of your profile page
+  "username": String, // your username
   "access_token": String // your access token key (TODO: NEED MORE DOCUMENTATION)
 }
 ```

@@ -179,7 +179,7 @@
         return flickrData;
     }
     function fetchData(settings) {
-        return asyncGet("http://api.flickr.com/services/feeds/photos_public.gne?id=" + settings.client_id + "&format=json&lang=en-us", undefined, "jsoncallback");
+        return asyncGet("http://api.flickr.com/services/feeds/photos_public.gne?id=" + settings.user_id + "&format=json&lang=en-us", undefined, "jsoncallback");
     }
     exportService({
         displayName: DISPLAY_NAME,

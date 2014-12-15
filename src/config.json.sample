@@ -91,60 +91,52 @@
   },
   "services_settings": {
     "github": {
-      "url": "[e.g: https://github.com/lejenome]",
-      "client_id": "[your username]"
+      "username": "[your username]"
     },
     "stackoverflow": {
-      "url": "[e.g: https://stackoverflow.com/users/2481592/lejenome]",
-      "userid": "[your id e.g: 2481592]"
+      "username": "[your username]",
+      "user_id": "[your user id e.g: 2481592]"
     },
     "flickr": {
-      "url": "[e.g: https://www.flickr.com/photos/shutterjack/]",
-      "client_id": "[your id e.g: 18205706@N06 (you can get it from http://idgettr.com/)]"
+      "username": "[your username]",
+      "user_id": "[your user id e.g: 18205706@N06 (you can get it from http://idgettr.com/)]"
     },
     "bitbucket": {
-      "url": "[e.g: https://bitbucket.org/pypy]",
       "username": "[your username]",
       "show_forks": false
     },
     "soundcloud": {
-      "url": "[e.g: https://soundcloud.com/olivianoelle]",
       "username": "[your username]",
       "client_id": "[more on README.md]",
       "show_artwork": false,
       "player_color": "ff912b"
     },
     "lastfm": {
-      "url": "[e.g: https://www.last.fm/user/bmoezj]",
       "username": "[your username]",
       "api_key": "[more on README.md]"
     },
     "dribbble": {
-      "url": "[e.g: https://dribbble.com/mbarvian]",
       "username": "[your username]"
     },
     "youtube": {
-      "url": "[e.g: https://www.youtube.com/user/minutephysics]",
       "username": "[your username]",
       "api_key": "[more on README.md]"
     },
     "gplus": {
-      "url": "[e.g: https://plus.google.com/+LinusTorvalds]",
       "user_id": "[your user id e.g: 102150693225130002912]",
       "api_key": "[more on README.md]"
     },
     "facebook": {
-      "url": "[e.g: https://facebook.com/legenome]",
       "username": "[your username]",
       "access_token": "[more on README.md]"
     },
     "instagram": {
-      "url": "[e.g: http://instagram.com/seanparkerphotography]",
+      "username": "[your username]",
       "access_token": "[more on README.md]",
       "user_id": "[your user id e.g: 19324936]"
     },
     "linkedin": {
-      "url": "[e.g: https://www.linkedin.com/in/lejenome]",
+      "username": "[your username]",
       "access_token": "[more on README.md]"
     }
   }

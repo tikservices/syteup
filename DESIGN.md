@@ -44,6 +44,7 @@
 	passed to the template
       - fetch: funct to fetch data from service
 	server
+      - getURL: funct to return the profile url from the settings
       - template: file name of template inside
 	templates/
       - supportMore: (optional) bool setted to true if service
