@@ -35,6 +35,6 @@
         displayName: DISPLAY_NAME,
         setup: setupContact,
         fetch: fetchContact,
-        template: "syteup-contact.html"
-    }, "syteup_contact");
+        template: "contact.html"
+    }, "contact");
 }(window));
