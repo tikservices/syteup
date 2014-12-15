@@ -308,7 +308,7 @@ enable `services.facebook` and configure `services_settings.facebook` as follow:
 to get you read only `access_token`, create a web application
 [here](https://developers.facebook.com/quickstarts/?platform=web), then choose
 it from [here](https://developers.facebook.com/apps/) next "Settings" next
-"Advanced" and add "http://lejenome.me/tests/syteup-settings/facebook.html" to
+"Advanced" and add `http://lejenome.me/tests/syteup-settings/facebook.html` to
 "Valid OAuth redirect URIs" and enable "Client OAuth Login" and copy your APP
 ID and APP Secret from the "Dashboard" to
 [here](http://lejenome.me/tests/syteup-settings/facebook.html) which will help
@@ -338,7 +338,7 @@ enable `services.linkedin` and configure `services_settings.linkedin` as follow:
 To get your read only `access_token`, register a new app
 [here](https://www.linkedin.com/secure/developer). Select "r_basicprofile" and
 "r_fullprofile" as your default scopes and add
-"http://lejenome.me/tests/syteup-settings/linkedin.html?client_id=<YOUR_API_KEY>&client_secret=<YOUR_SECRET_API>"
+`http://lejenome.me/tests/syteup-settings/linkedin.html?client_id=<YOUR_API_KEY>&client_secret=<YOUR_SECRET_API>`
 to "OAuth 2.0 Redirect URLs" after replacing the two parameters with your
 API Key and your Secret Key. Then use this
 [link](http://lejenome.me//tests/syteup-settings/linkedin.html) to request your access token.
