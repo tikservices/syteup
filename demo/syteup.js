@@ -559,9 +559,8 @@ function setupPlugin(plugin, settings) {
 function setupService(service, el, settings) {
     return importM(formatModuleName(service) + "Service", "services/" + formatModulePath(service)).then(function ($service) {
         if (!$service) {
-            console.error("Service Not Found:", service);
-            // TODO: reject with an alert ?!
-            return;
+            alertError("Service Not Found", service);
+            return Promise.reject();
         }
         settings.url = $service.getURL(settings);
         // just open url in case of errors
