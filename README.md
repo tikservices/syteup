@@ -306,14 +306,12 @@ enable `services.facebook` and configure `services_settings.facebook` as follow:
 }
 ```
 to get you read only `access_token`, create a web application
-[here](https://developers.facebook.com/quickstarts/?platform=web), then choose
-it from [here](https://developers.facebook.com/apps/) next "Settings" next
-"Advanced" and add `http://lejenome.me/tests/syteup-settings/facebook.html` to
-"Valid OAuth redirect URIs" and enable "Client OAuth Login" and copy your APP
-ID and APP Secret from the "Dashboard" to
-[here](http://lejenome.me/tests/syteup-settings/facebook.html) which will help
-you request your access token. Still need more explainations? Sorry, it
-really sucks.
+[here](https://developers.facebook.com/quickstarts/?platform=web). Then, choose
+it from "Application" menu from this
+[page](https://developers.facebook.com/tools/explorer/) and click "Get Access
+Token" and select booth "user_activities", "user_about_me" and "user_status".
+After confirming, you will get your final `access_token` on the Access Token
+field.
 
 #### Instagram
 
