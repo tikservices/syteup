@@ -40,7 +40,7 @@ minify-pre:
 	cp -r $(SRC)/blogs/* $(DIST)/blogs
 	cp $(CONF) $(DIST)/config.json 2>/dev/null || true
 	#cp $(SRC)/syteup.appcache $(DIST)
-	sed -i 's|.*<script .*||' $(DIST)/index.html
+	sed -i 's,.*<script \(async\|defer\).*,,' $(DIST)/index.html
 	sed -i 's|.*stylesheet/less.*||' $(DIST)/index.html
 	sed -i 's|<!--syteup.min.css-->|<link rel="stylesheet" href="syteup.min.css" type="text/css"  charset="UTF-8" media="screen, projection">|' $(DIST)/index.html
 	sed -i 's|<!--syteup-profiles.min.css-->|<link rel="stylesheet" href="syteup-profiles.min.css" id="profiles-style" type="text/css"  charset="UTF-8" media="only x">|' $(DIST)/index.html
