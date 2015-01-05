@@ -85,7 +85,7 @@
     "soundcloud": true,
     "github": false,
     "gplus": false,
-    "facebook": true,
+    "facebook": false,
     "linkedin": false,
     "twitter": false,
     "stackoverflow": false,
@@ -135,7 +135,7 @@
     },
     "facebook": {
       "username": "legenome",
-      "access_token": "CAAN1AGCv4JABACcs8Rgz6a8Xolm8YTco43iPEeM5Vph68qFeChVQRCuc4Nyhqe7wH5i6JSmflD80iVfB7MmZB5AeDAoWqjjoQZAZArc0uSz8zmQBtceBz9WXzsq9JwWzeZAtMG4t0iZBgqiv3BNYcqn8n47EKwL3TxfXUgBhKeEfiiniFxSs7kfJQBynyUZBj0WD0aL9gRMLzmXUolclyw0jqYF6HkkcwZD"
+      "access_token": "CAAKpfrF3JjQBAAux6ZC5ZCMvp9AR68JLZB1SfM7rVy0OL3UbeWwG0cWNtbmSKJEz8qoHU8inHgEVpOAIZBF0IuimNt9qegwO0bYjchxZArrog3nhZCgb6W9rYyuUehDBr9QYKEwr3sy9nW9KczU9S2pVJZBZAVWstEMfNqawIimbBl0CZB6Kj479WkrZCaVDrju0LoLoiXSuMVFZA6nEpR0xJuiEn7LhiamYZBkZD"
     },
     "instagram": {
       "username": "seanparkerphotography",
