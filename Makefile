@@ -5,6 +5,7 @@ ALL_BLOG_PLATFORMS=false # just to force support of all availbale blog platforms
 LESSCFLAGS=--no-ie-compat --no-js --strict-imports --strict-math=on -rp=$(SRC)/ -x --clean-css
 HTMLMINIFIERFLAGS=--remove-comments --collapse-whitespace --minify-js
 
+.NOTPARALLEL : pre-commit minify
 pre-commit: beautify fix test dist
 test: lint # style-check
 fix: fix-js
