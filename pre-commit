@@ -5,4 +5,7 @@
 # INSTALL: cp pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
 
 echo "Running pre-commit hook! should take some seconds"
-npm run pre-commit
+npm run pre-commit || exit 1
+git diff --cached --name-only HEAD | while read F; do
+	git add "$F"
+done
