@@ -28,12 +28,12 @@
   "devDependencies": {
     "bower": "",
     "jshint": "",
-    "fixmyjs": ">=0.13.6",
+    "fixmyjs": ">=1.0.2",
     "js-beautify": ">=1.5.4",
     "jsonlint": "",
     "json": "",
     "uglifyjs": "",
-    "less": ">=2.0.0",
+    "less": ">=2.4.0",
     "less-plugin-clean-css": "",
     "html-minifier": ""
   },
