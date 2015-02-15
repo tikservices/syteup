@@ -13,7 +13,7 @@ fix-js:
 	find $(SRC) -path $(SRC)/js/libs -prune -a -type f -o -name "*.js" -or -name "*.json" | xargs -n 1 fixmyjs -c .jshintrc || true
 lint: lint-js lint-json
 lint-json:
-	ls .jsbeautifyrc .jshintrc package.json | xargs -n 1 jsonlint -ip
+	ls .jsbeautifyrc .jshintrc package.json src/config.json.sample | xargs -n 1 jsonlint -ip
 	for json in `find $(SRC) -name "*.json"`; do jsonlint -ip $${json};done
 	jsonlint -ip $(CONF)
 lint-js:

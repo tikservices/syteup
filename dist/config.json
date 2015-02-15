@@ -25,7 +25,8 @@
     "rss": true,
     "sitemap": false,
     "control_panel": true,
-    "gratipay_widget": true
+    "gratipay_widget": true,
+    "paypal_donate": true
   },
   "plugins_settings": {
     "google_analytics": {
@@ -52,6 +53,9 @@
     },
     "segment": {
       "write_key": "[your write key]"
+    },
+    "paypal": {
+      "encrypted": "[Your encrypted code]"
     }
   },
   "blogs_settings": {
