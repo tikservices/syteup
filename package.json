@@ -32,7 +32,7 @@
     "js-beautify": ">=1.5.4",
     "jsonlint": "",
     "json": "",
-    "uglifyjs": "",
+    "uglify-js": "",
     "less": ">=2.4.0",
     "less-plugin-clean-css": "",
     "html-minifier": ""
