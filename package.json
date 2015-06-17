@@ -29,11 +29,11 @@
     "bower": "",
     "jshint": "",
     "fixmyjs": ">=1.0.2",
-    "js-beautify": ">=1.5.4",
+    "js-beautify": ">=1.5.6",
     "jsonlint": "",
     "json": "",
     "uglify-js": "",
-    "less": ">=2.4.0",
+    "less": ">=2.5.1",
     "less-plugin-clean-css": "",
     "html-minifier": ""
   },
