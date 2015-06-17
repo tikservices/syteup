@@ -24,7 +24,7 @@
   ],
   "dependencies": {
     "less": "2.5.1",
-    "bootstrap": "3.2.0",
+    "bootstrap": "3.3.4",
     "handlebars": "3.0.3",
     "jquery": "2.1.4",
     "moment": "2.10.3",
