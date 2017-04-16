@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/lejenome/syteup.png?label=ready&title=Ready)](https://waffle.io/lejenome/syteup)
 # Syteup
 
 **Syteup** (a complete rewrite of [Syte](https://github.com/rigoneri/syte)) is a
